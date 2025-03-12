@@ -1,0 +1,26 @@
+<p>flora works!</p>
+<div class="flora-container">
+    <h2>Flora do Instituto</h2>
+  
+    <!-- Seletor de filtro por local -->
+    <div class="filtro-local">
+      <label for="local">Filtrar por Local:</label>
+      <select
+        id="local"
+        [(ngModel)]="selectedLocal"
+        (change)="filtrarPorLocal()"
+      >
+        <option *ngFor="let loc of locais" [value]="loc">{{ loc }}</option>
+      </select>
+    </div>
+  
+    <!-- Lista de plantas -->
+    <div class="flora-list">
+      <div class="planta-card" *ngFor="let planta of plantas">
+        <img *ngIf="planta.imagem" [src]="planta.imagem" [alt]="planta.nome" />
+        <h3>{{ planta.nome }}</h3>
+        <p>Local: {{ planta.local }}</p>
+      </div>
+    </div>
+  </div>
+  

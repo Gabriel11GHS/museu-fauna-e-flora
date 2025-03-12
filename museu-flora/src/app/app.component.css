@@ -1,0 +1,106 @@
+/* Barra principal */
+.homebar {
+    display: flex;
+    align-items: center;
+    background-color: #27632a; /* Ajuste para o tom de verde desejado */
+    padding: 0.5rem 1rem;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Área de logo(s) à esquerda */
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  /* Ajuste a altura conforme o tamanho desejado */
+  .museu-logo {
+    height: 50px;
+  }
+  
+  .icmc-logo {
+    height: 40px;
+  }
+  
+  /* Navegação (links do menu) */
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    margin-left: 2rem; /* Dá espaço entre o logo e os links */
+  }
+  
+  .nav-links a {
+    background-color: #3a8c3a; /* Um tom de verde ligeiramente diferente */
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s;
+  }
+  
+  .nav-links a:hover {
+    background-color: #2f7b2f;
+  }
+  
+  /* Seção da direita (Contato + Busca) */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Empurra essa parte para a direita */
+    gap: 1rem;
+  }
+  
+  /* Botão de Contato */
+  .contato-btn {
+    background-color: #fff;
+    color: #27632a;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  }
+  
+  .contato-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  /* Campo de busca */
+  .search-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .search-container input {
+    border: none;
+    outline: none;
+    margin-right: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 15px;
+  }
+  
+  .search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem; /* Ícone de lupa maior */
+    color: #27632a;
+  }
+  
+  /* Rodapé */
+  footer {
+    text-align: center;
+    background-color: #eee;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+  

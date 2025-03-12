@@ -1,0 +1,55 @@
+/* Seção principal (hero) com imagem de fundo */
+.hero-section {
+  position: relative;
+  min-height: 400px; /* Ajuste a altura conforme necessidade */
+  background: url('/fundo.jpg') no-repeat center/cover; /* Imagem de fundo */
+}
+
+/* Overlay verde translúcido sobre a imagem */
+.hero-overlay {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(39, 99, 42, 0.7); /* Cor verde e transparência (0.7) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-overlay h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+/* Retângulo preto para fotos/vídeos */
+.media-box {
+  width: 600px;       /* Ajuste conforme o layout desejado */
+  height: 300px;      /* Ajuste conforme o layout desejado */
+  background-color: #000;
+  border: 3px solid #fff; /* Borda branca para destacar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Seção dos locais (mapa) */
+.locais-section {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 2rem;
+}
+
+.locais-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.mapa img {
+  max-width: 600px; /* Largura máxima do mapa */
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+}
