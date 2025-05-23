@@ -1,26 +1,45 @@
-<p>flora works!</p>
 <div class="flora-container">
-    <h2>Flora do Instituto</h2>
-  
-    <!-- Seletor de filtro por local -->
-    <div class="filtro-local">
-      <label for="local">Filtrar por Local:</label>
-      <select
-        id="local"
-        [(ngModel)]="selectedLocal"
-        (change)="filtrarPorLocal()"
-      >
-        <option *ngFor="let loc of locais" [value]="loc">{{ loc }}</option>
-      </select>
-    </div>
-  
-    <!-- Lista de plantas -->
-    <div class="flora-list">
-      <div class="planta-card" *ngFor="let planta of plantas">
-        <img *ngIf="planta.imagem" [src]="planta.imagem" [alt]="planta.nome" />
-        <h3>{{ planta.nome }}</h3>
-        <p>Local: {{ planta.local }}</p>
-      </div>
+  <h2>Flora do Instituto</h2>
+
+  <!-- Filtro por Local -->
+  <div class="filtro-local">
+    <label for="local">Filtrar por Local:</label>
+    <select id="local" [(ngModel)]="selectedLocal" (change)="filtrarPlantas()">
+      <option *ngFor="let loc of locais" [value]="loc">{{ loc }}</option>
+    </select>
+  </div>
+
+  <!-- Filtro por Classe Científica -->
+  <div class="filtro-classe">
+    <label for="classe">Filtrar por Classe Científica:</label>
+    <select id="classe" [(ngModel)]="selectedClasse" (change)="filtrarPlantas()">
+      <option *ngFor="let cls of classes" [value]="cls">{{ cls }}</option>
+    </select>
+  </div>
+
+  <!-- Busca por Nome -->
+  <div class="busca-nome">
+    <label for="search">Buscar por Nome:</label>
+    <input
+      type="text"
+      id="search"
+      [(ngModel)]="searchTerm"
+      (input)="filtrarPlantas()"
+      placeholder="Digite o nome da planta..."
+    />
+  </div>
+
+  <!-- Lista de Plantas -->
+  <div class="flora-list">
+    <div class="planta-card" *ngFor="let p of plantas">
+      <img *ngIf="p.imagem" [src]="p.imagem" [alt]="p.nome" />
+      <h3>{{ p.nome }}</h3>
+      <p><em>{{ p.nomeCientifico }}</em></p>
+      <p>Classe: {{ p.classeCientifica }}</p>
+      <p>Local: {{ p.local }}</p>
+      <audio *ngIf="p.audio" controls [src]="p.audio"></audio>
     </div>
   </div>
+</div>
+
   
