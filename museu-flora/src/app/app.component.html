@@ -1,7 +1,8 @@
 <header class="homebar">
   <div class="logo-container">
     <!-- Ajuste as imagens conforme sua pasta de assets -->
-    <img src="assets/museu-logo.png" alt="Museu da Fauna e Flora" class="museu-logo" />
+    <img src="assets/museu-logo.png" alt="Museu da Fauna e Flora"
+      class="museu-logo" />
     <img src="assets/icmc-logo.png" alt="ICMC" class="icmc-logo" />
     <!-- Se preferir texto em vez de imagem:
     <h1>Museu da Fauna e Flora</h1> 
@@ -18,6 +19,14 @@
   <div class="nav-right">
     <button class="contato-btn">Contato</button>
     <div class="search-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Buscar...</mat-label>
+        <input matInput type="text" />
+      </mat-form-field>
+      <button mat-icon-button color="primary">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div> <div class="search-container">
       <input type="text" placeholder="Buscar..." />
       <button class="search-btn">🔍</button>
     </div>

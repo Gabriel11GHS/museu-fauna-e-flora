@@ -1,17 +1,29 @@
 <!-- Seção superior com imagem de fundo e overlay verde -->
-<div class="hero-section">
+<div class="hero-section" [@fadeIn]>
   <div class="hero-overlay">
-    <h1>Conheça o museu</h1>
-    <!-- Retângulo preto para fotos ou vídeos -->
-    <div class="media-box"></div>
+    <h1>Conheça o Museu</h1>
+    <button class="cta-button">Saiba mais</button>
+    <!-- Carrossel de multimídia -->
+    <ngx-slick-carousel class="media-box" [config]="slideConfig">
+      <div ngxSlickItem *ngFor="let item of mediaItems" class="slide">
+        <img [src]="item.image" alt="Mídia" />
+      </div>
+    </ngx-slick-carousel>
   </div>
 </div>
 
-<!-- Seção dos locais, com mapa -->
+<div class="vozes-da-natureza-section">
+  <h2>Vozes da Natureza</h2>
+  <p>
+    O projeto "Vozes da Natureza" convida professores da USP para dublar textos que acompanham os áudios de apresentação das árvores.
+    Essa iniciativa visa aproximar a comunidade acadêmica do conhecimento sobre a biodiversidade e incentivar a preservação ambiental.
+    Através de narrativas cativantes, os professores dão voz às árvores, transformando dados em histórias inspiradoras para enriquecer a experiência dos visitantes.
+  </p>
+</div>
+
 <div class="locais-section">
-  <h2>Conheça os locais do instituto</h2>
+  <h2>Conheça os locais do Instituto</h2>
   <div class="mapa">
-    <!-- Ajuste o caminho da imagem conforme sua pasta assets -->
-    <img src="assets/mapa-instituto.png" alt="Mapa do Instituto" />
+    <img src="/assets/mapa-instituto.png" alt="Mapa do Instituto" />
   </div>
 </div>

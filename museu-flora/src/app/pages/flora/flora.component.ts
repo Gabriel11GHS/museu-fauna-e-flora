@@ -1,36 +1,47 @@
 // src/app/pages/flora/flora.component.ts
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FloraService, Planta } from '../../services/flora.service';
+import { ApiService } from '../../services/api.service';
+import { Planta } from '../../models/planta.model';
 
 @Component({
   selector: 'app-flora',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './flora.component.html',
   styleUrls: ['./flora.component.css']
 })
 export class FloraComponent implements OnInit {
+  todasPlantas: Planta[] = [];
   plantas: Planta[] = [];
   locais: string[] = [];
-  selectedLocal: string = 'Todos';
+  classes: string[] = [];
+  selectedLocal = 'Todos';
+  selectedClasse = 'Todos';
+  searchTerm = '';
 
-  constructor(private floraService: FloraService) {}
+  constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    // Carrega todas as plantas do serviço
-    this.plantas = this.floraService.getPlantas();
-
-    // Monta a lista de locais com tipagem explícita para p
-    this.locais = ['Todos', ...new Set(this.plantas.map((p: Planta) => p.local))];
+    this.api.getPlantas().subscribe(pls => {
+      this.todasPlantas = pls;
+      this.plantas = [...pls];
+      this.locais = ['Todos', ...new Set(pls.map(p => p.local))];
+      this.classes = ['Todos', ...new Set(pls.map(p => p.classeCientifica))];
+    });
   }
 
-  filtrarPorLocal(): void {
-    const todas = this.floraService.getPlantas();
-    if (this.selectedLocal === 'Todos') {
-      this.plantas = todas;
-    } else {
-      this.plantas = todas.filter((p: Planta) => p.local === this.selectedLocal);
-    }
+  filtrarPlantas(): void {
+    this.plantas = this.todasPlantas.filter(p => {
+      const okLocal = this.selectedLocal === 'Todos' || p.local === this.selectedLocal;
+      const okClasse =
+        this.selectedClasse === 'Todos' || p.classeCientifica === this.selectedClasse;
+      const okBusca =
+        !this.searchTerm ||
+        p.nome.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        p.nomeCientifico.toLowerCase().includes(this.searchTerm.toLowerCase());
+      return okLocal && okClasse && okBusca;
+    });
   }
 }
