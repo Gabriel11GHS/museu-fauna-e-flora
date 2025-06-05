@@ -1,45 +1,60 @@
-<div class="flora-container">
-  <h2>Flora do Instituto</h2>
+<!-- src/app/pages/flora/flora.component.html -->
+<div>
+  <h2>Flora</h2>
 
-  <!-- Filtro por Local -->
-  <div class="filtro-local">
-    <label for="local">Filtrar por Local:</label>
-    <select id="local" [(ngModel)]="selectedLocal" (change)="filtrarPlantas()">
-      <option *ngFor="let loc of locais" [value]="loc">{{ loc }}</option>
-    </select>
-  </div>
+  <div class="filters">
+    <div>
+      <label for="local">Local:</label>
+      <select id="local" [(ngModel)]="selectedLocal" (change)="filtrarPlantas()">
+        <option value="">Todos os Locais</option>
+        <option *ngFor="let local of locais" [value]="local">{{ local }}</option>
+      </select>
+    </div>
 
-  <!-- Filtro por Classe Científica -->
-  <div class="filtro-classe">
-    <label for="classe">Filtrar por Classe Científica:</label>
-    <select id="classe" [(ngModel)]="selectedClasse" (change)="filtrarPlantas()">
-      <option *ngFor="let cls of classes" [value]="cls">{{ cls }}</option>
-    </select>
-  </div>
+    <div>
+      <label for="familia">Família:</label>
+      <select id="familia" [(ngModel)]="selectedFamilia" (change)="filtrarPlantas()">
+        <option value="">Todas as Famílias</option>
+        <option *ngFor="let familia of familias" [value]="familia">{{ familia }}</option>
+      </select>
+    </div>
 
-  <!-- Busca por Nome -->
-  <div class="busca-nome">
-    <label for="search">Buscar por Nome:</label>
-    <input
-      type="text"
-      id="search"
-      [(ngModel)]="searchTerm"
-      (input)="filtrarPlantas()"
-      placeholder="Digite o nome da planta..."
-    />
-  </div>
-
-  <!-- Lista de Plantas -->
-  <div class="flora-list">
-    <div class="planta-card" *ngFor="let p of plantas">
-      <img *ngIf="p.imagem" [src]="p.imagem" [alt]="p.nome" />
-      <h3>{{ p.nome }}</h3>
-      <p><em>{{ p.nomeCientifico }}</em></p>
-      <p>Classe: {{ p.classeCientifica }}</p>
-      <p>Local: {{ p.local }}</p>
-      <audio *ngIf="p.audio" controls [src]="p.audio"></audio>
+    <div>
+      <label for="search">Buscar por Nome Popular ou Científico:</label>
+      <input type="text" id="search" [(ngModel)]="searchTerm" (input)="filtrarPlantas()" placeholder="Digite para buscar...">
     </div>
   </div>
-</div>
 
-  
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!errorMessage && data.length === 0 && allPlantas.length > 0 && (selectedLocal || selectedFamilia || searchTerm)" class="no-results-message">
+    <p>Nenhuma planta encontrada com os filtros selecionados.</p>
+  </div>
+
+   <div *ngIf="!allPlantas.length && !errorMessage" class="loading-message">
+    <p>Carregando dados das plantas...</p>
+  </div>
+
+
+  <ul *ngIf="data.length > 0" class="plant-list">
+    <li *ngFor="let item of data; trackBy: trackByPlantId" class="plant-item">
+      <h3>{{ item.nomePopular }}</h3>
+      <p><strong>Nome Científico:</strong> {{ item.nomeCientifico }}</p>
+      <p><strong>Família:</strong> {{ item.familia }}</p>
+      <p><strong>Local:</strong> {{ item.nomeLocal }}</p>
+      <p><strong>ID Indivíduo:</strong> {{ item.idIndividuo }}</p>
+      <p *ngIf="item.anoPlantio && item.anoPlantio !== '0'"><strong>Ano Plantio:</strong> {{ item.anoPlantio }}</p>
+      
+      <div class="media-container">
+        <img *ngIf="item.fotoIndividuo" [src]="item.fotoIndividuo" alt="Foto do Indivíduo {{ item.nomePopular }}" class="plant-image">
+        <img *ngIf="item.fotoTaxonomia && !item.fotoIndividuo" [src]="item.fotoTaxonomia" alt="Foto da Taxonomia {{ item.nomePopular }}" class="plant-image">
+        
+        <audio *ngIf="item.trilhaAudio" controls [src]="item.trilhaAudio" class="plant-audio">
+          Seu navegador não suporta o elemento de áudio.
+        </audio>
+      </div>
+    </li>
+  </ul>
+</div>

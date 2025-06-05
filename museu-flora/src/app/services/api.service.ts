@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { API_URL } from '../app.config';
 import { Planta } from '../models/planta.model';
 
 interface ApiPlanta {
@@ -18,35 +17,19 @@ interface ApiPlanta {
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
+  private apiUrl = 'https://mff.icmc.usp.br/Webservice/listarIndividuos';
   constructor(private http: HttpClient) {}
 
-  getPlantas(): Observable<Planta[]> {
-    return this.http.get<ApiPlanta[]>(API_URL).pipe(
-      map(list =>
-        list.map(p => ({
-          id: +p.idIndividuo,
-          nome: p.nomePopular ?? '—',
-          nomeCientifico: p.nomeCientifico ?? '—',
-          classeCientifica: p.familia ?? '—',
-          local: p.nomeLocal,
-          imagem: p.fotoIndividuo
-            ? this.construirUrl(p.fotoIndividuo)
-            : p.fotoTaxonomia
-            ? this.construirUrl(p.fotoTaxonomia)
-            : undefined,
-          audio: p.trilhaAudio
-            ? this.construirUrl(p.trilhaAudio)
-            : undefined
-        }))
-      )
-    );
-  }
+  getData(): Observable<any> {
+       return this.http.get(this.apiUrl);
+    }
+  
 
   private construirUrl(path: string): string {
     // se já vier com http, retorna direto
     if (/^https?:\/\//.test(path)) return path;
     // senão, concatena com base sem o endpoint
-    return API_URL.replace(/listarIndividuos\?$/, '') + path;
+  
+    return `${this.apiUrl}/${path}`;
   }
 }
-
