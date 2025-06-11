@@ -104,3 +104,17 @@
     margin-top: 1rem;
   }
   
+  .search-form-field {
+  width: 250px; /* Ajuste a largura conforme necessário */
+}
+/* Remove a borda e o padding extra do mat-form-field */
+.search-form-field .mdc-notched-outline {
+  border: none !important;
+}
+.search-form-field .mat-mdc-form-field-flex {
+  padding: 0 !important;
+  align-items: center;
+}
+.search-form-field .mat-mdc-form-field-infix {
+  padding: 8px 12px !important;
+}

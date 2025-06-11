@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { FiltroService } from './services/filtro.service';
 
 @Component({
   selector: 'app-root',
@@ -24,4 +25,15 @@ import { MatButtonModule } from '@angular/material/button';
 
 export class AppComponent {
   title = 'Museu da Fauna e Flora';
+
+  // Injeta o FiltroService
+  constructor(private filtroService: FiltroService) {}
+
+  /**
+   * Chamado sempre que o usuário digita no campo de busca.
+   * @param termo O valor atual do campo.
+   */
+  onBusca(termo: string): void {
+    this.filtroService.atualizarTermoBusca(termo);
+  }
 }

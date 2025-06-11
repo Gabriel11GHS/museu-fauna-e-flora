@@ -34,8 +34,27 @@
         Seu navegador não suporta o elemento de áudio.
       </audio>
 
-      <a [routerLink]="['/flora', item.idIndividuo]" class="details-button">Saiba Mais</a>
+      <a [routerLink]="['/flora', item.idIndividuo]"
+        class="details-button">Saiba Mais</a>
     </div>
 
   </div>
+</div>
+
+<div class="filtros-container">
+  <mat-form-field appearance="outline" class="search-form-field">
+    <mat-label>Buscar por nome...</mat-label>
+    <input
+      matInput
+      type="text"
+      placeholder="Ex: Ipê Amarelo"
+      (input)="onBusca($event)">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+</div>
+
+<div
+  *ngIf="!errorMessage && data.length === 0 && allPlantas.length > 0 && (selectedLocal || selectedFamilia || searchTerm)"
+  class="no-results-message">
 </div>
