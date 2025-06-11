@@ -1,7 +1,7 @@
 // src/app/services/api.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, find } from 'rxjs';
 
 export interface Planta {
   idIndividuo: string;
@@ -32,8 +32,16 @@ export class ApiService {
     return this.http.get<Planta[]>(this.apiUrl).pipe(
       map(plantas => plantas.map(planta => this.processarPlanta(planta)))
     );
-  }
+  };
 
+  getPlantaById(id: string): Observable<Planta | undefined> {
+    // Reutilizamos o método getPlantas() e usamos o operador 'find' do RxJS
+    // para retornar apenas o item que corresponde ao ID.
+    return this.getPlantas().pipe(
+      map(plantas => plantas.find(planta => planta.idIndividuo === id))
+    );
+  }
+  
   private processarPlanta(planta: Planta): Planta {
     // Função para limpar e construir a URL completa
     const construirUrl = (path: string | null): string | null => {

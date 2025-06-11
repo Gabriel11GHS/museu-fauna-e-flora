@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService, Planta } from '../../services/api.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-flora',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './flora.component.html',
   styleUrls: ['./flora.component.css']
 })
