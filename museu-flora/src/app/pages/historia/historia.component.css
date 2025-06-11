@@ -4,6 +4,7 @@
   margin: 0 auto;
   padding: 2rem;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  box-sizing: border-box; /* Garante que padding não afete a largura */
 }
 
 .pagina-header {
@@ -37,11 +38,11 @@
   content: '';
   position: absolute;
   width: 6px;
-  background-color: #3a8c3a; /* Verde do tema */
+  background-color: #3a8c3a;
   top: 0;
   bottom: 0;
   left: 50%;
-  margin-left: -3px;
+  margin-left: -3px; /* Centraliza a linha de 6px */
   border-radius: 3px;
 }
 
@@ -51,6 +52,7 @@
   position: relative;
   background-color: inherit;
   width: 50%;
+  box-sizing: border-box; /* Adicionado para consistência */
 }
 
 /* O círculo em cada evento na linha do tempo */
@@ -59,7 +61,6 @@
   position: absolute;
   width: 25px;
   height: 25px;
-  right: -17px;
   background-color: white;
   border: 4px solid #27632a;
   top: 15px;
@@ -67,16 +68,15 @@
   z-index: 1;
 }
 
-/* Posicionamento dos containers */
+/* --- Posicionamento Esquerda --- */
 .esquerda {
   left: 0;
 }
 
-.direita {
-  left: 50%;
+.esquerda::after {
+  right: -17px; /* Posiciona o círculo na linha */
 }
 
-/* "Setas" apontando para a linha do tempo */
 .esquerda::before {
   content: " ";
   height: 0;
@@ -88,6 +88,15 @@
   border: medium solid white;
   border-width: 10px 0 10px 10px;
   border-color: transparent transparent transparent white;
+}
+
+/* --- Posicionamento Direita (CORRIGIDO) --- */
+.direita {
+  left: 50%;
+}
+
+.direita::after {
+  left: -16px; /* CORREÇÃO: Posiciona o círculo na linha */
 }
 
 .direita::before {
@@ -103,10 +112,6 @@
   border-color: transparent white transparent transparent;
 }
 
-/* Corrige a posição do círculo para os containers da direita */
-.direita::after {
-  left: -16px;
-}
 
 /* --- Conteúdo dos Cards --- */
 .timeline-content {
@@ -146,19 +151,16 @@
 
 /* --- Responsividade para Telas Pequenas --- */
 @media screen and (max-width: 768px) {
-  /* A linha central vai para a esquerda */
   .timeline::after {
     left: 31px;
   }
   
-  /* Todos os containers ficam com 100% de largura */
   .timeline-container {
     width: 100%;
     padding-left: 70px;
     padding-right: 25px;
   }
   
-  /* As setas apontam para a esquerda */
   .timeline-container::before {
     left: 60px;
     border: medium solid white;
@@ -166,13 +168,12 @@
     border-color: transparent white transparent transparent;
   }
 
-  /* Círculos na linha do tempo */
   .esquerda::after, .direita::after {
-    left: 15px;
+    left: 15px; /* Alinha todos os círculos à esquerda */
   }
   
-  /* O container da direita não é mais deslocado */
   .direita {
-    left: 0%;
+    left: 0%; /* Alinha todos os containers à esquerda */
   }
 }
+
