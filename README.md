@@ -4,8 +4,6 @@ Este é o repositório do projeto de extensão para a criação do website do Mu
 
 O site oferece uma experiência virtual, permitindo que os visitantes explorem as árvores e plantas do local, acessem informações detalhadas, vejam fotos e ouçam áudios explicativos gravados por professores da USP no âmbito do projeto "Vozes da Natureza".
 
-![Captura de tela da página de listagem da flora](https://github.com/gabriel11ghs/museu-fauna-e-flora/assets/112695594/8040af04-7c22-446f-a6a9-8588820c7cc4)
-
 
 ## ✨ Funcionalidades Principais
 
