@@ -1,0 +1,19 @@
+<div class="pagina-container">
+  <header class="pagina-header">
+    <h1>A Trajetória do Museu</h1>
+    <p>Conheça os marcos que transformaram o campus do ICMC em um museu a céu aberto.</p>
+  </header>
+
+  <div class="timeline">
+    <!-- Usamos *ngFor para iterar sobre cada evento no array 'eventos' -->
+    <!-- A cada iteração, a diretiva ngClass alterna as classes para o alinhamento -->
+    <div *ngFor="let evento of eventos; let i = index" class="timeline-container" [ngClass]="{ 'direita': i % 2 !== 0, 'esquerda': i % 2 === 0 }">
+      <div class="timeline-content">
+        <h2>{{ evento.titulo }}</h2>
+        <small class="data">{{ evento.ano }}</small>
+        <p>{{ evento.descricao }}</p>
+        <img *ngIf="evento.imagem" [src]="evento.imagem" [alt]="evento.titulo" class="evento-imagem">
+      </div>
+    </div>
+  </div>
+</div>
