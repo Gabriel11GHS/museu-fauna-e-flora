@@ -2,29 +2,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-
-// Define a interface para os dados da planta
-interface Planta {
-  idIndividuo: string;
-  anoPlantio: string | null;
-  trilhaAudio: string | null;
-  fotoIndividuo: string | null;
-  idTaxonomia: string;
-  nomePopular: string | null;
-  nomeCientifico: string | null;
-  familia: string | null;
-  fotoTaxonomia: string | null;
-  idLocal: string;
-  nomeLocal: string;
-}
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ApiService, Planta } from '../../services/api.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-flora',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './flora.component.html',
   styleUrls: ['./flora.component.css']
 })
@@ -33,47 +19,34 @@ export class FloraComponent implements OnInit {
   searchTerm: string = '';
   selectedFamilia: string = '';
 
-  allPlantas: Planta[] = []; // Armazena todas as plantas carregadas
-  data: Planta[] = []; // Armazena as plantas filtradas para exibição
+  allPlantas: Planta[] = [];
+  data: Planta[] = [];
   errorMessage: string | null = null;
 
-  locais: string[] = []; // Para popular o dropdown de locais
-  familias: string[] = []; // Para popular o dropdown de famílias
-
-  // Dados simulados da API (conteúdo de APIFlora.txt)
-  // Em uma aplicação real, você faria uma requisição HTTP para obter esses dados.
-  private apiFloraData: Planta[] = [{"idIndividuo":"1","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"17","nomePopular":"Sibipiruna","nomeCientifico":"Caesalpinia pluviosa DC.","familia":"Fabaceae","fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"2","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"17","nomePopular":"Sibipiruna","nomeCientifico":"Caesalpinia pluviosa DC.","familia":"Fabaceae","fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"3","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"17","nomePopular":"Sibipiruna","nomeCientifico":"Caesalpinia pluviosa DC.","familia":"Fabaceae","fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"4","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"17","nomePopular":"Sibipiruna","nomeCientifico":"Caesalpinia pluviosa DC.","familia":"Fabaceae","fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"5","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"17","nomePopular":"Sibipiruna","nomeCientifico":"Caesalpinia pluviosa DC.","familia":"Fabaceae","fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"6","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"17","nomePopular":"Sibipiruna","nomeCientifico":"Caesalpinia pluviosa DC.","familia":"Fabaceae","fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"7","anoPlantio":"0","trilhaAudio":".\/upload\/013-Eucalipto.mp3","fotoIndividuo":null,"idTaxonomia":"2","nomePopular":"Eucalipto","nomeCientifico":"Eucalyptus globulus Labill.","familia":"Myrtaceae","fotoTaxonomia":".\/upload\/7Foto.jpg","idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"8","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"1","nomePopular":null,"nomeCientifico":null,"familia":null,"fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},{"idIndividuo":"9","anoPlantio":null,"trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"3","nomePopular":"Ip\u00ea Roxo","nomeCientifico":"Handroanthus impetiginosus (Mart. Ex DC.) Mattos","familia":"Bignoniaceae","fotoTaxonomia":null,"idLocal":"1","nomeLocal":"Local 1"},
-    // ... (O restante do conteúdo JSON de APIFlora.txt seria colado aqui)
-    // Por questões de brevidade, o conteúdo completo não está replicado aqui, mas deve ser incluído.
-    // Exemplo de como o final do array seria:
-    {"idIndividuo":"453","anoPlantio":"0","trilhaAudio":null,"fotoIndividuo":null,"idTaxonomia":"78","nomePopular":"Chap\u00e9u-de-napole\u00e3o","nomeCientifico":"Thevetia peruviana","familia":"\tApocynaceae","fotoTaxonomia":null,"idLocal":"5","nomeLocal":"Local 5"}];
-
-  constructor(private http: HttpClient) { }
+  locais: string[] = [];
+  familias: string[] = [];
+  
+  // Injetamos o ApiService no construtor
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.carregarPlantas();
   }
 
   carregarPlantas(): void {
-    // Simula o carregamento de dados. Substitua por this.http.get<Planta[]>('URL_DA_SUA_API/APIFLora.txt') em um cenário real.
-    of(this.apiFloraData)
+    // Chama o serviço para obter os dados das plantas
+    this.apiService.getPlantas()
       .pipe(
-        map(plantas => plantas.map(planta => ({ // Trata valores nulos ou '*'
-          ...planta,
-          nomePopular: (planta.nomePopular === '*' || planta.nomePopular === null) ? 'Não identificado' : planta.nomePopular,
-          nomeCientifico: (planta.nomeCientifico === '*' || planta.nomeCientifico === null) ? 'Não identificado' : planta.nomeCientifico,
-          familia: (planta.familia === '*' || planta.familia === null) ? 'Não identificada' : planta.familia?.trim(), // .trim() para remover espaços extras como em "\tApocynaceae"
-        }))),
         catchError(error => {
           console.error('Erro ao carregar dados das plantas:', error);
           this.errorMessage = 'Não foi possível carregar os dados das plantas. Tente novamente mais tarde.';
-          return of([]); // Retorna um array vazio em caso de erro
+          return of([]);
         })
       )
       .subscribe(plantas => {
         this.allPlantas = plantas;
         this.extractFilterOptions();
-        this.filtrarPlantas(); // Aplica filtros iniciais (ou exibe todos)
+        this.filtrarPlantas(); 
       });
   }
 
@@ -85,7 +58,6 @@ export class FloraComponent implements OnInit {
       if (planta.nomeLocal) {
         locaisSet.add(planta.nomeLocal);
       }
-      // Adiciona à lista de famílias apenas se não for "Não identificada" e existir
       if (planta.familia && planta.familia !== 'Não identificada') {
         familiasSet.add(planta.familia);
       }
@@ -116,10 +88,22 @@ export class FloraComponent implements OnInit {
 
     this.data = filteredData;
 
+    // Lógica para mensagem de "nenhum resultado"
     if (this.data.length === 0 && (this.selectedLocal || this.selectedFamilia || this.searchTerm)) {
-      this.errorMessage = 'Nenhuma planta encontrada com os filtros selecionados.';
-    } else {
-      this.errorMessage = null;
+      this.errorMessage = null; // Limpa erro de carregamento para não confundir
+    } else if (this.errorMessage && this.data.length > 0) {
+      this.errorMessage = null; // Limpa erro de carregamento se os dados chegarem
     }
+  }
+
+  // Função para otimizar o *ngFor
+  trackByPlantId(index: number, planta: Planta): string {
+    return planta.idIndividuo;
+  }
+
+  // Método para atualizar a imagem quando ocorrer um erro de carregamento
+  public updateImageOnError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = 'assets/placeholder-image.png';
   }
 }
