@@ -1,14 +1,80 @@
-/* --- Estilo Principal da Lista --- */
+/* --- Seção de Filtros --- */
+.filtros-container-wrapper {
+  background-color: #f7f7f7; /* Cor de fundo suave */
+  padding: 24px 32px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 24px;
+}
+
+.filtros-titulo {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #27632a; /* Verde escuro do tema */
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.filtros-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Espaço entre os filtros */
+}
+
+.filtro-item {
+  min-width: 250px; /* Largura mínima para cada filtro */
+  flex-grow: 1; /* Permite que os filtros cresçam para preencher o espaço */
+  max-width: 350px; /* Largura máxima para não ficarem muito grandes */
+}
+
+/* Ajuste fino para os componentes do Angular Material */
+::ng-deep .filtro-item .mat-mdc-form-field-flex {
+  background-color: white;
+  border-radius: 8px !important; /* Adiciona cantos arredondados */
+}
+
+::ng-deep .filtro-item .mdc-notched-outline > * {
+  border-color: #d0d0d0 !important;
+}
+
+::ng-deep .filtro-item:hover .mdc-notched-outline > * {
+  border-color: #3a8c3a !important; /* Borda verde ao passar o mouse */
+}
+
+/* --- Container do Conteúdo Principal --- */
+.content-wrapper {
+  padding: 0 24px;
+}
+
+/* --- Mensagens de Feedback (Carregando, Erro, Sem Resultados) --- */
+.loading-message,
+.no-results-message,
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 24px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error-message {
+  color: #b71c1c; /* Tom de vermelho para o erro */
+}
+
+/* --- Estilo da Lista de Plantas (sem alterações) --- */
 .plant-list {
   display: grid;
-  /* Cria um grid responsivo: tenta encaixar colunas de 280px, 
-     mas elas podem esticar para preencher o espaço (1fr) */
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px; /* Espaçamento entre os cards */
-  padding: 24px;
+  gap: 24px;
   max-width: 1400px;
   margin: auto;
 }
+
+/* ... (O restante dos estilos dos cards, .plant-card, etc., continua aqui) ... */
 
 /* --- Card Individual --- */
 .plant-card {
@@ -79,10 +145,12 @@
 }
 
 .details-button {
-  width: 100%;
+  display: block; /* Garante que o link ocupe a largura total */
+  text-align: center;
   padding: 10px;
   background-color: #3a8c3a; /* Verde do seu header */
   color: white;
+  text-decoration: none;
   border: none;
   border-radius: 8px;
   font-weight: bold;
@@ -92,14 +160,4 @@
 
 .details-button:hover {
   background-color: #2f7b2f; /* Tom mais escuro ao passar o mouse */
-}
-
-/* --- Mensagens de feedback --- */
-.loading-message,
-.no-results-message,
-.error-message {
-  text-align: center;
-  padding: 40px;
-  font-size: 1.2rem;
-  color: #666;
 }

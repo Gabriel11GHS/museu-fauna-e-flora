@@ -1,60 +1,93 @@
-<div
-  *ngIf="!errorMessage && data.length === 0 && allPlantas.length > 0 && (selectedLocal || selectedFamilia || searchTerm)"
-  class="no-results-message">
-  <p>Nenhuma planta encontrada com os filtros selecionados.</p>
-</div>
+<!-- Container principal para a seção de filtros -->
+<div class="filtros-container-wrapper">
+  <h2 class="filtros-titulo">Explore a Flora</h2>
+  <div class="filtros-container">
+    
+    <!-- Campo de Busca por Nome -->
+    <mat-form-field appearance="outline" class="filtro-item">
+      <mat-label>Buscar por nome...</mat-label>
+      <input 
+        matInput 
+        type="text"
+        placeholder="Ex: Ipê Amarelo"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="filtrarPlantas()">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
 
-<div *ngIf="!allPlantas.length && !errorMessage" class="loading-message">
-  <p>Carregando dados das plantas...</p>
-</div>
-
-<div *ngIf="data.length > 0" class="plant-list">
-  <div *ngFor="let item of data; trackBy: trackByPlantId" class="plant-card">
-
-    <div class="card-image-container">
-      <img
-        [src]="item.fotoIndividuo || item.fotoTaxonomia || 'assets/placeholder-image.png'"
-        alt="Foto de {{ item.nomePopular }}"
-        class="card-image"
-        (error)="updateImageOnError($event)">
-    </div>
-
-    <div class="card-content">
-      <h3 class="plant-name">{{ item.nomePopular }}</h3>
-      <p class="scientific-name">
-        <em>{{ item.nomeCientifico }}</em>
-      </p>
-      <p class="plant-family"><strong>Família:</strong> {{ item.familia }}</p>
-      <p class="plant-local"><strong>Local:</strong> {{ item.nomeLocal }}</p>
-    </div>
-
-    <div class="card-actions">
-      <audio *ngIf="item.trilhaAudio" controls [src]="item.trilhaAudio"
-        class="plant-audio">
-        Seu navegador não suporta o elemento de áudio.
-      </audio>
-
-      <a [routerLink]="['/flora', item.idIndividuo]"
-        class="details-button">Saiba Mais</a>
-    </div>
+    <!-- Filtro por Família -->
+    <mat-form-field appearance="outline" class="filtro-item">
+      <mat-label>Filtrar por Família</mat-label>
+      <mat-select [(ngModel)]="selectedFamilia" (selectionChange)="filtrarPlantas()">
+        <mat-option value="">Todas as Famílias</mat-option>
+        <mat-option *ngFor="let familia of familias" [value]="familia">
+          {{ familia }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <!-- Filtro por Local -->
+    <mat-form-field appearance="outline" class="filtro-item">
+      <mat-label>Filtrar por Local</mat-label>
+      <mat-select [(ngModel)]="selectedLocal" (selectionChange)="filtrarPlantas()">
+        <mat-option value="">Todos os Locais</mat-option>
+        <mat-option *ngFor="let local of locais" [value]="local">
+          {{ local }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
   </div>
 </div>
 
-<div class="filtros-container">
-  <mat-form-field appearance="outline" class="search-form-field">
-    <mat-label>Buscar por nome...</mat-label>
-    <input
-      matInput
-      type="text"
-      placeholder="Ex: Ipê Amarelo"
-      (input)="onBusca($event)">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+<!-- Container principal que gerencia o que é exibido: carregamento ou conteúdo -->
+<div class="content-wrapper">
 
-</div>
+  <!-- Estado de Carregamento: exibe enquanto isLoading for true -->
+  <div *ngIf="isLoading" class="loading-message">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p style="margin-top: 20px;">Carregando dados das plantas...</p>
+  </div>
 
-<div
-  *ngIf="!errorMessage && data.length === 0 && allPlantas.length > 0 && (selectedLocal || selectedFamilia || searchTerm)"
-  class="no-results-message">
+  <!-- Conteúdo Principal: exibe quando o carregamento terminar (isLoading é false) -->
+  <div *ngIf="!isLoading">
+    
+    <!-- Sub-estado de Erro -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Sub-estado de "Sem Resultados" -->
+    <div *ngIf="!errorMessage && data.length === 0" class="no-results-message">
+      <p>Nenhuma planta encontrada com os filtros selecionados.</p>
+    </div>
+
+    <!-- Sub-estado com Resultados: a lista de plantas -->
+    <div *ngIf="data.length > 0" class="plant-list">
+      <div *ngFor="let item of data; trackBy: trackByPlantId" class="plant-card">
+        <div class="card-image-container">
+          <img
+            [src]="item.fotoIndividuo || item.fotoTaxonomia || 'assets/placeholder-image.png'"
+            alt="Foto de {{ item.nomePopular }}"
+            class="card-image"
+            (error)="updateImageOnError($event)">
+        </div>
+        <div class="card-content">
+          <h3 class="plant-name">{{ item.nomePopular }}</h3>
+          <p class="scientific-name">
+            <em>{{ item.nomeCientifico }}</em>
+          </p>
+          <p class="plant-family"><strong>Família:</strong> {{ item.familia }}</p>
+          <p class="plant-local"><strong>Local:</strong> {{ item.nomeLocal }}</p>
+        </div>
+        <div class="card-actions">
+          <audio *ngIf="item.trilhaAudio" controls [src]="item.trilhaAudio" class="plant-audio">
+            Seu navegador não suporta o elemento de áudio.
+          </audio>
+          <a [routerLink]="['/flora', item.idIndividuo]" class="details-button">Saiba Mais</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
