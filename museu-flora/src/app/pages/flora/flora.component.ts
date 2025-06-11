@@ -1,52 +1,72 @@
-// src/app/pages/flora/flora.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService, Planta } from '../../services/api.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router'; // 1. Importar RouterLink
+
+// Módulos do Angular Material
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-flora',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    RouterLink, // 2. Adicionar RouterLink aqui para que o template o reconheça
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatSelectModule,
+    MatProgressSpinnerModule
+  ],
   templateUrl: './flora.component.html',
   styleUrls: ['./flora.component.css']
 })
 export class FloraComponent implements OnInit {
-  selectedLocal: string = '';
-  searchTerm: string = '';
-  selectedFamilia: string = '';
+  public isLoading: boolean = true;
+  public selectedLocal: string = '';
+  public searchTerm: string = '';
+  public selectedFamilia: string = '';
 
-  allPlantas: Planta[] = [];
-  data: Planta[] = [];
-  errorMessage: string | null = null;
+  public allPlantas: Planta[] = [];
+  public data: Planta[] = [];
+  public errorMessage: string | null = null;
 
-  locais: string[] = [];
-  familias: string[] = [];
+  public locais: string[] = [];
+  public familias: string[] = [];
   
-  // Injetamos o ApiService no construtor
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.carregarPlantas();
   }
-
+  
   carregarPlantas(): void {
-    // Chama o serviço para obter os dados das plantas
+    this.isLoading = true;
+    this.errorMessage = null;
+
     this.apiService.getPlantas()
       .pipe(
         catchError(error => {
           console.error('Erro ao carregar dados das plantas:', error);
-          this.errorMessage = 'Não foi possível carregar os dados das plantas. Tente novamente mais tarde.';
+          this.errorMessage = 'Não foi possível carregar os dados. Verifique sua conexão ou tente mais tarde.';
+          this.isLoading = false;
           return of([]);
         })
       )
       .subscribe(plantas => {
         this.allPlantas = plantas;
+        this.data = plantas;
         this.extractFilterOptions();
-        this.filtrarPlantas(); 
+        this.isLoading = false;
+        this.filtrarPlantas();
       });
   }
 
@@ -55,28 +75,16 @@ export class FloraComponent implements OnInit {
     const familiasSet = new Set<string>();
 
     this.allPlantas.forEach(planta => {
-      if (planta.nomeLocal) {
-        locaisSet.add(planta.nomeLocal);
-      }
-      if (planta.familia && planta.familia !== 'Não identificada') {
-        familiasSet.add(planta.familia);
-      }
+      if (planta.nomeLocal) locaisSet.add(planta.nomeLocal);
+      if (planta.familia && planta.familia !== 'Não identificada') familiasSet.add(planta.familia);
     });
 
     this.locais = Array.from(locaisSet).sort();
     this.familias = Array.from(familiasSet).sort();
   }
 
-  filtrarPlantas(): void {
+  public filtrarPlantas(): void {
     let filteredData = [...this.allPlantas];
-
-    if (this.selectedLocal) {
-      filteredData = filteredData.filter(planta => planta.nomeLocal === this.selectedLocal);
-    }
-
-    if (this.selectedFamilia) {
-      filteredData = filteredData.filter(planta => planta.familia === this.selectedFamilia);
-    }
 
     if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase();
@@ -86,22 +94,21 @@ export class FloraComponent implements OnInit {
       );
     }
 
-    this.data = filteredData;
-
-    // Lógica para mensagem de "nenhum resultado"
-    if (this.data.length === 0 && (this.selectedLocal || this.selectedFamilia || this.searchTerm)) {
-      this.errorMessage = null; // Limpa erro de carregamento para não confundir
-    } else if (this.errorMessage && this.data.length > 0) {
-      this.errorMessage = null; // Limpa erro de carregamento se os dados chegarem
+    if (this.selectedFamilia) {
+      filteredData = filteredData.filter(planta => planta.familia === this.selectedFamilia);
     }
+
+    if (this.selectedLocal) {
+      filteredData = filteredData.filter(planta => planta.nomeLocal === this.selectedLocal);
+    }
+
+    this.data = filteredData;
   }
 
-  // Função para otimizar o *ngFor
   trackByPlantId(index: number, planta: Planta): string {
     return planta.idIndividuo;
   }
 
-  // Método para atualizar a imagem quando ocorrer um erro de carregamento
   public updateImageOnError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = 'assets/placeholder-image.png';
