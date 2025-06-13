@@ -1,20 +1,29 @@
 /* Barra principal */
 .homebar {
-    display: flex;
-    align-items: center;
-    background-color: #27632a; /* Ajuste para o tom de verde desejado */
-    padding: 0.5rem 1rem;
-    border-top-right-radius: 40px;
-    border-bottom-right-radius: 40px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
+  display: flex;
+  align-items: center;
+  background-color: #27632a;
+  padding: 0.5rem 1.5rem; /* Aumentei um pouco o padding lateral */
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
   
-  /* Área de logo(s) à esquerda */
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+/* Área do logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+/* Estilo para o novo logo */
+.museu-logo {
+  height: 60px; /* Ajuste esta altura conforme necessário */
+  width: auto;  /* Mantém a proporção da imagem */
+  cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
+  transition: transform 0.2s ease-in-out;
+}
+.museu-logo:hover {
+  transform: scale(1.05); /* Leve efeito de zoom ao passar o mouse */
+}
   
   /* Ajuste a altura conforme o tamanho desejado */
   .museu-logo {
@@ -25,12 +34,11 @@
     height: 40px;
   }
   
-  /* Navegação (links do menu) */
   .nav-links {
-    display: flex;
-    gap: 1rem;
-    margin-left: 2rem; /* Dá espaço entre o logo e os links */
-  }
+  display: flex;
+  gap: 1rem;
+  margin-left: 2.5rem; /* Aumentei o espaço entre o logo e os links */
+}
   
   .nav-links a {
     background-color: #3a8c3a; /* Um tom de verde ligeiramente diferente */

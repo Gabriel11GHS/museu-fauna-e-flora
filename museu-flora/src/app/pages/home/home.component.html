@@ -1,29 +1,56 @@
-<!-- Seção superior com imagem de fundo e overlay verde -->
-<div class="hero-section" [@fadeIn]>
-  <div class="hero-overlay">
-    <h1>Conheça o Museu</h1>
-    <button class="cta-button">Saiba mais</button>
-    <!-- Carrossel de multimídia -->
-    <ngx-slick-carousel class="media-box" [config]="slideConfig">
-      <div ngxSlickItem *ngFor="let item of mediaItems" class="slide">
-        <img [src]="item.image" alt="Mídia" />
-      </div>
-    </ngx-slick-carousel>
+<!-- Seção Hero: A primeira impressão -->
+<section class="hero-section" [@fadeIn]>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-titulo">Museu de Fauna e Flora</h1>
+    <p class="hero-subtitulo">Um acervo digital a céu aberto no coração do ICMC/USP</p>
+    <a mat-flat-button color="primary" class="hero-cta" routerLink="/historia">
+      Conheça nossa história
+    </a>
   </div>
-</div>
+</section>
 
-<div class="vozes-da-natureza-section">
-  <h2>Vozes da Natureza</h2>
-  <p>
-    O projeto "Vozes da Natureza" convida professores da USP para dublar textos que acompanham os áudios de apresentação das árvores.
-    Essa iniciativa visa aproximar a comunidade acadêmica do conhecimento sobre a biodiversidade e incentivar a preservação ambiental.
-    Através de narrativas cativantes, os professores dão voz às árvores, transformando dados em histórias inspiradoras para enriquecer a experiência dos visitantes.
-  </p>
-</div>
+<!-- Seção de Destaques: Cards de navegação -->
+<section class="destaques-section">
+  <div class="destaques-container">
+    <div *ngFor="let destaque of destaques" class="destaque-card">
+      <mat-icon class="destaque-icone">{{ destaque.icone }}</mat-icon>
+      <h3 class="destaque-titulo">{{ destaque.titulo }}</h3>
+      <p class="destaque-descricao">{{ destaque.descricao }}</p>
+      <a mat-stroked-button color="primary" [routerLink]="destaque.link" class="destaque-link">
+        Ver mais
+      </a>
+    </div>
+  </div>
+</section>
 
-<div class="locais-section">
+<!-- Seção Vozes da Natureza & Carrossel -->
+<section class="vozes-carousel-section">
+  <div class="vozes-carousel-container">
+    <div class="texto-vozes">
+      <h2>Vozes da Natureza</h2>
+      <p>
+        O projeto "Vozes da Natureza" convida professores da USP para dar voz às árvores, transformando dados científicos em histórias cativantes. Ouça os áudios e enriqueça sua experiência.
+      </p>
+      <a mat-raised-button color="accent" routerLink="/flora">
+        <mat-icon>graphic_eq</mat-icon>
+        Ouvir agora
+      </a>
+    </div>
+    <div class="carousel-vozes">
+      <ngx-slick-carousel class="media-box" [config]="slideConfig">
+        <div ngxSlickItem *ngFor="let item of mediaItems" class="slide">
+          <img [src]="item.image" [alt]="item.alt" />
+        </div>
+      </ngx-slick-carousel>
+    </div>
+  </div>
+</section>
+
+<!-- Seção do Mapa -->
+<section class="locais-section">
   <h2>Conheça os locais do Instituto</h2>
-  <div class="mapa">
-    <img src="/assets/mapa-instituto.png" alt="Mapa do Instituto" />
+  <div class="mapa-container">
+    <img src="assets/mapa-instituto.png" alt="Mapa do Instituto" class="mapa-imagem" />
   </div>
-</div>
+</section>
