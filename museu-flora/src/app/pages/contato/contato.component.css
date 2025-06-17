@@ -13,7 +13,7 @@
 .pagina-header h1 {
   font-size: 2.8rem;
   font-weight: 700;
-  color: #27632a; /* Verde do tema */
+  color: #27632a; 
 }
 
 .pagina-header p {
@@ -26,13 +26,13 @@
 /* --- Layout Principal --- */
 .conteudo-contato {
   display: flex;
-  flex-wrap: wrap; /* Permite que as colunas quebrem em telas menores */
+  flex-wrap: wrap; 
   gap: 40px;
 }
 
 .info-coluna, .mapa-coluna {
-  flex: 1; /* Faz com que ambas as colunas tentem ocupar o mesmo espaço */
-  min-width: 320px; /* Largura mínima antes de quebrar a linha */
+  flex: 1; 
+  min-width: 320px; 
 }
 
 /* --- Card de Informações --- */
@@ -90,9 +90,9 @@
 /* --- Mapa --- */
 .mapa-wrapper {
   width: 100%;
-  height: 500px; /* Altura do mapa */
+  height: 500px; 
   border-radius: 12px;
-  overflow: hidden; /* Garante que o iframe respeite o border-radius */
+  overflow: hidden; 
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #ddd;
 }
@@ -100,6 +100,6 @@
 /* --- Responsividade --- */
 @media (max-width: 992px) {
   .info-card {
-    height: auto; /* Permite que a altura se ajuste em telas menores */
+    height: auto; 
   }
 }
