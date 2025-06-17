@@ -5,8 +5,6 @@
   </header>
 
   <div class="timeline">
-    <!-- Usamos *ngFor para iterar sobre cada evento no array 'eventos' -->
-    <!-- A cada iteração, a diretiva ngClass alterna as classes para o alinhamento -->
     <div *ngFor="let evento of eventos; let i = index" class="timeline-container" [ngClass]="{ 'direita': i % 2 !== 0, 'esquerda': i % 2 === 0 }">
       <div class="timeline-content">
         <h2>{{ evento.titulo }}</h2>
