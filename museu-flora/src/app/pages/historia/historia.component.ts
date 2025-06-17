@@ -6,7 +6,7 @@ interface EventoHistoria {
   ano: string;
   titulo: string;
   descricao: string;
-  imagem?: string; // Propriedade opcional para imagem
+  imagem?: string; 
 }
 
 @Component({
@@ -24,7 +24,7 @@ export class HistoriaComponent {
       ano: '1971',
       titulo: 'Fundação do ICMC',
       descricao: 'O Instituto de Ciências Matemáticas e de Computação é fundado, estabelecendo as bases para futuras iniciativas de pesquisa e extensão no campus da USP em São Carlos.',
-      imagem: 'assets/historia/icmc-antigo.jpg' // Exemplo de caminho
+      imagem: 'assets/historia/icmc.jpg' // Exemplo de caminho
     },
     {
       ano: '',
@@ -34,9 +34,9 @@ export class HistoriaComponent {
     },
     {
       ano: '201',
-      titulo: 'Início do museu',
+      titulo: 'Início do museu da fauna e flora',
       descricao: '',
-      imagem: 'assets/historia/catalogacao.jpg'
+      imagem: 'assets/mff-antigo.png'
     },
     {
       ano: '202',
