@@ -33,9 +33,9 @@ export class HistoriaComponent {
       imagem: 'assets/historia/plantio.jpg' 
     },
     {
-      ano: '201',
+      ano: '2013',
       titulo: 'Início do museu da fauna e flora',
-      descricao: '',
+      descricao: 'O Museu da Fauna e Flora do ICMC foi criado em 2013, a partir do interesse em registrar e difundir as espécies existentes no campus da USP em São Carlos, em particular, na região do ICMC. Essa região contém uma grande parte da área arborizada da área 1 do campus, compondo um ambiente com espécies arbóreas de grande, médio e pequeno portes e um conjunto de pequenos animais e pássaros não catalogados.',
       imagem: 'assets/mff-antigo.png'
     },
     {
@@ -45,7 +45,7 @@ export class HistoriaComponent {
       imagem: 'assets/historia/vozes-natureza.jpg'
     },
     {
-      ano: '202',
+      ano: '2025',
       titulo: 'Lançamento do Website',
       descricao: 'O website do Museu de Fauna e Flora é lançado, disponibilizando o catálogo completo, os áudios do projeto e informações interativas para o público geral, unindo natureza, ciência e tecnologia.',
       imagem: 'assets/historia/website-launch.jpg'

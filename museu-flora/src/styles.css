@@ -1,4 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fafafa;
+}
+
+/*
+  SOBRESCRITA DO TEMA DO ANGULAR MATERIAL
+  Aqui nós forçamos a nossa cor primária na toolbar.
+*/
+.mat-toolbar.mat-primary {
+  background: #27632a;
+  color: #ffffff;
+}
+

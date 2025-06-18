@@ -2,11 +2,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { FiltroService } from './services/filtro.service';
+import { HeaderComponent } from './shared/components/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +10,7 @@ import { FiltroService } from './services/filtro.service';
   imports: [
     CommonModule,
     RouterModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule
+    HeaderComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
@@ -25,15 +18,4 @@ import { FiltroService } from './services/filtro.service';
 
 export class AppComponent {
   title = 'Museu da Fauna e Flora';
-
-  // Injeta o FiltroService
-  constructor(private filtroService: FiltroService) {}
-
-  /**
-   * Chamado sempre que o usuário digita no campo de busca.
-   * @param termo O valor atual do campo.
-   */
-  onBusca(termo: string): void {
-    this.filtroService.atualizarTermoBusca(termo);
-  }
 }
