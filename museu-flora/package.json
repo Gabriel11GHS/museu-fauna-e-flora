@@ -1,13 +1,14 @@
 {
   "name": "museu-flora",
   "version": "0.0.0",
-  "scripts": {
+ "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+    "test": "ng test",
+    "deploy": "ng build --configuration production --base-href \"/museu-fauna-e-flora/\" && touch dist/.nojekyll && npx angular-cli-ghpages --dir=dist --repo=https://github.com/gabriel11ghs/museu-fauna-e-flora.git"
+  }, 
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.1.0",
