@@ -1,12 +1,42 @@
 [
-{
+  {
     "id": 1,
-    "nomePopular": "",
-    "nomeCientifico": "",
-    "grupo": "",
-    "habitat": "",
-    "dieta": "",
-    "curiosidade": "",
-    "imagem": ""
+    "nomePopular": "Abelha Jataí",
+    "nomeCientifico": "Tetragonisca angustula",
+    "grupo": "Insetos",
+    "habitat": "Constroem seus ninhos em ocos de árvores, muros e fendas, sendo muito adaptadas a ambientes urbanos como o campus.",
+    "dieta": "Néctar e pólen de diversas flores, atuando como importantes polinizadores para a flora local.",
+    "curiosidade": "É uma abelha social e sem ferrão. Seu mel é muito valorizado por suas propriedades medicinais e sabor suave. A entrada do ninho, como a da foto, é um tubo de cera característico que ajuda na defesa contra predadores.",
+    "imagem": "assets/fauna/abelha-jatai.jpg"
+  },
+  {
+    "id": 2,
+    "nomePopular": "Macaco-prego",
+    "nomeCientifico": "Sapajus apella",
+    "grupo": "Mamíferos",
+    "habitat": "Florestas e áreas arborizadas, como as matas do campus. São muito adaptáveis e vivem no alto das árvores.",
+    "dieta": "Onívoros. Sua dieta é variada, incluindo frutas, sementes, insetos, ovos de aves e pequenos vertebrados.",
+    "curiosidade": "É um dos primatas mais inteligentes das Américas, conhecido por sua habilidade de usar ferramentas, como pedras para quebrar cocos e sementes duras. Vivem em bandos e possuem uma estrutura social complexa.",
+    "imagem": "assets/fauna/macaco-prego.jpg"
+  },
+  {
+    "id": 3,
+    "nomePopular": "Arara-canindé",
+    "nomeCientifico": "Ara ararauna",
+    "grupo": "Aves",
+    "habitat": "Habita florestas tropicais, áreas de palmeiras e matas de galeria. No campus, é mais comum vê-las sobrevoando as áreas mais altas e arborizadas.",
+    "dieta": "Sua alimentação é baseada em sementes, castanhas e frutos. Possuem um bico extremamente forte para quebrar cascas duras.",
+    "curiosidade": "As araras-canindé são monogâmicas, formando pares que permanecem juntos por toda a vida. São aves muito sociais e inteligentes, capazes de imitar sons.",
+    "imagem": "assets/fauna/arara-caninde.jpg"
+  },
+  {
+    "id": 4,
+    "nomePopular": "Teiú",
+    "nomeCientifico": "Salvator merianae",
+    "grupo": "Répteis",
+    "habitat": "Áreas abertas, cerrados e bordas de mata. É frequentemente visto nos gramados do campus, procurando por sol e alimento.",
+    "dieta": "Onívoro. Alimenta-se de frutas, insetos, pequenos vertebrados, carniça e ovos.",
+    "curiosidade": "Apesar do tamanho que pode assustar, é um animal geralmente tímido. É um importante 'faxineiro' do ecossistema, comendo restos de animais e controlando populações de insetos e pequenos roedores.",
+    "imagem": "assets/fauna/teiu.jpg"
   }
 ]
