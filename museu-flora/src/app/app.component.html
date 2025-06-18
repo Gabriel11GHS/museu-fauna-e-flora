@@ -1,23 +1,4 @@
-<header class="homebar">
-  <div class="logo-container">
-    <!-- CORREÇÃO: Usando um caminho absoluto (iniciando com /) para o asset -->
-    <a routerLink="/home">
-      <img src="/assets/mff-antigo.png" alt="Logo do Museu de Fauna e Flora"
-        class="museu-logo" />
-    </a>
-  </div>
-
-  <nav class="nav-links">
-    <a routerLink="/fauna">FAUNA</a>
-    <a routerLink="/flora">FLORA</a>
-    <a routerLink="/intervencao">INTERVENÇÃO</a>
-    <a routerLink="/historia">HISTÓRIA</a>
-  </nav>
-
-  <div class="nav-right">
-    <button class="contato-btn" routerLink="/contato">Contato</button>
-  </div>
-</header>
+<app-header></app-header>
 
 <!-- Conteúdo principal das rotas -->
 <router-outlet></router-outlet>

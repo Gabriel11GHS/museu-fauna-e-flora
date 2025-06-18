@@ -1,14 +1,40 @@
 /* --- Seção Hero --- */
 .hero-section {
-  position: relative;
-  height: 60vh; /* Ocupa 60% da altura da tela */
-  min-height: 400px;
-  display: flex;
+  position: relative; /* Contexto de posicionamento */
+  height: 70vh;
+  min-height: 450px;
+  color: white;
+  display: flex; /* Usamos flex para centralizar o conteúdo */
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: white;
-  background: url('/assets/home/fundo-hero.jpg') no-repeat center center/cover;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Fica atrás do conteúdo */
+  overflow: hidden; /* Garante que o carrossel não vaze */
+}
+
+.hero-carousel {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-carousel .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cobre todo o espaço */
+}
+
+/* Esconde as setas e pontos padrão do Slick Carousel */
+.hero-carousel ::ng-deep .slick-arrow,
+.hero-carousel ::ng-deep .slick-dots {
+  display: none !important;
 }
 
 .hero-overlay {
@@ -17,19 +43,19 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Gradiente sutil para escurecer a imagem e garantir a legibilidade do texto */
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.30));
 }
 
 .hero-content {
-  position: relative; /* Para ficar acima do overlay */
-  z-index: 1;
-  max-width: 800px;
+  position: relative; /* Garante que fique acima do fundo */
+  z-index: 2; /* Fica na frente do .hero-background */
   padding: 1rem;
+  max-width: 800px;
 }
 
+/* Estilos do conteúdo do Hero (títulos, botão, etc.) - Sem alterações */
 .hero-titulo {
-  font-size: clamp(2.5rem, 5vw, 4rem); /* Tamanho de fonte responsivo */
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   margin: 0;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
