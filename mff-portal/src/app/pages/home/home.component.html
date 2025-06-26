@@ -1,6 +1,6 @@
 <section class="hero-section" [@fadeIn]>
   <div class="hero-background">
-    <ngx-slick-carousel class="hero-carousel" [config]="slideConfig">
+    <ngx-slick-carousel *ngIf="showCarousel" class="hero-carousel" [config]="slideConfig">
       <div ngxSlickItem *ngFor="let item of mediaItems" class="slide">
         <img [src]="item.image" [alt]="item.alt" />
       </div>

@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { forkJoin, Observable, of } from 'rxjs'; 
+import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiService, Planta } from '../../services/api.service';
 import { FaunaService } from '../../services/fauna.service';
-import { Animal } from '../../models/animal.model';
+
 
 export interface Destaque {
   nome: string;
@@ -33,9 +33,10 @@ export interface Destaque {
   styleUrls: ['./home.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent implements OnInit {
-  
+export class HomeComponent implements OnInit, AfterViewInit {
+
   public destaques$!: Observable<Destaque[]>;
+  public showCarousel: boolean = false;
 
   // Configurações do Carrossel da seção Hero
   mediaItems = [
@@ -47,18 +48,15 @@ export class HomeComponent implements OnInit {
   slideConfig = {
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    dots: true,
-    arrows: false, // Setas desabilitadas para um visual mais limpo
+    autoplay: false,
     infinite: true,
     fade: true,
-    cssEase: 'linear'
+    cssEase: 'linear',
+    dots: true,
+    arrows: true,
+    accessibility: true
   };
-  
-  // ====================================================================
-  // A PROPRIEDADE QUE FALTAVA ESTÁ AQUI:
-  // ====================================================================
+
   destaquesPrincipais = [
     {
       icone: 'park',
@@ -82,11 +80,12 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private faunaService: FaunaService
+    private faunaService: FaunaService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // A lógica dos destaques aleatórios continua a mesma
+
     this.destaques$ = forkJoin({
       plantas: this.apiService.getPlantas().pipe(catchError(() => of([]))), // Fallback em caso de erro
       animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))  // Fallback em caso de erro
@@ -107,11 +106,18 @@ export class HomeComponent implements OnInit {
           tipo: 'Fauna',
           link: `/fauna`
         }));
-        
+
         const combinados = [...destaquesFlora, ...destaquesFauna];
         return this.embaralharArray(combinados).slice(0, 8);
       })
     );
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.showCarousel = true;
+      this.cdr.detectChanges(); // Força a detecção de mudanças
+    }, 0);
   }
 
   private embaralharArray(array: any[]): any[] {
