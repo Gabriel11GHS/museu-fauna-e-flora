@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService, Planta } from '../../services/api.service';
-import { RouterLink } from '@angular/router'; // 1. Importar RouterLink
+import { RouterLink } from '@angular/router';
 
 // Módulos do Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,18 +12,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { combineLatest } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-flora',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    RouterLink, // 2. Adicionar RouterLink aqui para que o template o reconheça
+    CommonModule,
+    FormsModule,
+    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatSelectModule,
+    MatSlideToggleModule,
     MatProgressSpinnerModule
   ],
   templateUrl: './flora.component.html',
@@ -34,6 +38,7 @@ export class FloraComponent implements OnInit {
   public selectedLocal: string = '';
   public searchTerm: string = '';
   public selectedFamilia: string = '';
+  public filtroAudio: boolean = false;
 
   public allPlantas: Planta[] = [];
   public data: Planta[] = [];
@@ -41,13 +46,13 @@ export class FloraComponent implements OnInit {
 
   public locais: string[] = [];
   public familias: string[] = [];
-  
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.carregarPlantas();
   }
-  
+
   carregarPlantas(): void {
     this.isLoading = true;
     this.errorMessage = null;
@@ -100,6 +105,12 @@ export class FloraComponent implements OnInit {
 
     if (this.selectedLocal) {
       filteredData = filteredData.filter(planta => planta.nomeLocal === this.selectedLocal);
+    }
+
+    if (this.filtroAudio) {
+      filteredData = filteredData.filter(planta =>
+        planta.trilhaAudio && planta.trilhaAudio.trim() !== ''
+      );
     }
 
     this.data = filteredData;

@@ -2,12 +2,12 @@
 <div class="filtros-container-wrapper">
   <h2 class="filtros-titulo">Explore a Flora</h2>
   <div class="filtros-container">
-    
+
     <!-- Campo de Busca por Nome -->
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Buscar por nome...</mat-label>
-      <input 
-        matInput 
+      <input
+        matInput
         type="text"
         placeholder="Ex: Ipê Amarelo"
         [(ngModel)]="searchTerm"
@@ -25,7 +25,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    
+
     <!-- Filtro por Local -->
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Local</mat-label>
@@ -36,6 +36,15 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <!-- Filtro se possui áudio -->
+    <mat-slide-toggle
+      class="filtro-item audio-toggle"
+      [(ngModel)]="filtroAudio"
+      (ngModelChange)="filtrarPlantas()"
+      color="primary">
+      Mostrar apenas com áudio
+    </mat-slide-toggle>
 
   </div>
 </div>
@@ -51,7 +60,7 @@
 
   <!-- Conteúdo Principal: exibe quando o carregamento terminar (isLoading é false) -->
   <div *ngIf="!isLoading">
-    
+
     <!-- Sub-estado de Erro -->
     <div *ngIf="errorMessage" class="error-message">
       <p>{{ errorMessage }}</p>

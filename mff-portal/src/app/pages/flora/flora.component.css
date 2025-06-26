@@ -29,6 +29,11 @@
   max-width: 350px; /* Largura máxima para não ficarem muito grandes */
 }
 
+.audio-toggle {
+  margin-top: 8px; /* Ajusta o alinhamento vertical com os outros campos */
+  margin-left: 8px;
+}
+
 /* Ajuste fino para os componentes do Angular Material */
 ::ng-deep .filtro-item .mat-mdc-form-field-flex {
   background-color: white;
