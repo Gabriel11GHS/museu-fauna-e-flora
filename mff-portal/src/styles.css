@@ -1,16 +1,6 @@
-html, body { height: 100%; }
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #fafafa;
-}
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
-/*
-  SOBRESCRITA DO TEMA DO ANGULAR MATERIAL
-  Aqui nós forçamos a nossa cor primária na toolbar.
-*/
-.mat-toolbar.mat-primary {
-  background: #27632a;
-  color: #ffffff;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 

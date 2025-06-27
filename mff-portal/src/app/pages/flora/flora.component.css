@@ -1,176 +1,204 @@
 :host {
-  --cor-primaria: #27632a;
-  --cor-primaria-escura: #1e4a20;
-  --cor-texto: #ffffff;
-  --cor-ativo: #a5038a;
+  --cor-principal: #27632a;
+  --cor-secundaria: #3a8c3a;
+  --cor-destaque: #a5038a;
+  --cor-fundo-header: #f0f4f0;
+  --cor-fundo-pagina: #f8faf9;
+  --cor-texto-claro: #ffffff;
+  --cor-texto-escuro: #333;
+  --borda-radius: 16px;
+  --shadow-suave: 0 4px 15px rgba(0, 0, 0, 0.06);
+  --shadow-elevado: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* --- Seção de Filtros --- */
-.filtros-container-wrapper {
-  background-color: #f7f7f7; /* Cor de fundo suave */
-  padding: 24px 32px;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 24px;
-}
-
-.filtros-titulo {
+.header-filtros {
+  background-color: var(--cor-fundo-header);
+  padding: 3rem 2rem;
   text-align: center;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: #27632a; /* Verde escuro do tema */
-  margin-top: 0;
-  margin-bottom: 20px;
+}
+
+.header-conteudo h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--cor-principal);
+  margin: 0 0 0.5rem 0;
+}
+
+.header-conteudo p {
+  font-size: 1.2rem;
+  color: var(--cor-texto-escuro);
+  margin: 0.5rem 0 2.5rem 0;
 }
 
 .filtros-container {
   display: flex;
-  flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Espaço entre os filtros */
+  gap: 1.5rem;
 }
 
 .filtro-item {
-  color: var(--cor-ativo);
-  min-width: 250px; /* Largura mínima para cada filtro */
-  flex-grow: 1; /* Permite que os filtros cresçam para preencher o espaço */
-  max-width: 350px; /* Largura máxima para não ficarem muito grandes */
+  min-width: 240px;
+  max-width: 320px;
+  flex-grow: 1;
 }
+
+/* ANÁLISE E MELHORIA: A regra de fundo foi removida pois o tema global agora cuida disso.
+   As regras de foco foram mantidas para aplicar nossa personalização de cor rosa. */
+
+.filtros-container .filtro-item ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline-border {
+  border-color: var(--cor-destaque) !important;
+  border-width: 2px !important;
+}
+
+.filtros-container .filtro-item ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-floating-label {
+  color: var(--cor-destaque) !important;
+}
+
 
 .audio-toggle {
-  margin-top: 8px; /* Ajusta o alinhamento vertical com os outros campos */
-  margin-left: 8px;
+  color: var(--cor-principal);
+  font-weight: 500;
 }
 
-/* Ajuste fino para os componentes do Angular Material */
-::ng-deep .filtro-item .mat-mdc-form-field-flex {
-  background-color: white;
-  border-radius: 8px !important; /* Adiciona cantos arredondados */
+/* Estilização do Toggle com a cor de destaque (mantida) */
+::ng-deep .mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mdc-switch__handle {
+  background-color: var(--cor-destaque) !important;
+}
+::ng-deep .mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mdc-switch__track::after {
+  background-color: var(--cor-destaque) !important;
 }
 
-::ng-deep .filtro-item .mdc-notched-outline > * {
-  border-color: #d0d0d0 !important;
-}
+/* ... O restante do arquivo CSS permanece o mesmo ... */
 
-::ng-deep .filtro-item:hover .mdc-notched-outline > * {
-  border-color: #3a8c3a !important; /* Borda verde ao passar o mouse */
-}
-
-/* --- Container do Conteúdo Principal --- */
 .content-wrapper {
-  padding: 0 24px;
+  background-color: var(--cor-fundo-pagina);
+  padding: 3rem 1.5rem;
 }
 
-/* --- Mensagens de Feedback (Carregando, Erro, Sem Resultados) --- */
-.loading-message,
-.no-results-message,
-.error-message {
+.feedback-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 60px 24px;
+  gap: 1rem;
+  padding: 4rem 0;
   text-align: center;
   font-size: 1.2rem;
   color: #666;
 }
 
-.error-message {
-  color: #b71c1c; /* Tom de vermelho para o erro */
+.feedback-container mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #bdbdbd;
 }
 
-/* --- Estilo da Lista de Plantas (sem alterações) --- */
+.error-message {
+  color: #c62828;
+}
+.error-message mat-icon {
+  color: #c62828;
+}
+
 .plant-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  max-width: 1400px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
+  max-width: 1600px;
   margin: auto;
 }
 
-/* ... (O restante dos estilos dos cards, .plant-card, etc., continua aqui) ... */
-
-/* --- Card Individual --- */
 .plant-card {
-  background-color: #ffffff;
-  border-radius: 12px; /* Cantos arredondados */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidade */
-  overflow: hidden; /* Garante que a imagem não vaze dos cantos arredondados */
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: var(--borda-radius) !important;
+  box-shadow: var(--shadow-suave) !important;
+  border: 1px solid #eef0ef;
 }
 
 .plant-card:hover {
-  transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-elevado) !important;
 }
 
-/* --- Imagem do Card --- */
-.card-image-container {
-  width: 100%;
-  height: 200px; /* Altura fixa para todas as imagens */
-  background-color: #f0f0f0; /* Cor de fundo para o placeholder */
+.card-image-wrapper {
+  position: relative;
 }
 
-.card-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* ESSENCIAL: a imagem cobre o espaço sem distorcer */
+.plant-card img {
+  height: 240px;
+  object-fit: cover;
+  border-radius: var(--borda-radius) var(--borda-radius) 0 0;
 }
 
-/* --- Conteúdo de Texto --- */
-.card-content {
-  padding: 16px;
-  flex-grow: 1; /* Faz essa área crescer para ocupar o espaço disponível */
+.audio-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: var(--cor-destaque);
+  color: var(--cor-texto-claro);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.plant-name {
-  font-size: 1.4rem;
+.audio-badge mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+mat-card-header {
+  padding: 20px 20px 8px 20px;
+}
+
+mat-card-title {
+  color: var(--cor-principal);
   font-weight: 600;
-  color: #27632a; /* Verde escuro do seu tema */
-  margin: 0 0 4px 0;
+  font-size: 1.4rem;
+  margin-bottom: 4px;
 }
 
-.scientific-name {
-  font-size: 1rem;
-  color: #555;
-  margin: 0 0 12px 0;
+mat-card-subtitle {
   font-style: italic;
+  font-size: 1rem;
+  color: var(--cor-texto-secundario);
 }
 
-.plant-family,
-.plant-local {
-  font-size: 0.9rem;
-  color: #333;
-  margin: 4px 0;
+mat-card-content {
+  padding: 8px 20px 20px 20px;
+  min-height: 80px;
 }
 
-/* --- Ações e Player de Áudio --- */
-.card-actions {
-  padding: 0 16px 16px 16px;
-  margin-top: auto; /* Empurra as ações para o final do card */
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--cor-texto-escuro);
+  margin-bottom: 10px;
+}
+.info-item mat-icon {
+  color: var(--cor-secundaria);
 }
 
-.plant-audio {
-  width: 100%;
-  height: 35px;
-  margin-bottom: 12px;
+mat-card-actions {
+  padding: 0 20px 20px 20px;
 }
 
 .details-button {
-  display: block; /* Garante que o link ocupe a largura total */
-  text-align: center;
-  padding: 10px;
-  background-color: #3a8c3a; /* Verde do seu header */
-  color: white;
-  text-decoration: none;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.details-button:hover {
-  background-color: #2f7b2f; /* Tom mais escuro ao passar o mouse */
+  width: 100%;
+  background-color: var(--cor-destaque) !important;
+  color: var(--cor-texto-claro) !important;
+  padding: 12px 0 !important;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px !important;
 }
