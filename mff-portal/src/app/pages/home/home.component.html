@@ -1,6 +1,16 @@
-<section class="hero-section" [@fadeIn]>
+<section class="hero-section" [@fadeIn] aria-labelledby="hero-titulo-h1">
+
+  <div class="visually-hidden" aria-live="polite" aria-atomic="true">
+    {{ liveRegionMessage }}
+  </div>
+
   <div class="hero-background">
-    <ngx-slick-carousel *ngIf="showCarousel" class="hero-carousel" [config]="slideConfig">
+    <ngx-slick-carousel
+      *ngIf="showCarousel"
+      #heroCarousel
+      class="hero-carousel"
+      [config]="slideConfig"
+      (afterChange)="onCarouselAfterChange($event)">
       <div ngxSlickItem *ngFor="let item of mediaItems" class="slide">
         <img [src]="item.image" [alt]="item.alt" />
       </div>
@@ -9,12 +19,19 @@
   </div>
 
   <div class="hero-content">
-    <h1 class="hero-titulo">Museu da Fauna e Flora</h1>
-    <p class="hero-subtitulo">Um acervo digital a céu aberto no ICMC</p>
-    <a mat-flat-button color="primary" class="hero-cta" routerLink="/historia">
+    <h1 class="hero-titulo" id="hero-titulo-h1">Museu de Fauna e Flora</h1>
+    <p class="hero-subtitulo">Um acervo digital a céu aberto no coração do ICMC/USP</p>
+    <a mat-raised-button class="hero-cta" routerLink="/historia">
       Conheça nossa história
     </a>
   </div>
+
+  <button
+    class="carousel-play-pause-btn"
+    (click)="togglePlayPause()"
+    [attr.aria-label]="isCarouselPlaying ? 'Pausar animação do carrossel' : 'Iniciar animação do carrossel'">
+    <mat-icon>{{ isCarouselPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
+  </button>
 </section>
 
 <section class="destaques-section">
