@@ -1,3 +1,10 @@
+:host {
+  --cor-primaria: #27632a;
+  --cor-primaria-escura: #1e4a20;
+  --cor-texto: #ffffff;
+  --cor-ativo: #a5038a;
+}
+
 /* --- Seção de Filtros --- */
 .filtros-container-wrapper {
   background-color: #f7f7f7; /* Cor de fundo suave */
@@ -24,6 +31,7 @@
 }
 
 .filtro-item {
+  color: var(--cor-ativo);
   min-width: 250px; /* Largura mínima para cada filtro */
   flex-grow: 1; /* Permite que os filtros cresçam para preencher o espaço */
   max-width: 350px; /* Largura máxima para não ficarem muito grandes */

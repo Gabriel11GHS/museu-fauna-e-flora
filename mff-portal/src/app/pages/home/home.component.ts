@@ -1,14 +1,23 @@
-import { ChangeDetectionStrategy, Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiService, Planta } from '../../services/api.service';
 import { FaunaService } from '../../services/fauna.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 export interface Destaque {
@@ -31,12 +40,28 @@ export interface Destaque {
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None, 
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'class': 'app-home-wrapper'
+  },
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('1s ease-out', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
+
   public destaques$!: Observable<Destaque[]>;
   public showCarousel: boolean = false;
+  public isCarouselPlaying: boolean = true;
+  public liveRegionMessage: string = '';
 
   // Configurações do Carrossel da seção Hero
   mediaItems = [
@@ -54,7 +79,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     cssEase: 'linear',
     dots: true,
     arrows: true,
-    accessibility: true
+    accessibility: true, // Garante navegação via teclado para setas e pontos.
+    pauseOnHover: true,  // Pausa a animação ao passar o mouse. [cite: 97]
+    pauseOnFocus: true,  // Pausa a animação quando um elemento (seta/ponto) recebe foco. [cite: 97]
   };
 
   destaquesPrincipais = [
@@ -85,24 +112,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-
     this.destaques$ = forkJoin({
-      plantas: this.apiService.getPlantas().pipe(catchError(() => of([]))), // Fallback em caso de erro
-      animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))  // Fallback em caso de erro
+      plantas: this.apiService.getPlantas().pipe(catchError(() => of([]))),
+      animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))
     }).pipe(
       map(({ plantas, animais }) => {
         const destaquesFlora: Destaque[] = plantas
-          .filter(p => p.fotoIndividuo || p.fotoTaxonomia)
+          .filter(p => !!(p.fotoIndividuo || p.fotoTaxonomia))
           .map(planta => ({
             nome: planta.nomePopular || 'Planta não identificada',
-            imagem: planta.fotoIndividuo! || planta.fotoTaxonomia!,
+            imagem: (planta.fotoIndividuo || planta.fotoTaxonomia) ?? 'assets/placeholder.jpg',
             tipo: 'Flora',
             link: `/flora/${planta.idIndividuo}`
           }));
 
         const destaquesFauna: Destaque[] = animais.map(animal => ({
           nome: animal.nomePopular,
-          imagem: animal.imagem || 'assets/default-fauna.jpg',
+          imagem: animal.imagem ?? 'assets/placeholder.jpg',
           tipo: 'Fauna',
           link: `/fauna`
         }));
@@ -114,10 +140,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    // O setTimeout(0) garante que a inicialização do carrossel ocorra após a detecção de mudanças inicial do Angular.
     setTimeout(() => {
       this.showCarousel = true;
-      this.cdr.detectChanges(); // Força a detecção de mudanças
+      this.cdr.detectChanges(); // Força a detecção de mudanças para renderizar o carrossel.
+      this.onCarouselAfterChange({ currentSlide: 0 }); // Define a mensagem inicial para a live region.
     }, 0);
+  }
+
+  togglePlayPause(): void {
+    if (this.isCarouselPlaying) {
+      this.heroCarousel.slickPause();
+    } else {
+      this.heroCarousel.slickPlay();
+    }
+    this.isCarouselPlaying = !this.isCarouselPlaying;
+  }
+
+  onCarouselAfterChange(event: { currentSlide: number }): void {
+    const current = event.currentSlide + 1;
+    const total = this.mediaItems.length;
+    this.liveRegionMessage = `Slide ${current} de ${total}: ${this.mediaItems[event.currentSlide].alt}`;
+    this.cdr.detectChanges(); // Notifica o Angular sobre a mudança na mensagem.
   }
 
   private embaralharArray(array: any[]): any[] {

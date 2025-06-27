@@ -38,7 +38,7 @@
   content: '';
   position: absolute;
   width: 6px;
-  background-color: #3a8c3a;
+  background-color: #a5038a;
   top: 0;
   bottom: 0;
   left: 50%;
@@ -62,7 +62,7 @@
   width: 25px;
   height: 25px;
   background-color: white;
-  border: 4px solid #27632a;
+  border: 4px solid #85016f;
   top: 15px;
   border-radius: 50%;
   z-index: 1;
