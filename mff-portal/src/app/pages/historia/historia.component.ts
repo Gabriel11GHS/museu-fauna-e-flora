@@ -27,28 +27,40 @@ export class HistoriaComponent {
       imagem: 'assets/historia/icmc.jpg' // Exemplo de caminho
     },
     {
-      ano: '',
-      titulo: '',
-      descricao: '',
-      imagem: 'assets/historia/plantio.jpg' 
-    },
-    {
       ano: '2013',
-      titulo: 'Início do museu da fauna e flora',
-      descricao: 'O Museu da Fauna e Flora do ICMC foi criado em 2013, a partir do interesse em registrar e difundir as espécies existentes no campus da USP em São Carlos, em particular, na região do ICMC. Essa região contém uma grande parte da área arborizada da área 1 do campus, compondo um ambiente com espécies arbóreas de grande, médio e pequeno portes e um conjunto de pequenos animais e pássaros não catalogados.',
-      imagem: 'assets/mff-antigo.png'
+      titulo: 'Nasce a Brigada de Arboristas',
+      descricao: 'Inspirada nas brigadas de incêndio, uma equipe pioneira de funcionários e docentes do ICMC é criada para cuidar das árvores, zelar pela segurança da comunidade e preservar o patrimônio arbóreo do campus.',
+      imagem: 'assets/historia/brigada-arboristas.jpg'
     },
     {
-      ano: '202',
+      ano: '2014',
+      titulo: 'A Semente do Museu é Plantada',
+      descricao: 'A imprensa começa a divulgar a iniciativa de criar um museu a céu aberto e colaborativo no ICMC, destacando a rica fauna e flora do campus e o potencial de um acervo virtual.',
+      imagem: 'assets/historia/plantio.jpg'
+    },
+    {
+      ano: '2016',
+      titulo: 'Regimento Oficial do Museu',
+      descricao: 'O Museu da Fauna e Flora do ICMC é oficialmente subordinado à Comissão de Cultura e Extensão, com seu regimento aprovado pela Congregação, consolidando sua missão de difundir o conhecimento sobre a biodiversidade local.',
+      imagem: 'assets/historia/icmc-antigo.jpg'
+    },
+    {
+      ano: '2019',
+      titulo: 'Capacitação e Manejo',
+      descricao: 'A segunda edição do treinamento da Brigada de Arboristas no ICMC reforça o compromisso com as boas práticas de manejo arbóreo e as ações da Seção de Áreas Verdes do campus.',
+      imagem: 'assets/historia/catalogacao.jpg'
+    },
+    {
+      ano: '2023',
       titulo: 'Projeto "Vozes da Natureza"',
-      descricao: 'Nasce o projeto de extensão "Vozes da Natureza", com o objetivo de criar um acervo digital com áudios de professores da USP narrando histórias e curiosidades sobre as árvores.',
+      descricao: 'É lançado o projeto de extensão "Vozes da Natureza", uma iniciativa para criar um acervo digital com áudios de professores da USP, narrando histórias e curiosidades sobre as árvores do campus.',
       imagem: 'assets/historia/vozes-natureza.jpg'
     },
     {
       ano: '2025',
-      titulo: 'Lançamento do Website',
-      descricao: 'O website do Museu de Fauna e Flora é lançado, disponibilizando o catálogo completo, os áudios do projeto e informações interativas para o público geral, unindo natureza, ciência e tecnologia.',
-      imagem: 'assets/historia/website-launch.jpg'
+      titulo: 'Lançamento do Website Interativo',
+      descricao: 'O website do Museu de Fauna e Flora é lançado, unindo tecnologia e natureza para oferecer ao público um catálogo digital completo, com filtros interativos, mapas e os áudios do projeto "Vozes da Natureza".',
+      imagem: 'assets/mff-novo5.png'
     }
   ];
 }
