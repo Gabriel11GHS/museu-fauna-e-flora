@@ -122,6 +122,6 @@ export class FloraComponent implements OnInit {
 
   public updateImageOnError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
-    imgElement.src = 'assets/placeholder-image.png';
+    imgElement.src = 'assets/error/placeholder-image.png';
   }
 }
