@@ -4,13 +4,27 @@ import { ActivatedRoute, RouterLink } from '@angular/router'; // Importe Activat
 import { CommonModule } from '@angular/common';
 import { ApiService, Planta } from '../../services/api.service';
 import { Observable } from 'rxjs';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-detalhe-planta',
   standalone: true,
-  imports: [CommonModule, RouterLink], // Adicione RouterLink para o botão de voltar
+  imports: [CommonModule,
+            MatIcon,
+            MatProgressSpinnerModule,
+            RouterLink], // Adicione RouterLink para o botão de voltar
   templateUrl: './detalhe-planta.component.html',
-  styleUrls: ['./detalhe-planta.component.css']
+  styleUrls: ['./detalhe-planta.component.css'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px)' }),
+        animate('500ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class DetalhePlantaComponent implements OnInit {
   
