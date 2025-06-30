@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 // Módulos do Angular Material para ícones e divisórias
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-contato',
@@ -11,11 +13,30 @@ import { MatDividerModule } from '@angular/material/divider';
   imports: [
     CommonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatButtonModule
   ],
   templateUrl: './contato.component.html',
   styleUrls: ['./contato.component.css']
 })
+
 export class ContatoComponent {
-  // Nenhuma lógica complexa é necessária para esta página estática.
+  
+  constructor(
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+    this.iconRegistry.addSvgIcon(
+      'facebook',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/facebook.svg')
+    );
+    this.iconRegistry.addSvgIcon(
+      'instagram',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/instagram.svg')
+    );
+    this.iconRegistry.addSvgIcon(
+      'twitter',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/twitter.svg')
+    );
+  }
 }

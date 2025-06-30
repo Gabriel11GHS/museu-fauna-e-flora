@@ -36,7 +36,7 @@ export class HistoriaComponent {
       ano: '2014',
       titulo: 'A Semente do Museu é Plantada',
       descricao: 'A imprensa começa a divulgar a iniciativa de criar um museu a céu aberto e colaborativo no ICMC, destacando a rica fauna e flora do campus e o potencial de um acervo virtual.',
-      imagem: 'assets/historia/plantio.jpg'
+      imagem: 'assets/historia/mff-antigo.png'
     },
     {
       ano: '2016',
@@ -60,7 +60,7 @@ export class HistoriaComponent {
       ano: '2025',
       titulo: 'Lançamento do Website Interativo',
       descricao: 'O website do Museu de Fauna e Flora é lançado, unindo tecnologia e natureza para oferecer ao público um catálogo digital completo, com filtros interativos, mapas e os áudios do projeto "Vozes da Natureza".',
-      imagem: 'assets/mff-novo5.png'
+      imagem: 'assets/logos/mff-novo5.png'
     }
   ];
 }

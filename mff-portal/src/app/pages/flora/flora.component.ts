@@ -5,8 +5,6 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService, Planta } from '../../services/api.service';
 import { RouterLink } from '@angular/router';
-
-// Módulos do Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-flora',
@@ -28,7 +27,8 @@ import { map, startWith } from 'rxjs/operators';
     MatIconModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   templateUrl: './flora.component.html',
   styleUrls: ['./flora.component.css']
