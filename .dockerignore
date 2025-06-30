@@ -1,0 +1,15 @@
+# Arquivo .dockerignore
+
+# Ignorar dependências locais, pois elas serão instaladas dentro do contêiner
+node_modules
+
+# Ignorar arquivos de build e cache do Angular
+/dist
+/.angular/cache
+
+# Arquivos do Docker
+Dockerfile
+.dockerignore
+
+# Arquivos de log do npm
+npm-debug.log*
