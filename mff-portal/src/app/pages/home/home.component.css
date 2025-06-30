@@ -204,12 +204,12 @@
 }
 
 /* --- Seção Vozes da Natureza & Carrossel --- */
-.vozes-carousel-section {
+.vozes-section {
   background-color: #e8f5e9; /* Tom de verde claro */
   padding: 80px 20px;
 }
 
-.vozes-carousel-container {
+.vozes-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -279,3 +279,10 @@
   width: 100%;
   display: block; /* Remove espaço extra abaixo da imagem */
 }
+
+.nature-sounds-image img {
+  width: 100%; /* Faz a imagem preencher a largura do seu contêiner */
+  height: auto;
+  display: block; /* Remove qualquer espaçamento extra abaixo da imagem */
+}
+
