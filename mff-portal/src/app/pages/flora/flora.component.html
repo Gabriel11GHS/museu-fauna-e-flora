@@ -1,0 +1,77 @@
+<div class="header-filtros">
+  <div class="header-conteudo">
+    <h1>Explore a Flora do Campus</h1>
+    <p>Utilize os filtros para encontrar espécies por nome, família ou local.</p>
+  </div>
+  <div class="filtros-container">
+    <mat-form-field appearance="outline" class="filtro-item">
+      <mat-label>Buscar por nome...</mat-label>
+      <input matInput type="text" placeholder="Ex: Ipê Amarelo" [(ngModel)]="searchTerm" (ngModelChange)="filtrarPlantas()">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="filtro-item">
+      <mat-label>Filtrar por Família</mat-label>
+      <mat-select [(ngModel)]="selectedFamilia" (selectionChange)="filtrarPlantas()">
+        <mat-option value="">Todas as Famílias</mat-option>
+        <mat-option *ngFor="let familia of familias" [value]="familia">{{ familia }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="filtro-item">
+      <mat-label>Filtrar por Local</mat-label>
+      <mat-select [(ngModel)]="selectedLocal" (selectionChange)="filtrarPlantas()">
+        <mat-option value="">Todos os Locais</mat-option>
+        <mat-option *ngFor="let local of locais" [value]="local">{{ local }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slide-toggle class="audio-toggle" [(ngModel)]="filtroAudio" (ngModelChange)="filtrarPlantas()" color="primary">
+      Apenas com áudio
+    </mat-slide-toggle>
+  </div>
+</div>
+
+<div class="content-wrapper">
+  <div *ngIf="isLoading" class="feedback-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando dados das plantas...</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="errorMessage" class="feedback-container error-message">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ errorMessage }}</p>
+    </div>
+    <div *ngIf="!errorMessage && data.length === 0" class="feedback-container">
+      <mat-icon>search_off</mat-icon>
+      <p>Nenhuma planta encontrada com os filtros selecionados.</p>
+    </div>
+
+    <div *ngIf="data.length > 0" class="plant-list">
+      <mat-card *ngFor="let item of data; trackBy: trackByPlantId" class="plant-card">
+        <div class="card-image-wrapper">
+          <img mat-card-image [src]="item.fotoIndividuo || item.fotoTaxonomia || 'assets/placeholder-image.png'" [alt]="'Foto de ' + item.nomePopular" (error)="updateImageOnError($event)">
+          <span *ngIf="item.trilhaAudio" class="audio-badge">
+            <mat-icon>graphic_eq</mat-icon> Áudio
+          </span>
+        </div>
+        
+        <mat-card-header>
+          <mat-card-title>{{ item.nomePopular }}</mat-card-title>
+          <mat-card-subtitle><em>{{ item.nomeCientifico }}</em></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-item">
+            <mat-icon>eco</mat-icon>
+            <span>{{ item.familia }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ item.nomeLocal }}</span>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-flat-button color="primary" [routerLink]="['/flora', item.idIndividuo]" class="details-button">Saiba Mais</a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

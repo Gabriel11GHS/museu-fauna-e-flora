@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "nomePopular": "Abelha Jataí",
+    "nomeCientifico": "Tetragonisca angustula",
+    "grupo": "Insetos",
+    "habitat": "Constroem seus ninhos em ocos de árvores, muros e fendas, sendo muito adaptadas a ambientes urbanos como o campus.",
+    "dieta": "Néctar e pólen de diversas flores, atuando como importantes polinizadores para a flora local.",
+    "curiosidade": "É uma abelha social e sem ferrão. Seu mel é muito valorizado por suas propriedades medicinais e sabor suave. A entrada do ninho, como a da foto, é um tubo de cera característico que ajuda na defesa contra predadores.",
+    "imagem": "assets/fauna/abelha-jatai.jpg"
+  },
+  {
+    "id": 2,
+    "nomePopular": "Macaco-prego",
+    "nomeCientifico": "Sapajus apella",
+    "grupo": "Mamíferos",
+    "habitat": "Florestas e áreas arborizadas, como as matas do campus. São muito adaptáveis e vivem no alto das árvores.",
+    "dieta": "Onívoros. Sua dieta é variada, incluindo frutas, sementes, insetos, ovos de aves e pequenos vertebrados.",
+    "curiosidade": "É um dos primatas mais inteligentes das Américas, conhecido por sua habilidade de usar ferramentas, como pedras para quebrar cocos e sementes duras. Vivem em bandos e possuem uma estrutura social complexa.",
+    "imagem": "assets/fauna/macaco-prego.jpg"
+  },
+  {
+    "id": 3,
+    "nomePopular": "Arara-canindé",
+    "nomeCientifico": "Ara ararauna",
+    "grupo": "Aves",
+    "habitat": "Habita florestas tropicais, áreas de palmeiras e matas de galeria. No campus, é mais comum vê-las sobrevoando as áreas mais altas e arborizadas.",
+    "dieta": "Sua alimentação é baseada em sementes, castanhas e frutos. Possuem um bico extremamente forte para quebrar cascas duras.",
+    "curiosidade": "As araras-canindé são monogâmicas, formando pares que permanecem juntos por toda a vida. São aves muito sociais e inteligentes, capazes de imitar sons.",
+    "imagem": "assets/fauna/arara-caninde.jpg"
+  },
+  {
+    "id": 4,
+    "nomePopular": "Teiú",
+    "nomeCientifico": "Salvator merianae",
+    "grupo": "Répteis",
+    "habitat": "Áreas abertas, cerrados e bordas de mata. É frequentemente visto nos gramados do campus, procurando por sol e alimento.",
+    "dieta": "Onívoro. Alimenta-se de frutas, insetos, pequenos vertebrados, carniça e ovos.",
+    "curiosidade": "Apesar do tamanho que pode assustar, é um animal geralmente tímido. É um importante 'faxineiro' do ecossistema, comendo restos de animais e controlando populações de insetos e pequenos roedores.",
+    "imagem": "assets/fauna/teiu.jpg"
+  },
+  {
+    "id": 5,
+    "nomePopular": "Tucano-toco",
+    "nomeCientifico": "Ramphastos toco",
+    "grupo": "Aves",
+    "habitat": "Habita cerrados, matas de galeria e áreas abertas com árvores. Pode ser visto (e ouvido) nas árvores mais altas do campus.",
+    "dieta": "Onívoro, com preferência por frutas e sementes. Também se alimenta de insetos, ovos e filhotes de outras aves.",
+    "curiosidade": "Seu bico, apesar de grande, é muito leve, pois é oco por dentro. Ele é usado para alcançar frutos, regular a temperatura corporal e em rituais de acasalamento.",
+    "imagem": "assets/fauna/tucano-toco.jpg"
+  },
+  {
+    "id": 6,
+    "nomePopular": "Libélula",
+    "nomeCientifico": "Anisoptera (infraordem)",
+    "grupo": "Insetos",
+    "habitat": "Encontradas próximas a corpos d'água como lagos e riachos, onde se reproduzem. Adultos são excelentes voadores e podem ser vistos caçando em áreas abertas.",
+    "dieta": "Carnívora. São predadores vorazes de outros insetos, como moscas e mosquitos, que capturam em pleno voo.",
+    "curiosidade": "As libélulas possuem uma visão excepcional, com olhos compostos que cobrem quase toda a cabeça, permitindo um campo de visão de quase 360 graus.",
+    "imagem": "assets/fauna/libelula.jpg"
+  },
+  {
+    "id": 7,
+    "nomePopular": "Borboleta Velinha",
+    "nomeCientifico": "Methona themisto",
+    "grupo": "Insetos",
+    "habitat": "Matas e áreas com bastante vegetação, principalmente onde encontram plantas da família das solanáceas (como o manacá) para colocar seus ovos.",
+    "dieta": "Quando lagartas, alimentam-se de folhas de plantas tóxicas, o que as torna impalatáveis para predadores. Adultos alimentam-se de néctar.",
+    "curiosidade": "O padrão de cores vibrantes e as asas parcialmente transparentes servem como um aviso aos predadores de que ela é tóxica, um mecanismo de defesa conhecido como aposematismo.",
+    "imagem": "assets/fauna/borboleta-velinha.jpg"
+  },
+  {
+    "id": 8,
+    "nomePopular": "Borboleta Caixão-de-defunto",
+    "nomeCientifico": "Papilio thoas",
+    "grupo": "Insetos",
+    "habitat": "Ambientes abertos, bordas de matas e jardins. São borboletas grandes e ativas, vistas com frequência em áreas ensolaradas do campus.",
+    "dieta": "As lagartas se alimentam de folhas de plantas cítricas e outras da família Rutaceae. Os adultos visitam flores para se alimentar de néctar.",
+    "curiosidade": "O nome popular 'Caixão-de-defunto' vem do fato de que, em algumas regiões, acredita-se que sua visita anuncia a morte de alguém. É uma das maiores borboletas diurnas do Brasil.",
+    "imagem": "assets/fauna/borboleta-caixao-de-defunto.jpg"
+  }
+]

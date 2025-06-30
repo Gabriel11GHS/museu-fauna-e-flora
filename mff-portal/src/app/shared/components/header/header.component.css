@@ -1,0 +1,140 @@
+/* Definindo as variáveis de cor para fácil manutenção */
+:host {
+  --cor-primaria: #27632a;
+  --cor-primaria-escura: #1e4a20;
+  --cor-texto: #ffffff;
+  --cor-ativo: #a5038a;
+}
+
+.main-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  position: sticky; /* Mantém o header fixo no topo */
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background: var(--cor-primaria-escura);
+  height: 100px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--cor-texto);
+}
+
+.museu-logo {
+  height: 80px;
+  width: auto;
+  margin-right: 12px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.museu-logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: none; /* Escondido por padrão */
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+/* Estilos para os links de desktop */
+.desktop-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0 16px;
+  line-height: 64px; /* Centraliza verticalmente no toolbar */
+  text-decoration: none;
+  color: var(--cor-texto);
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.desktop-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  right: 16px;
+  height: 3px;
+  background-color: var(--cor-ativo);
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.desktop-links a:hover::after,
+.desktop-links a.active-link::after {
+  transform: scaleX(1);
+}
+
+/* Responsividade: Esconde/mostra elementos */
+.mobile-menu-button {
+  display: none; /* Escondido em desktop */
+}
+
+.mobile-nav {
+  display: none; /* Escondido em desktop */
+}
+
+
+/* --- Media Query para Telas Menores (Mobile) --- */
+@media (max-width: 960px) {
+  .desktop-links {
+    display: none; /* Esconde os links de desktop */
+  }
+
+  .logo-title {
+    display: block; /* Mostra o título ao lado do logo */
+  }
+
+  .mobile-menu-button {
+    display: block; /* Mostra o botão hambúrguer */
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 120px;
+    left: 0;
+    right: 0;
+    background-color: var(--cor-primaria-escura);
+    z-index: 999;
+    transform: translateY(-120%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+
+  .mobile-nav.open {
+    transform: translateY(0);
+  }
+
+  .mobile-nav a {
+    color: var(--cor-texto);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-nav a.active-link {
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-title {
+    display: none; /* Esconde o título em telas muito pequenas para dar espaço */
+  }
+}

@@ -1,0 +1,26 @@
+<mat-toolbar color="primary" class="main-toolbar">
+  <a routerLink="/home" class="logo-container">
+    <img src="/assets/logos/mff-novo5.png" alt="Logo do Museu de Fauna e Flora" class="museu-logo">
+    <span class="logo-title">Museu de Fauna e Flora</span>
+  </a>
+
+  <span class="toolbar-spacer"></span>
+
+  <nav class="desktop-links">
+    <a mat-button routerLink="/fauna" routerLinkActive="active-link">FAUNA</a>
+    <a mat-button routerLink="/flora" routerLinkActive="active-link">FLORA</a>
+    <a mat-button routerLink="/historia" routerLinkActive="active-link">HISTÓRIA</a>
+    <a mat-button routerLink="/contato" routerLinkActive="active-link">CONTATO</a>
+  </nav>
+
+  <button mat-icon-button (click)="toggleMobileMenu()" class="mobile-menu-button">
+    <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="mobile-nav" [ngClass]="{ 'open': isMobileMenuOpen }">
+  <a mat-button routerLink="/fauna" routerLinkActive="active-link" (click)="toggleMobileMenu()">FAUNA</a>
+  <a mat-button routerLink="/flora" routerLinkActive="active-link" (click)="toggleMobileMenu()">FLORA</a>
+  <a mat-button routerLink="/historia" routerLinkActive="active-link" (click)="toggleMobileMenu()">HISTÓRIA</a>
+  <a mat-button routerLink="/contato" routerLinkActive="active-link" (click)="toggleMobileMenu()">CONTATO</a>
+</div>
