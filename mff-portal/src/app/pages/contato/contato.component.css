@@ -87,6 +87,30 @@
   color: #27632a;
 }
 
+/* --- Seção de Redes Sociais --- */
+.redes-sociais-titulo {
+  font-size: 1.4rem;
+  color: #27632a;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.redes-sociais-container {
+  display: flex;
+  gap: 10px; /* Espaço entre os ícones */
+}
+
+.redes-sociais-container a[mat-icon-button] {
+  color: #3a8c3a; /* Cor principal dos ícones */
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.redes-sociais-container a[mat-icon-button]:hover {
+  color: #27632a; /* Cor mais escura no hover */
+  transform: scale(1.1); /* Efeito de zoom sutil */
+}
+
 /* --- Mapa --- */
 .mapa-wrapper {
   width: 100%;

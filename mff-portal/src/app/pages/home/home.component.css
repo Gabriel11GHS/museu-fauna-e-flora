@@ -280,29 +280,6 @@
   display: block; /* Remove espaço extra abaixo da imagem */
 }
 
-.nature-sounds-section {
-  padding: 2rem; /* Adicione um pouco de espaçamento ao redor da seção */
-  background-color: #f9f9f9; /* Cor de fundo opcional */
-  border-radius: 8px; /* Bordas arredondadas opcionais */
-  margin-top: 2rem; /* Espaçamento superior opcional */
-}
-
-.nature-sounds-content {
-  display: flex; /* Habilita o layout flexível para alinhar texto e imagem */
-  align-items: center; /* Alinha verticalmente o texto e a imagem no centro */
-  justify-content: space-between; /* Distribui o espaço entre o texto e a imagem (opcional) */
-}
-
-.nature-sounds-text {
-  flex-grow: 1; /* Permite que o texto ocupe o espaço restante */
-  margin-right: 1rem; /* Adiciona um pouco de espaço entre o texto e a imagem */
-}
-
-.nature-sounds-image {
-  width: 150px; /* Defina a largura desejada para a imagem */
-  height: auto; /* Mantém a proporção da imagem */
-}
-
 .nature-sounds-image img {
   width: 100%; /* Faz a imagem preencher a largura do seu contêiner */
   height: auto;
