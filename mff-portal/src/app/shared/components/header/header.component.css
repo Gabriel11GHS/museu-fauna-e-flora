@@ -95,7 +95,7 @@
   }
 
   .logo-title {
-    display: block; /* Mostra o título ao lado do logo */
+    display: none; /* Mostra o título ao lado do logo */
   }
 
   .mobile-menu-button {
@@ -133,8 +133,60 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 720px) {
   .logo-title {
     display: none; /* Esconde o título em telas muito pequenas para dar espaço */
   }
+}
+
+/* Base para a animação. Define a transição suave para as propriedades que mudarão */
+.logo-container {
+  transition: transform 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out;
+}
+
+/* * Estado 1: Logo grande e centralizado (apenas na home, no topo) 
+ * A classe `at-home-top` é aplicada.
+ */
+.logo-container.at-home-top {
+  position: absolute; /* Permite posicionamento sobre a página */
+  left: 50%;
+  top: 32vh; /* Ajuste para centralizar verticalmente no 'hero' */
+  transform: translate(-50%, -50%) scale(3.5); /* Centraliza e aumenta o tamanho */
+  z-index: 1001; /* Garante que fique sobre outros elementos da home */
+}
+
+.logo-container.at-home-top .logo-title {
+  font-size: 2rem; /* Aumenta o tamanho da fonte do título */
+  margin-left: 15px;
+}
+
+/* * Estado 2: Logo na posição final (em outras páginas ou após o scroll)
+ * A classe `scrolled-or-static` é aplicada.
+ */
+.logo-container.scrolled-or-static {
+  position: relative; /* Volta ao fluxo normal do toolbar */
+  left: 0;
+  top: 0;
+  transform: translate(0, 0) scale(1); /* Posição e tamanho normais */
+}
+
+.logo-container.scrolled-or-static .logo-title {
+  font-size: 1.2rem; /* Tamanho da fonte normal */
+}
+
+/* Oculta os links de navegação quando o logo está grande e centralizado */
+.at-home-top ~ .desktop-links,
+.at-home-top ~ .mobile-menu-button,
+.at-home-top ~ .toolbar-spacer {
+  opacity: 1;
+  pointer-events: none; /* Impede a interação com os links ocultos */
+  transition: opacity 0.3s ease;
+}
+
+/* Garante que os links voltem a aparecer suavemente */
+.scrolled-or-static ~ .desktop-links,
+.scrolled-or-static ~ .mobile-menu-button,
+.scrolled-or-static ~ .toolbar-spacer {
+  opacity: 1;
+  transition: opacity 0.3s ease 0.2s; /* Adiciona um pequeno delay */
 }

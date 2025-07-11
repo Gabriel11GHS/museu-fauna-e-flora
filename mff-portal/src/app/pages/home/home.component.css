@@ -90,15 +90,16 @@
 .app-home-wrapper .hero-subtitulo {
   font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   font-weight: 300;
-  margin: 1rem 0 2rem;
+  margin-top: 10rem;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .app-home-wrapper .hero-cta {
   background: var(--cor-ativo);
-  padding: 12px 32px;
+  padding: 20px 40px;
   font-size: 1rem;
   border-radius: 50px;
+  margin-top: 10rem;
 }
 
 /* --- Estilos Acessíveis para Controles do Carrossel --- */
@@ -281,8 +282,9 @@
 }
 
 .nature-sounds-image img {
-  width: 100%; /* Faz a imagem preencher a largura do seu contêiner */
+  width: 30%; /* Faz a imagem preencher a largura do seu contêiner */
   height: auto;
   display: block; /* Remove qualquer espaçamento extra abaixo da imagem */
+
 }
 
