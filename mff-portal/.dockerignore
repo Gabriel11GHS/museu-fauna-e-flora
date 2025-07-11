@@ -1,0 +1,36 @@
+# Arquivo .dockerignore para otimizar builds de projetos Angular
+
+# Ignore a pasta de dependências do Node.
+# Esta é a otimização mais importante. A instalação das dependências
+# deve sempre acontecer DENTRO do contêiner.
+node_modules
+
+# Ignore a pasta de saída do build.
+# A compilação do projeto (ng build) também deve acontecer dentro do contêiner.
+dist
+.angular
+
+# Ignore os logs de erro do npm.
+npm-debug.log*
+*.log
+
+# Ignore os arquivos de configuração de IDEs e editores.
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Ignore o cache do sistema operacional.
+.DS_Store
+Thumbs.db
+
+# Ignore os arquivos do Git.
+.git
+.gitignore
+
+# Ignore o próprio Dockerfile e o .dockerignore, pois eles não são
+# necessários dentro do contexto da aplicação.
+Dockerfile
+.dockerignore

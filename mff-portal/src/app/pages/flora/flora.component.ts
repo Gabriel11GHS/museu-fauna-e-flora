@@ -10,7 +10,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  MatSlideToggleChange,
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
 import { combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatCardModule } from '@angular/material/card';
@@ -28,10 +31,10 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
   ],
   templateUrl: './flora.component.html',
-  styleUrls: ['./flora.component.css']
+  styleUrls: ['./flora.component.css'],
 })
 export class FloraComponent implements OnInit {
   public isLoading: boolean = true;
@@ -47,7 +50,7 @@ export class FloraComponent implements OnInit {
   public locais: string[] = [];
   public familias: string[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.carregarPlantas();
@@ -57,21 +60,37 @@ export class FloraComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = null;
 
-    this.apiService.getPlantas()
+    this.apiService
+      .getPlantas()
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Erro ao carregar dados das plantas:', error);
-          this.errorMessage = 'Não foi possível carregar os dados. Verifique sua conexão ou tente mais tarde.';
+          this.errorMessage =
+            'Não foi possível carregar os dados. Verifique sua conexão ou tente mais tarde.';
           this.isLoading = false;
           return of([]);
         })
       )
-      .subscribe(plantas => {
+      .subscribe((plantas) => {
+        // Lógica de ordenação: Plantas com foto primeiro
+        plantas.sort((a, b) => {
+          const aHasPhoto = !!a.fotoIndividuo || !!a.fotoTaxonomia;
+          const bHasPhoto = !!b.fotoIndividuo || !!b.fotoTaxonomia;
+
+          if (aHasPhoto && !bHasPhoto) {
+            return -1; // 'a' (com foto) vem antes de 'b' (sem foto)
+          } else if (!aHasPhoto && bHasPhoto) {
+            return 1; // 'b' (com foto) vem antes de 'a' (sem foto)
+          } else {
+            return 0; // Mantém a ordem relativa se ambos têm ou não têm foto
+          }
+        });
+
         this.allPlantas = plantas;
         this.data = plantas;
         this.extractFilterOptions();
         this.isLoading = false;
-        this.filtrarPlantas();
+        this.filtrarPlantas(); // Aplica filtros se houver algum selecionado
       });
   }
 
@@ -79,9 +98,10 @@ export class FloraComponent implements OnInit {
     const locaisSet = new Set<string>();
     const familiasSet = new Set<string>();
 
-    this.allPlantas.forEach(planta => {
+    this.allPlantas.forEach((planta) => {
       if (planta.nomeLocal) locaisSet.add(planta.nomeLocal);
-      if (planta.familia && planta.familia !== 'Não identificada') familiasSet.add(planta.familia);
+      if (planta.familia && planta.familia !== 'Não identificada')
+        familiasSet.add(planta.familia);
     });
 
     this.locais = Array.from(locaisSet).sort();
@@ -93,23 +113,30 @@ export class FloraComponent implements OnInit {
 
     if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase();
-      filteredData = filteredData.filter(planta =>
-        (planta.nomePopular && planta.nomePopular.toLowerCase().includes(term)) ||
-        (planta.nomeCientifico && planta.nomeCientifico.toLowerCase().includes(term))
+      filteredData = filteredData.filter(
+        (planta) =>
+          (planta.nomePopular &&
+            planta.nomePopular.toLowerCase().includes(term)) ||
+          (planta.nomeCientifico &&
+            planta.nomeCientifico.toLowerCase().includes(term))
       );
     }
 
     if (this.selectedFamilia) {
-      filteredData = filteredData.filter(planta => planta.familia === this.selectedFamilia);
+      filteredData = filteredData.filter(
+        (planta) => planta.familia === this.selectedFamilia
+      );
     }
 
     if (this.selectedLocal) {
-      filteredData = filteredData.filter(planta => planta.nomeLocal === this.selectedLocal);
+      filteredData = filteredData.filter(
+        (planta) => planta.nomeLocal === this.selectedLocal
+      );
     }
 
     if (this.filtroAudio) {
-      filteredData = filteredData.filter(planta =>
-        planta.trilhaAudio && planta.trilhaAudio.trim() !== ''
+      filteredData = filteredData.filter(
+        (planta) => planta.trilhaAudio && planta.trilhaAudio.trim() !== ''
       );
     }
 
