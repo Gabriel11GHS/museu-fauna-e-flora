@@ -22,7 +22,7 @@ echo "🚀 Iniciando o processo de deploy..."
 
 # 1. Atualizar o Código-Fonte
 echo "➡️  Passo 1/4: Puxando as últimas alterações do repositório Git..."
-git pull
+
 echo "✅ Código-fonte atualizado com sucesso."
 echo ""
 
