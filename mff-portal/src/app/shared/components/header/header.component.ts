@@ -1,3 +1,5 @@
+// extraído de header.component.ts
+
 import { Component, ChangeDetectorRef, ChangeDetectionStrategy, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -24,7 +26,7 @@ import { HeaderStateService } from '../../../services/header-state.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  public isMobileMenuOpen = false;
+  public isMobileMenuOpen = false; // Estado do menu mobile
   public isHomePage: boolean = false;
   public isScrolled: boolean = false;
   private stateSubscription: Subscription;
@@ -57,6 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges(); // Notifica o Angular sobre a mudança
   }
 
+  // Método para alternar a visibilidade do menu
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }

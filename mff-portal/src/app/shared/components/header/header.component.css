@@ -179,7 +179,6 @@
 .at-home-top ~ .mobile-menu-button,
 .at-home-top ~ .toolbar-spacer {
   opacity: 1;
-  pointer-events: none; /* Impede a interação com os links ocultos */
   transition: opacity 0.3s ease;
 }
 
@@ -189,4 +188,60 @@
 .scrolled-or-static ~ .toolbar-spacer {
   opacity: 1;
   transition: opacity 0.3s ease 0.2s; /* Adiciona um pequeno delay */
+}
+
+/* --- Media Query para Telas Menores (Mobile) --- */
+@media (max-width: 960px) {
+  .desktop-links {
+    display: none; /* Esconde os links de desktop */
+  }
+
+  .logo-title {
+    display: block; /* Garante que o título seja exibido ao lado do logo, se houver espaço */
+  }
+
+  .mobile-menu-button {
+    display: block; /* Mostra o botão hambúrguer */
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 100px; /* Alinhado com a altura do header */
+    left: 0;
+    right: 0;
+    background-color: var(--cor-primaria-escura);
+    z-index: 999;
+    transform: translateY(-150%); /* Começa mais escondido para uma transição mais limpa */
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  }
+
+  .mobile-nav.open {
+    transform: translateY(0);
+  }
+
+  .mobile-nav a {
+    color: var(--cor-texto);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-nav a.active-link {
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+  }
+
+  /* Ajuste da animação do logo em telas menores */
+  .logo-container.at-home-top {
+    transform: translate(-50%, -50%) scale(2.5); /* Reduz a escala para não cobrir o carrossel */
+  }
+}
+
+@media (max-width: 720px) {
+  .logo-title {
+    display: none; /* Esconde o título em telas muito pequenas para dar espaço */
+  }
 }

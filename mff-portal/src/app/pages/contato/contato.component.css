@@ -121,6 +121,65 @@
   border: 1px solid #ddd;
 }
 
+/* --- Seções de Ação (Agendamento e Google) --- */
+.acao-button {
+width: 100%;
+max-width: 320px;
+padding: 18px 0 !important; 
+font-size: 1rem !important;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border-radius: 5px; /* Adicionando um pouco de arredondamento para um visual moderno */
+}
+
+.acao-button mat-icon {
+margin-right: 8px;
+}
+
+/* Estilo para o botão primário ("Agendar Visita") */
+.acao-secao button.mat-raised-button.mat-primary {
+background-color: #E91E63; /* Cor de fundo rosa */
+color: white; /* Texto branco para melhor contraste */
+}
+
+.acao-secao button.mat-raised-button.mat-primary:hover {
+background-color: #C2185B; /* Tom mais escuro de rosa no hover */
+}
+
+/* Estilo para o botão de contorno ("Conectar com Google") */
+.acao-secao button.mat-stroked-button.mat-primary {
+color: #E91E63; /* Cor do texto e da borda rosa */
+border-color: #E91E63;
+}
+
+.acao-secao button.mat-stroked-button.mat-primary:hover {
+background-color: #F8BBD0;
+color: #C2185B; 
+border-color: #C2185B; 
+}
+
+.google-button .google-icon {
+width: 20px;
+height: 20px;
+}
+
+/* --- Seção de Redes Sociais --- */
+.redes-sociais-titulo {
+  font-size: 1.4rem;
+  color: #27632a;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.redes-sociais-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center; /* Centraliza os ícones */
+}
+
 /* --- Responsividade --- */
 @media (max-width: 992px) {
   .info-card {

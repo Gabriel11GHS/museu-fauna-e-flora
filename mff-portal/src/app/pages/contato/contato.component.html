@@ -38,6 +38,26 @@
             </span>
           </li>
         </ul>
+        
+    <mat-divider></mat-divider>
+        <div class="acao-secao">
+          <h3>Planeje sua Visita</h3>
+          <p>Organize uma visita guiada para você, sua escola ou grupo. Toque no botão abaixo para iniciar o processo de agendamento.</p>
+          <button mat-raised-button color="primary" class="acao-button" (click)="agendarVisita()">
+            <mat-icon>calendar_today</mat-icon>
+            Agendar Visita
+          </button>
+        </div>
+
+        <mat-divider></mat-divider>
+        <div class="acao-secao">
+          <h3>Ver Disponibilidade</h3>
+          <p>Conecte sua conta Google para visualizar os horários disponíveis diretamente em sua agenda e facilitar o agendamento.</p>
+          <button mat-stroked-button color="primary" class="acao-button google-button" (click)="conectarGoogle()">
+            <mat-icon svgIcon="google" class="google-icon"></mat-icon>
+            Conectar com Google
+          </button>
+        </div>
 
     <mat-divider></mat-divider>
         <h3 class="redes-sociais-titulo">Nossas Redes Sociais</h3>
