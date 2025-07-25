@@ -15,7 +15,8 @@ import { MatCardModule } from '@angular/material/card';
 import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ApiService, Planta } from '../../services/api.service';
+import { ApiService} from '../../services/api.service';
+import { Planta } from '../../models/planta.model';
 import { FaunaService } from '../../services/fauna.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { HeaderStateService } from '../../services/header-state.service'; // Importado

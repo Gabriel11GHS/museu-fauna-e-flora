@@ -51,6 +51,22 @@
             <span class="detalhe-label">Ano de Plantio</span>
             <span class="detalhe-value">{{ planta.anoPlantio }}</span>
           </div>
+          <div *ngIf="planta.altura && planta.altura !== '0.00'" class="detalhe-row">
+            <span class="detalhe-label">Altura</span>
+            <span class="detalhe-value">{{ planta.altura }} m</span>
+          </div>
+          <div *ngIf="planta.circunferencia && planta.circunferencia !== '0.00'" class="detalhe-row">
+            <span class="detalhe-label">Circunferência</span>
+            <span class="detalhe-value">{{ planta.circunferencia }} cm</span>
+          </div>
+          <div *ngIf="planta.diametro && planta.diametro !== '0.00'" class="detalhe-row">
+            <span class="detalhe-label">Diâmetro</span>
+            <span class="detalhe-value">{{ planta.diametro }} cm</span>
+          </div>
+          <div *ngIf="planta.diametro_copa && planta.diametro_copa !== '0.00'" class="detalhe-row">
+            <span class="detalhe-label">Diâmetro da copa</span>
+            <span class="detalhe-value">{{ planta.diametro_copa }} cm</span>
+          </div>
         </div>
       </div>
     </div>

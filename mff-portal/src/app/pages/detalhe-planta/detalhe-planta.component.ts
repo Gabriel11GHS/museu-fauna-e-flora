@@ -2,7 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router'; // Importe ActivatedRoute e RouterLink
 import { CommonModule } from '@angular/common';
-import { ApiService, Planta } from '../../services/api.service';
+import { ApiService} from '../../services/api.service';
+import { Planta } from '../../models/planta.model';
 import { Observable } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -14,7 +15,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
   imports: [CommonModule,
             MatIcon,
             MatProgressSpinnerModule,
-            RouterLink], // Adicione RouterLink para o botão de voltar
+            RouterLink],
   templateUrl: './detalhe-planta.component.html',
   styleUrls: ['./detalhe-planta.component.css'],
   animations: [
@@ -28,7 +29,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class DetalhePlantaComponent implements OnInit {
   
-  planta$: Observable<Planta | undefined> | undefined;
+  planta$!: Observable<Planta>; 
 
   constructor(
     private route: ActivatedRoute,
@@ -36,16 +37,14 @@ export class DetalhePlantaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Pegamos o 'id' da URL
     const id = this.route.snapshot.paramMap.get('id');
     
     if (id) {
-      // Usamos o novo método do serviço para buscar a planta
+      // Agora chamamos o novo método do serviço
       this.planta$ = this.apiService.getPlantaById(id);
     }
   }
 
-  // Método para atualizar a imagem quando ocorrer um erro de carregamento
   public updateImageOnError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = 'assets/placeholder-image.png';
