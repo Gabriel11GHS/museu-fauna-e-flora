@@ -1,10 +1,36 @@
 /* --- Estilos da Seção de Filtros (reutilizados) --- */
-.filtros-container-wrapper {
-  background-color: #f7f7f7;
-  padding: 24px 32px;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 24px;
+:host {
+  --cor-principal: #27632a;
+  --cor-secundaria: #3a8c3a;
+  --cor-destaque: #a5038a;
+  --cor-fundo-header: #f0f4f0;
+  --cor-fundo-pagina: #f8faf9;
+  --cor-texto-claro: #ffffff;
+  --cor-texto-escuro: #333;
+  --borda-radius: 16px;
+  --shadow-suave: 0 4px 15px rgba(0, 0, 0, 0.06);
+  --shadow-elevado: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
+
+.header-conteudo h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--cor-principal); 
+  margin: 0 0 0.5rem 0;
+}
+
+.header-conteudo p {
+  font-size: 1.2rem;
+  color: #333; /* Cor padrão para o subtítulo */
+  margin: 0.5rem 0 2.5rem 0;
+}
+
+.header-filtros {
+  background-color: var(--cor-fundo-header);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
 .filtros-titulo {
   text-align: center;
   font-size: 1.8rem;
@@ -100,7 +126,7 @@
   display: block;
   text-align: center;
   padding: 10px;
-  background-color: #3a8c3a;
+  background-color: #FDB100;
   color: white;
   text-decoration: none;
   border: none;
@@ -110,5 +136,5 @@
   transition: background-color 0.2s;
 }
 .details-button:hover {
-  background-color: #2f7b2f;
+  background-color: #FE7D09;
 }
