@@ -1,12 +1,15 @@
-<div class="filtros-container-wrapper">
-  <h2 class="filtros-titulo">Explore a Fauna</h2>
+<div class="header-filtros">
+  <div class="header-conteudo">
+    <h1>Explore a Fauna do Campus</h1>
+    <p>Utilize os filtros para encontrar espécies por nome ou grupo.</p>
+  </div>
   <div class="filtros-container">
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Buscar por nome...</mat-label>
       <input 
         matInput 
         type="text"
-        placeholder="Ex: Capivara"
+        placeholder="Ex: Tucano-toco"
         [(ngModel)]="searchTerm"
         (ngModelChange)="filtrarAnimais()">
       <mat-icon matSuffix>search</mat-icon>
