@@ -44,9 +44,6 @@
   flex-grow: 1;
 }
 
-/* ANÁLISE E MELHORIA: A regra de fundo foi removida pois o tema global agora cuida disso.
-   As regras de foco foram mantidas para aplicar nossa personalização de cor rosa. */
-
 .filtros-container .filtro-item ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline-border {
   border-color: var(--cor-destaque) !important;
   border-width: 2px !important;
@@ -62,15 +59,12 @@
   font-weight: 500;
 }
 
-/* Estilização do Toggle com a cor de destaque (mantida) */
 ::ng-deep .mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mdc-switch__handle {
   background-color: var(--cor-destaque) !important;
 }
 ::ng-deep .mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mdc-switch__track::after {
   background-color: var(--cor-destaque) !important;
 }
-
-/* ... O restante do arquivo CSS permanece o mesmo ... */
 
 .content-wrapper {
   background-color: var(--cor-fundo-pagina);
@@ -125,8 +119,8 @@
 
 .card-image-wrapper img {
   width: 100%;
-  height: 100%; /* A imagem ocupa 100% da altura do seu contêiner */
-  object-fit: cover; /* A imagem cobre a área, cortando o excesso */
+  height: 100%; 
+  object-fit: cover; 
 }
 
 .plant-card img {
@@ -197,10 +191,13 @@ mat-card-actions {
 
 .details-button {
   width: 100%;
-  background-color: var(--cor-destaque) !important;
-  color: var(--cor-texto-claro) !important;
-  padding: 12px 0 !important;
-  font-size: 1rem;
-  font-weight: 500;
-  border-radius: 8px !important;
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--cor-destaque);
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
 }

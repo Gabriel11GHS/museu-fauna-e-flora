@@ -135,6 +135,7 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
+
 .details-button:hover {
   background-color: #FE7D09;
 }
