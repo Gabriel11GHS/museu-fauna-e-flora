@@ -52,7 +52,7 @@
   max-width: 350px;
 }
 
-/* --- Container do Conteúdo (reutilizado) --- */
+/* --- Container do Conteúdo --- */
 .content-wrapper { padding: 0 24px; }
 .loading-message, .no-results-message, .error-message {
   display: flex;

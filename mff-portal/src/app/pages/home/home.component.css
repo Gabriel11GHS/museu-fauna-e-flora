@@ -234,14 +234,14 @@
 }
 
 .nature-sounds-image img {
-  width: 300%;           /* Garante que a imagem se ajuste perfeitamente ao seu contêiner */
-  height: auto;          /* Mantém a proporção da imagem */
+  width: 300%;       
+  height: auto;          
   display: block;
 }
 
 /* --- Coluna do Texto --- */
 .texto-vozes {
-  flex: 1.5;             /* Define que o texto ocupará 1.5x o espaço da imagem, dando-lhe mais destaque */
+  flex: 1.5;            
   min-width: 300px;
   max-width: 500px;
   display: flex;
@@ -295,13 +295,13 @@
 
 .mapa-imagem {
   width: 100%;
-  display: block; /* Remove espaço extra abaixo da imagem */
+  display: block; 
 }
 
 .nature-sounds-image img {
-  width: 30%; /* Faz a imagem preencher a largura do seu contêiner */
+  width: 30%; 
   height: auto;
-  display: block; /* Remove qualquer espaçamento extra abaixo da imagem */
+  display: block; 
 
 }
 
