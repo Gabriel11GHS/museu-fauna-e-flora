@@ -19,6 +19,7 @@ import {
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiService } from '../../services/api.service';
+import { HttpClient } from '@angular/common/http';
 import { Planta } from '../../models/planta.model';
 import { FaunaService } from '../../services/fauna.service';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -95,7 +96,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private headerStateService: HeaderStateService, // Injetado
     private apiService: ApiService,
     private faunaService: FaunaService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -171,32 +173,30 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
 }).addTo(map);
 
-// --- CÓDIGO FINAL E FUNCIONAL ---
-// Busca o arquivo KML manualmente para garantir compatibilidade
-fetch('assets/mapa/Local7.kml')
-  .then(res => {
-    if (!res.ok) {
-      throw new Error(`Erro ao carregar o KML: ${res.statusText}`);
+// Carrega o arquivo KML usando o HttpClient do Angular
+this.http.get('/assets/mapa/Local7.kml', { responseType: 'text' })
+  .pipe(
+    catchError(error => {
+      console.error('Erro ao buscar o arquivo KML com HttpClient:', error);
+      // Retorna um observable vazio para não quebrar a cadeia
+      return of('');
+    })
+  )
+  .subscribe(kmltext => {
+    if (kmltext) {
+      // Cria um parser de XML
+      const parser = new DOMParser();
+      const kml = parser.parseFromString(kmltext, 'text/xml');
+
+      // Instancia a camada KML do Leaflet com o XML já processado
+      const track = new (L as any).KML(kml);
+      map.addLayer(track);
+
+      // Ajusta o mapa para mostrar todos os marcadores do KML
+      map.fitBounds(track.getBounds());
+    } else {
+      console.error('O arquivo KML não pôde ser carregado ou está vazio.');
     }
-    return res.text();
-  })
-  .then(kmltext => {
-    // Cria um parser de XML
-    const parser = new DOMParser();
-    const kml = parser.parseFromString(kmltext, 'text/xml');
-
-    // Instancia a camada KML do Leaflet com o XML já processado
-    const track = new (L as any).KML(kml);
-    map.addLayer(track);
-
-    // Ajusta o mapa para mostrar todos os marcadores do KML
-    map.fitBounds(track.getBounds());
-  })
-  .catch(error => {
-    console.error('Não foi possível carregar ou processar o arquivo KML:', error);
-    // Opcional: Mostrar uma mensagem de erro para o usuário no mapa
-
-  // --- FIM DO TRECHO CORRIGIDO ---
   });
 };
 
