@@ -5,17 +5,20 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
+import {
+  SlickCarouselComponent,
+  SlickCarouselModule,
+} from 'ngx-slick-carousel';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ApiService} from '../../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { Planta } from '../../models/planta.model';
 import { FaunaService } from '../../services/fauna.service';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -23,7 +26,6 @@ import { HeaderStateService } from '../../services/header-state.service';
 import { AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-kml';
-
 
 export interface Destaque {
   nome: string;
@@ -41,23 +43,23 @@ export interface Destaque {
     SlickCarouselModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'app-home-wrapper'
+    class: 'app-home-wrapper',
   },
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('1s ease-out', style({ opacity: 1 }))
-      ])
-    ])
-  ]
+        animate('1s ease-out', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
@@ -72,20 +74,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       icone: 'eco',
       titulo: 'Fauna',
       descricao: 'Conheça a diversidade de animais do nosso acervo.',
-      link: '/fauna'
+      link: '/fauna',
     },
     {
       icone: 'local_florist',
       titulo: 'Flora',
       descricao: 'Explore as espécies de plantas catalogadas.',
-      link: '/flora'
+      link: '/flora',
     },
     {
       icone: 'map',
       titulo: 'Mapa',
-      descricao: 'Veja onde estão localizados os principais pontos do Instituto.',
-      link: '/mapa'
-    }
+      descricao:
+        'Veja onde estão localizados os principais pontos do Instituto.',
+      link: '/mapa',
+    },
   ];
 
   constructor(
@@ -101,23 +104,25 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.destaques$ = forkJoin({
       plantas: this.apiService.getPlantas().pipe(catchError(() => of([]))),
-      animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))
+      animais: this.faunaService.getAnimais().pipe(catchError(() => of([]))),
     }).pipe(
       map(({ plantas, animais }) => {
         const destaquesFlora: Destaque[] = plantas
-          .filter(p => !!(p.fotoIndividuo || p.fotoTaxonomia))
-          .map(planta => ({
+          .filter((p) => !!(p.fotoIndividuo || p.fotoTaxonomia))
+          .map((planta) => ({
             nome: planta.nomePopular || 'Planta não identificada',
-            imagem: (planta.fotoIndividuo || planta.fotoTaxonomia) ?? 'assets/placeholder.jpg',
+            imagem:
+              (planta.fotoIndividuo || planta.fotoTaxonomia) ??
+              'assets/placeholder.jpg',
             tipo: 'Flora',
-            link: `/flora/${planta.idIndividuo}`
+            link: `/flora/${planta.idIndividuo}`,
           }));
 
-        const destaquesFauna: Destaque[] = animais.map(animal => ({
+        const destaquesFauna: Destaque[] = animais.map((animal) => ({
           nome: animal.nomePopular,
           imagem: animal.imagem ?? 'assets/placeholder.jpg',
           tipo: 'Fauna',
-          link: `/fauna`
+          link: `/fauna`,
         }));
 
         const combinados = [...destaquesFlora, ...destaquesFauna];
@@ -133,8 +138,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   mediaItems = [
     { image: 'assets/home/carrossel-1.jpg', alt: 'Vista do campus do ICMC' },
-    { image: 'assets/home/carrossel-2.jpg', alt: 'Detalhe de uma flor de Ipê Amarelo' },
-    { image: 'assets/home/carrossel-3.jpg', alt: 'Capivara no gramado da USP' }
+    {
+      image: 'assets/home/carrossel-2.jpg',
+      alt: 'Detalhe de uma flor de Ipê Amarelo',
+    },
+    { image: 'assets/home/carrossel-3.jpg', alt: 'Capivara no gramado da USP' },
   ];
 
   slideConfig = {
@@ -145,35 +153,52 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     fade: true,
     cssEase: 'linear',
     dots: true,
-    arrows: true
+    arrows: true,
   };
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.showCarousel = true;
-      this.cdr.detectChanges();
-      this.onCarouselAfterChange({ currentSlide: 0 });
-    }, 0);
+  setTimeout(() => {
+    this.showCarousel = true;
+    this.cdr.detectChanges();
+    this.onCarouselAfterChange({ currentSlide: 0 });
+  }, 0);
 
-    // Cria o mapa centralizado no ICMC
-    const map = L.map('map').setView([-22.0029, -47.8913], 16);
+// Cria o mapa centralizado no ICMC
+const map = L.map('map').setView([-22.0029, -47.8913], 16);
 
-    // Camada base gratuita (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+// Adiciona a camada base do OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors',
+}).addTo(map);
 
-    // Carrega o arquivo KML (precisa converter seu .kmz para .kml antes)
-    fetch('assets/mapa/Local7.kml')
-      .then(res => res.text())
-      .then(kmltext => {
-        const parser = new DOMParser();
-        const kml = parser.parseFromString(kmltext, 'text/xml');
-        const track = new (L as any).KML(kml);
-        map.addLayer(track);
-        map.fitBounds(track.getBounds());
-      });
-  }
+// --- CÓDIGO FINAL E FUNCIONAL ---
+// Busca o arquivo KML manualmente para garantir compatibilidade
+fetch('assets/mapa/Local7.kml')
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`Erro ao carregar o KML: ${res.statusText}`);
+    }
+    return res.text();
+  })
+  .then(kmltext => {
+    // Cria um parser de XML
+    const parser = new DOMParser();
+    const kml = parser.parseFromString(kmltext, 'text/xml');
+
+    // Instancia a camada KML do Leaflet com o XML já processado
+    const track = new (L as any).KML(kml);
+    map.addLayer(track);
+
+    // Ajusta o mapa para mostrar todos os marcadores do KML
+    map.fitBounds(track.getBounds());
+  })
+  .catch(error => {
+    console.error('Não foi possível carregar ou processar o arquivo KML:', error);
+    // Opcional: Mostrar uma mensagem de erro para o usuário no mapa
+
+  // --- FIM DO TRECHO CORRIGIDO ---
+  });
+};
 
   togglePlayPause(): void {
     if (this.isCarouselPlaying) {
@@ -200,5 +225,4 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return arr;
   }
-
 }
