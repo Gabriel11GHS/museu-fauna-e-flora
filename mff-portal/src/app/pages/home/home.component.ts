@@ -163,30 +163,42 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onCarouselAfterChange({ currentSlide: 0 });
   }, 0);
 
-  // Cria o mapa centralizado no ICMC
-  const map = L.map('map').setView([-22.0029, -47.8913], 16);
+// Cria o mapa centralizado no ICMC
+const map = L.map('map').setView([-22.0029, -47.8913], 16);
 
-  // Camada base gratuita (OpenStreetMap)
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
-  }).addTo(map);
+// Adiciona a camada base do OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors',
+}).addTo(map);
 
-  // --- TRECHO CORRIGIDO ---
-  // Carrega o arquivo KML da forma correta, delegando ao plugin
-  const kmlLayer = new (L as any).KML('assets/mapa/Local7.kml', {
-    async: true,
-  });
+// --- CÓDIGO FINAL E FUNCIONAL ---
+// Busca o arquivo KML manualmente para garantir compatibilidade
+fetch('assets/mapa/Local7.kml')
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`Erro ao carregar o KML: ${res.statusText}`);
+    }
+    return res.text();
+  })
+  .then(kmltext => {
+    // Cria um parser de XML
+    const parser = new DOMParser();
+    const kml = parser.parseFromString(kmltext, 'text/xml');
 
-  // Usa o evento 'loaded' do plugin para garantir que o KML foi processado
-  kmlLayer.on('loaded', (e: any) => {
-    // Ajusta o zoom e a posição do mapa para enquadrar todos os pontos do KML
-    map.fitBounds(e.target.getBounds());
-  });
+    // Instancia a camada KML do Leaflet com o XML já processado
+    const track = new (L as any).KML(kml);
+    map.addLayer(track);
 
-  // Adiciona a camada ao mapa
-  kmlLayer.addTo(map);
+    // Ajusta o mapa para mostrar todos os marcadores do KML
+    map.fitBounds(track.getBounds());
+  })
+  .catch(error => {
+    console.error('Não foi possível carregar ou processar o arquivo KML:', error);
+    // Opcional: Mostrar uma mensagem de erro para o usuário no mapa
+
   // --- FIM DO TRECHO CORRIGIDO ---
-}
+  });
+};
 
   togglePlayPause(): void {
     if (this.isCarouselPlaying) {
