@@ -21,8 +21,9 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/custom-theme.scss",
+              "node_modules/leaflet/dist/leaflet.css",
               "src/styles.css"
-            ]
+            ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/leaflet/dist/leaflet.js",
