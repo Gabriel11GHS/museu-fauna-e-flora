@@ -21,9 +21,7 @@ import { FaunaService } from '../../services/fauna.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { HeaderStateService } from '../../services/header-state.service';
 import { AfterViewInit } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet-kml';
-
+declare var L: any;
 
 export interface Destaque {
   nome: string;
