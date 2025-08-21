@@ -23,10 +23,7 @@ import { HttpClient } from '@angular/common/http';
 import { Planta } from '../../models/planta.model';
 import { FaunaService } from '../../services/fauna.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { HeaderStateService } from '../../services/header-state.service';
-import { AfterViewInit } from '@angular/core';
-import * as L from 'leaflet';
-import 'leaflet-kml';
+import { HeaderStateService } from '../../services/header-state.service'; // Importado
 
 export interface Destaque {
   nome: string;
@@ -62,7 +59,7 @@ export interface Destaque {
     ]),
   ],
 })
-export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
 
   public destaques$!: Observable<Destaque[]>;
@@ -138,6 +135,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.headerStateService.setIsHomePage(false);
   }
 
+  // ... (demais métodos da classe)
   mediaItems = [
     { image: 'assets/home/carrossel-1.jpg', alt: 'Vista do campus do ICMC' },
     {
@@ -159,46 +157,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   ngAfterViewInit(): void {
-  setTimeout(() => {
-    this.showCarousel = true;
-    this.cdr.detectChanges();
-    this.onCarouselAfterChange({ currentSlide: 0 });
-  }, 0);
-
-// Cria o mapa centralizado no ICMC
-const map = L.map('map').setView([-22.0029, -47.8913], 16);
-
-// Adiciona a camada base do OpenStreetMap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors',
-}).addTo(map);
-
-// Carrega o arquivo KML usando o HttpClient do Angular
-this.http.get('/assets/mapa/Local7.kml', { responseType: 'text' })
-  .pipe(
-    catchError(error => {
-      console.error('Erro ao buscar o arquivo KML com HttpClient:', error);
-      // Retorna um observable vazio para não quebrar a cadeia
-      return of('');
-    })
-  )
-  .subscribe(kmltext => {
-    if (kmltext) {
-      // Cria um parser de XML
-      const parser = new DOMParser();
-      const kml = parser.parseFromString(kmltext, 'text/xml');
-
-      // Instancia a camada KML do Leaflet com o XML já processado
-      const track = new (L as any).KML(kml);
-      map.addLayer(track);
-
-      // Ajusta o mapa para mostrar todos os marcadores do KML
-      map.fitBounds(track.getBounds());
-    } else {
-      console.error('O arquivo KML não pôde ser carregado ou está vazio.');
-    }
-  });
-};
+    setTimeout(() => {
+      this.showCarousel = true;
+      this.cdr.detectChanges();
+      this.onCarouselAfterChange({ currentSlide: 0 });
+    }, 0);
+  }
 
   togglePlayPause(): void {
     if (this.isCarouselPlaying) {
@@ -210,19 +174,21 @@ this.http.get('/assets/mapa/Local7.kml', { responseType: 'text' })
   }
 
   onCarouselAfterChange(event: { currentSlide: number }): void {
-    // You can add logic here if needed, for now it's a stub to fix the error.
-    // Example: Update live region message for accessibility
-    this.liveRegionMessage = `Slide ${event.currentSlide + 1} ativo`;
+    const current = event.currentSlide + 1;
+    const total = this.mediaItems.length;
+    this.liveRegionMessage = `Slide ${current} de ${total}: ${this.mediaItems[event.currentSlide].alt}`;
     this.cdr.detectChanges();
   }
 
-  embaralharArray<T>(array: T[]): T[] {
-    // Algoritmo de Fisher-Yates para embaralhar o array
-    const arr = array.slice();
-    for (let i = arr.length - 1; i > 0; i--) {
+  private embaralharArray(array: any[]): any[] {
+    for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+      [array[i], array[j]] = [array[j], array[i]];
     }
-    return arr;
+    return array;
+  }
+
+  trackByDestaque(index: number, destaque: Destaque): string {
+    return destaque.link;
   }
 }
