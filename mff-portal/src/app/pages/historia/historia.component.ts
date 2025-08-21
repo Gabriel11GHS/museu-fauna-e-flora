@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Definimos uma interface para estruturar os dados de cada evento
 interface EventoHistoria {
   ano: string;
   titulo: string;
@@ -18,13 +17,12 @@ interface EventoHistoria {
 })
 export class HistoriaComponent {
   
-  // Array com os marcos históricos do museu
   eventos: EventoHistoria[] = [
     {
       ano: '1971',
       titulo: 'Fundação do ICMC',
       descricao: 'O Instituto de Ciências Matemáticas e de Computação é fundado, estabelecendo as bases para futuras iniciativas de pesquisa e extensão no campus da USP em São Carlos.',
-      imagem: 'assets/historia/icmc.jpg' // Exemplo de caminho
+      imagem: 'assets/historia/icmc.jpg' 
     },
     {
       ano: '2013',

@@ -1,5 +1,4 @@
 export interface Planta {
-  // Mantidos da listagem
   idIndividuo: string;
   nomePopular: string | null;
   nomeCientifico: string | null;
@@ -9,8 +8,6 @@ export interface Planta {
   fotoTaxonomia: string | null;
   trilhaAudio: string | null;
   anoPlantio: string | null;
-  
-  // Novos campos da API de detalhe
   latitude?: string;
   longitude?: string;
   circunferencia?: string;
@@ -20,8 +17,6 @@ export interface Planta {
   altura?: string;
   diametro_copa?: string;
   ano_supressao?: string | null;
-
-  // Campos que já existiam mas podem ser úteis manter
   idTaxonomia: string;
   idLocal: string;
 }

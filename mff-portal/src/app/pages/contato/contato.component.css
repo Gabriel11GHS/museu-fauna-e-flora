@@ -130,7 +130,7 @@ font-size: 1rem !important;
 display: inline-flex;
 align-items: center;
 justify-content: center;
-border-radius: 5px; /* Adicionando um pouco de arredondamento para um visual moderno */
+border-radius: 5px;
 }
 
 .acao-button mat-icon {
@@ -139,17 +139,17 @@ margin-right: 8px;
 
 /* Estilo para o botão primário ("Agendar Visita") */
 .acao-secao button.mat-raised-button.mat-primary {
-background-color: #E91E63; /* Cor de fundo rosa */
-color: white; /* Texto branco para melhor contraste */
+background-color: #E91E63; 
+color: white; 
 }
 
 .acao-secao button.mat-raised-button.mat-primary:hover {
-background-color: #C2185B; /* Tom mais escuro de rosa no hover */
+background-color: #C2185B; 
 }
 
 /* Estilo para o botão de contorno ("Conectar com Google") */
 .acao-secao button.mat-stroked-button.mat-primary {
-color: #E91E63; /* Cor do texto e da borda rosa */
+color: #E91E63; 
 border-color: #E91E63;
 }
 
@@ -177,10 +177,9 @@ height: 20px;
 .redes-sociais-container {
   display: flex;
   gap: 10px;
-  justify-content: center; /* Centraliza os ícones */
+  justify-content: center; 
 }
 
-/* --- Responsividade --- */
 @media (max-width: 992px) {
   .info-card {
     height: auto; 

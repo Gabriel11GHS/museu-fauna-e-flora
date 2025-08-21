@@ -135,7 +135,7 @@
 
 @media (max-width: 720px) {
   .logo-title {
-    display: none; /* Esconde o título em telas muito pequenas para dar espaço */
+    display: none; 
   }
 }
 
@@ -171,7 +171,7 @@
 }
 
 .logo-container.scrolled-or-static .logo-title {
-  font-size: 1.2rem; /* Tamanho da fonte normal */
+  font-size: 1.2rem; 
 }
 
 /* Oculta os links de navegação quando o logo está grande e centralizado */
@@ -193,27 +193,27 @@
 /* --- Media Query para Telas Menores (Mobile) --- */
 @media (max-width: 960px) {
   .desktop-links {
-    display: none; /* Esconde os links de desktop */
+    display: none; 
   }
 
   .logo-title {
-    display: block; /* Garante que o título seja exibido ao lado do logo, se houver espaço */
+    display: block; 
   }
 
   .mobile-menu-button {
-    display: block; /* Mostra o botão hambúrguer */
+    display: block; 
   }
 
   .mobile-nav {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 100px; /* Alinhado com a altura do header */
+    top: 100px; 
     left: 0;
     right: 0;
     background-color: var(--cor-primaria-escura);
     z-index: 999;
-    transform: translateY(-150%); /* Começa mais escondido para uma transição mais limpa */
+    transform: translateY(-150%);
     transition: transform 0.3s ease-in-out;
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   }
@@ -231,17 +231,16 @@
 
   .mobile-nav a.active-link {
     background-color: rgba(255, 255, 255, 0.1);
-    font-weight: bold;
+    font-weight: bold; 
   }
 
-  /* Ajuste da animação do logo em telas menores */
   .logo-container.at-home-top {
-    transform: translate(-50%, -50%) scale(2.5); /* Reduz a escala para não cobrir o carrossel */
+    transform: translate(-50%, -50%) scale(2.5); 
   }
 }
 
 @media (max-width: 720px) {
   .logo-title {
-    display: none; /* Esconde o título em telas muito pequenas para dar espaço */
+    display: none; 
   }
 }

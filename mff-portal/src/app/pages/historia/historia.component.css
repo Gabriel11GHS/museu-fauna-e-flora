@@ -4,7 +4,7 @@
   margin: 0 auto;
   padding: 2rem;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  box-sizing: border-box; /* Garante que padding não afete a largura */
+  box-sizing: border-box; 
 }
 
 .pagina-header {
@@ -16,7 +16,7 @@
 .pagina-header h1 {
   font-size: 2.8rem;
   font-weight: 700;
-  color: #27632a; /* Verde do tema */
+  color: #27632a;
 }
 
 .pagina-header p {
@@ -42,7 +42,7 @@
   top: 0;
   bottom: 0;
   left: 50%;
-  margin-left: -3px; /* Centraliza a linha de 6px */
+  margin-left: -3px; 
   border-radius: 3px;
 }
 
@@ -52,7 +52,7 @@
   position: relative;
   background-color: inherit;
   width: 50%;
-  box-sizing: border-box; /* Adicionado para consistência */
+  box-sizing: border-box; 
 }
 
 /* O círculo em cada evento na linha do tempo */
@@ -74,7 +74,7 @@
 }
 
 .esquerda::after {
-  right: -17px; /* Posiciona o círculo na linha */
+  right: -17px; 
 }
 
 .esquerda::before {
@@ -90,13 +90,13 @@
   border-color: transparent transparent transparent white;
 }
 
-/* --- Posicionamento Direita (CORRIGIDO) --- */
+/* --- Posicionamento Direita  --- */
 .direita {
   left: 50%;
 }
 
 .direita::after {
-  left: -16px; /* CORREÇÃO: Posiciona o círculo na linha */
+  left: -16px; 
 }
 
 .direita::before {
@@ -169,11 +169,11 @@
   }
 
   .esquerda::after, .direita::after {
-    left: 15px; /* Alinha todos os círculos à esquerda */
+    left: 15px; 
   }
   
   .direita {
-    left: 0%; /* Alinha todos os containers à esquerda */
+    left: 0%;
   }
 }
 
