@@ -5,25 +5,23 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ViewChild,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import {
-  SlickCarouselComponent,
-  SlickCarouselModule,
-} from 'ngx-slick-carousel';
+import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ApiService } from '../../services/api.service';
-import { HttpClient } from '@angular/common/http';
+import { ApiService} from '../../services/api.service';
 import { Planta } from '../../models/planta.model';
 import { FaunaService } from '../../services/fauna.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { HeaderStateService } from '../../services/header-state.service'; // Importado
+import { HeaderStateService } from '../../services/header-state.service';
+import { AfterViewInit } from '@angular/core';
+declare var L: any;
 
 export interface Destaque {
   nome: string;
@@ -41,23 +39,23 @@ export interface Destaque {
     SlickCarouselModule,
     MatButtonModule,
     MatIconModule,
-    MatCardModule,
+    MatCardModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'app-home-wrapper',
+    'class': 'app-home-wrapper'
   },
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('1s ease-out', style({ opacity: 1 })),
-      ]),
-    ]),
-  ],
+        animate('1s ease-out', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
@@ -72,21 +70,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       icone: 'eco',
       titulo: 'Fauna',
       descricao: 'Conheça a diversidade de animais do nosso acervo.',
-      link: '/fauna',
+      link: '/fauna'
     },
     {
       icone: 'local_florist',
       titulo: 'Flora',
       descricao: 'Explore as espécies de plantas catalogadas.',
-      link: '/flora',
+      link: '/flora'
     },
     {
       icone: 'map',
       titulo: 'Mapa',
-      descricao:
-        'Veja onde estão localizados os principais pontos do Instituto.',
-      link: '/mapa',
-    },
+      descricao: 'Veja onde estão localizados os principais pontos do Instituto.',
+      link: '/mapa'
+    }
   ];
 
   constructor(
@@ -103,25 +100,23 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.destaques$ = forkJoin({
       plantas: this.apiService.getPlantas().pipe(catchError(() => of([]))),
-      animais: this.faunaService.getAnimais().pipe(catchError(() => of([]))),
+      animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))
     }).pipe(
       map(({ plantas, animais }) => {
         const destaquesFlora: Destaque[] = plantas
-          .filter((p) => !!(p.fotoIndividuo || p.fotoTaxonomia))
-          .map((planta) => ({
+          .filter(p => !!(p.fotoIndividuo || p.fotoTaxonomia))
+          .map(planta => ({
             nome: planta.nomePopular || 'Planta não identificada',
-            imagem:
-              (planta.fotoIndividuo || planta.fotoTaxonomia) ??
-              'assets/placeholder.jpg',
+            imagem: (planta.fotoIndividuo || planta.fotoTaxonomia) ?? 'assets/placeholder.jpg',
             tipo: 'Flora',
-            link: `/flora/${planta.idIndividuo}`,
+            link: `/flora/${planta.idIndividuo}`
           }));
 
-        const destaquesFauna: Destaque[] = animais.map((animal) => ({
+        const destaquesFauna: Destaque[] = animais.map(animal => ({
           nome: animal.nomePopular,
           imagem: animal.imagem ?? 'assets/placeholder.jpg',
           tipo: 'Fauna',
-          link: `/fauna`,
+          link: `/fauna`
         }));
 
         const combinados = [...destaquesFlora, ...destaquesFauna];
@@ -138,11 +133,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   // ... (demais métodos da classe)
   mediaItems = [
     { image: 'assets/home/carrossel-1.jpg', alt: 'Vista do campus do ICMC' },
-    {
-      image: 'assets/home/carrossel-2.jpg',
-      alt: 'Detalhe de uma flor de Ipê Amarelo',
-    },
-    { image: 'assets/home/carrossel-3.jpg', alt: 'Capivara no gramado da USP' },
+    { image: 'assets/home/carrossel-2.jpg', alt: 'Detalhe de uma flor de Ipê Amarelo' },
+    { image: 'assets/home/carrossel-3.jpg', alt: 'Capivara no gramado da USP' }
   ];
 
   slideConfig = {
@@ -153,7 +145,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     fade: true,
     cssEase: 'linear',
     dots: true,
-    arrows: true,
+    arrows: true
   };
 
   ngAfterViewInit(): void {
