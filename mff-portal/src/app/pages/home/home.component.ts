@@ -90,8 +90,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     private headerStateService: HeaderStateService, // Injetado
     private apiService: ApiService,
     private faunaService: FaunaService,
-    private cdr: ChangeDetectorRef,
-    private http: HttpClient
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
