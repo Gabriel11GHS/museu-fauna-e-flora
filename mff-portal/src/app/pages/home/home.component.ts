@@ -19,7 +19,9 @@ import { ApiService} from '../../services/api.service';
 import { Planta } from '../../models/planta.model';
 import { FaunaService } from '../../services/fauna.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { HeaderStateService } from '../../services/header-state.service'; // Importado
+import { HeaderStateService } from '../../services/header-state.service';
+import { AfterViewInit } from '@angular/core';
+declare var L: any;
 
 export interface Destaque {
   nome: string;
