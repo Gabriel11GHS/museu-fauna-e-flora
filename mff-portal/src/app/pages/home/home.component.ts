@@ -165,40 +165,30 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.onCarouselAfterChange({ currentSlide: 0 });
   }, 0);
 
-// Cria o mapa centralizado no ICMC
-const map = L.map('map').setView([-22.0029, -47.8913], 16);
+  // Cria o mapa centralizado no ICMC
+  const map = L.map('map').setView([-22.0029, -47.8913], 16);
 
-// Adiciona a camada base do OpenStreetMap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors',
-}).addTo(map);
+  // Camada base gratuita (OpenStreetMap)
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
 
-// Carrega o arquivo KML usando o HttpClient do Angular
-this.http.get('/assets/mapa/Local7.kml', { responseType: 'text' })
-  .pipe(
-    catchError(error => {
-      console.error('Erro ao buscar o arquivo KML com HttpClient:', error);
-      // Retorna um observable vazio para não quebrar a cadeia
-      return of('');
-    })
-  )
-  .subscribe(kmltext => {
-    if (kmltext) {
-      // Cria um parser de XML
-      const parser = new DOMParser();
-      const kml = parser.parseFromString(kmltext, 'text/xml');
-
-      // Instancia a camada KML do Leaflet com o XML já processado
-      const track = new (L as any).KML(kml);
-      map.addLayer(track);
-
-      // Ajusta o mapa para mostrar todos os marcadores do KML
-      map.fitBounds(track.getBounds());
-    } else {
-      console.error('O arquivo KML não pôde ser carregado ou está vazio.');
-    }
+  // --- TRECHO CORRIGIDO ---
+  // Carrega o arquivo KML da forma correta, delegando ao plugin
+  const kmlLayer = new (L as any).KML('assets/mapa/Local7.kml', {
+    async: true,
   });
-};
+
+  // Usa o evento 'loaded' do plugin para garantir que o KML foi processado
+  kmlLayer.on('loaded', (e: any) => {
+    // Ajusta o zoom e a posição do mapa para enquadrar todos os pontos do KML
+    map.fitBounds(e.target.getBounds());
+  });
+
+  // Adiciona a camada ao mapa
+  kmlLayer.addTo(map);
+  // --- FIM DO TRECHO CORRIGIDO ---
+}
 
   togglePlayPause(): void {
     if (this.isCarouselPlaying) {
