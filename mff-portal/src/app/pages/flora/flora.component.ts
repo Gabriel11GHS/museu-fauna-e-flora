@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, forkJoin, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService} from '../../services/api.service';
 import { Planta } from '../../models/planta.model';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +18,7 @@ import {
 import { combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatCardModule } from '@angular/material/card';
+import { MapaFloraComponent } from './mapa-flora.component';
 
 @Component({
   selector: 'app-flora',
@@ -33,12 +34,15 @@ import { MatCardModule } from '@angular/material/card';
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MapaFloraComponent
   ],
   templateUrl: './flora.component.html',
   styleUrls: ['./flora.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FloraComponent implements OnInit {
   public isLoading: boolean = true;
+  public isMapLoading: boolean = false;
   public selectedLocal: string = '';
   public searchTerm: string = '';
   public selectedFamilia: string = '';
@@ -46,14 +50,22 @@ export class FloraComponent implements OnInit {
 
   public allPlantas: Planta[] = [];
   public data: Planta[] = [];
+  public plantasParaMapa: Planta[] = [];
+  public showMap: boolean = false;
   public errorMessage: string | null = null;
 
   public locais: string[] = [];
   public familias: string[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,
+              private route: ActivatedRoute,
+              private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    const localFromQuery = this.route.snapshot.queryParamMap.get('local');
+    if (localFromQuery) {
+      this.selectedLocal = localFromQuery;
+    }
     this.carregarPlantas();
   }
 
@@ -109,6 +121,24 @@ export class FloraComponent implements OnInit {
     this.familias = Array.from(familiasSet).sort();
   }
 
+  public gerarMapa(): void {
+    if (this.data.length === 0) return;
+    this.isMapLoading = true;
+    this.showMap = true;
+    
+    const requests: Observable<Planta>[] = this.data.map(planta =>
+      this.apiService.getPlantaById(planta.idIndividuo).pipe(
+        catchError(() => of(planta))
+      )
+    );
+
+    forkJoin(requests).subscribe(plantasComCoordenadas => {
+      this.plantasParaMapa = plantasComCoordenadas.filter(p => p.latitude && p.longitude);
+      this.isMapLoading = false;
+      this.cdr.markForCheck();
+    });
+  }
+
   public filtrarPlantas(): void {
     let filteredData = [...this.allPlantas];
 
@@ -142,6 +172,8 @@ export class FloraComponent implements OnInit {
     }
 
     this.data = filteredData;
+    this.showMap = false;
+    this.plantasParaMapa = [];
   }
 
   trackByPlantId(index: number, planta: Planta): string {
