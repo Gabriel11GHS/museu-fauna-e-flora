@@ -41,7 +41,7 @@ export class DetalhePlantaComponent implements OnInit {
     
     if (id) {
       // Agora chamamos o novo método do serviço
-      this.planta$ = this.apiService.getPlantaById(id);
+      this.planta$ = this.apiService.getIndividuo(id);
     }
   }
 

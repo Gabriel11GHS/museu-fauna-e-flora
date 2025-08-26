@@ -26,39 +26,12 @@
     <mat-slide-toggle class="audio-toggle" [(ngModel)]="filtroAudio" (ngModelChange)="filtrarPlantas()" color="primary">
       Apenas com áudio
     </mat-slide-toggle>
+    <mat-slide-toggle class="audio-toggle" [checked]="showMap" (change)="onMapToggleChange($event)" color="primary" [disabled]="data.length === 0">
+      Exibir Mapa
+    </mat-slide-toggle>
   </div>
 </div>
 
-<div class="content-wrapper">
-  <div *ngIf="!isLoading">
-    <div *ngIf="data.length > 0">
-      
-      <div class="mapa-actions">
-        <button mat-raised-button color="primary" (click)="gerarMapa()" [disabled]="isMapLoading">
-          <mat-icon>map</mat-icon>
-          Gerar Mapa com {{ data.length }} Resultados
-        </button>
-      </div>
-
-      <div *ngIf="showMap" class="mapa-resultados-container">
-        <div *ngIf="isMapLoading" class="feedback-container">
-          <mat-spinner diameter="40"></mat-spinner>
-          <p>Buscando coordenadas...</p>
-        </div>
-        
-        <app-mapa-flora *ngIf="!isMapLoading && plantasParaMapa.length > 0" [plantasFiltradas]="plantasParaMapa"></app-mapa-flora>
-        
-        <div *ngIf="!isMapLoading && plantasParaMapa.length === 0" class="feedback-container">
-            <mat-icon>location_off</mat-icon>
-            <p>Nenhum dos indivíduos filtrados possui coordenadas para exibição no mapa.</p>
-        </div>
-      </div>
-      
-      <div class="plant-list">
-        </div>
-    </div>
-  </div>
-</div>
 
 <div class="content-wrapper">
   <div *ngIf="isLoading" class="feedback-container">
@@ -74,6 +47,20 @@
     <div *ngIf="!errorMessage && data.length === 0" class="feedback-container">
       <mat-icon>search_off</mat-icon>
       <p>Nenhuma planta encontrada com os filtros selecionados.</p>
+    </div>
+
+    <div *ngIf="showMap" class="mapa-resultados-container">
+      <div *ngIf="isMapLoading" class="feedback-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Buscando coordenadas...</p>
+      </div>
+      
+      <app-mapa-flora *ngIf="!isMapLoading && plantasParaMapa.length > 0" [plantasFiltradas]="plantasParaMapa"></app-mapa-flora>
+      
+      <div *ngIf="!isMapLoading && plantasParaMapa.length === 0" class="feedback-container">
+        <mat-icon>location_off</mat-icon>
+        <p>Nenhum dos indivíduos filtrados possui coordenadas para exibição no mapa.</p>
+      </div>
     </div>
 
     <div *ngIf="data.length > 0" class="plant-list">
