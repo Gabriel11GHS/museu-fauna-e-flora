@@ -10,7 +10,6 @@ declare var L: any;
   selector: 'app-mapa-flora',
   standalone: true,
   imports: [CommonModule],
-  // MODIFICAÇÃO: Usamos o host para obter a referência do elemento
   template: '', 
   styles: [':host { display: block; height: 450px; width: 100%; border-radius: 8px; z-index: 1; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,11 +28,10 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
   private map: any;
   private markersLayer: any;
 
-  constructor(private elRef: ElementRef) { // Injetamos a referência do elemento
-    // A configuração dos ícones continua correta aqui.
-    const iconRetinaUrl = 'assets/images/leaflet/marker-icon-2x.png';
-    const iconUrl = 'assets/images/leaflet/marker-icon.png';
-    const shadowUrl = 'assets/images/leaflet/marker-shadow.png';
+  constructor(private elRef: ElementRef) { 
+    const iconRetinaUrl = 'assets/mapa/leaflet/marker-icon-2x.png';
+    const iconUrl = 'assets/mapa/leaflet/marker-icon.png';
+    const shadowUrl = 'assets/mapa/leaflet/marker-shadow.png';
     const iconDefault = L.icon({
       iconRetinaUrl, iconUrl, shadowUrl,
       iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
@@ -43,12 +41,10 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // A inicialização agora acontece aqui, no elemento hospedeiro do componente
     this.inicializarMapa();
   }
 
   ngOnDestroy(): void {
-    // Boa prática: remove o mapa ao destruir o componente para evitar vazamentos de memória
     if (this.map) {
       this.map.remove();
     }
@@ -62,11 +58,11 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
     this.markersLayer = new L.FeatureGroup().addTo(this.map);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+      attribution: '&copy; OpenStreetMap contributors',
+      maxNativeZoom: 19,
+      maxZoom: 22    
     }).addTo(this.map);
 
-    // Como os dados podem ter chegado antes do mapa ser inicializado,
-    // chamamos atualizarMarcadores aqui para a carga inicial.
     this.atualizarMarcadores();
   }
 
@@ -95,7 +91,10 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
     // O setTimeout garante que isso ocorra após a renderização final do Angular
     setTimeout(() => {
       this.map.invalidateSize();
-      this.map.fitBounds(this.markersLayer.getBounds(), { padding: [50, 50] });
+      this.map.fitBounds(this.markersLayer.getBounds(), { 
+        padding: [50, 50],
+        maxZoom: 22
+      });
     }, 0);
   }
 }
