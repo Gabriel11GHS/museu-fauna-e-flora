@@ -57,11 +57,19 @@
   height: 100%;
 }
 
+.app-home-wrapper .hero-carousel .slick-list,
+.app-home-wrapper .hero-carousel .slick-track,
+.app-home-wrapper .hero-carousel .slide {
+  height: 100%;
+}
+
+
 .app-home-wrapper .hero-carousel .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Essencial para cobrir o espaço sem distorcer */
 }
+
 
 .app-home-wrapper .hero-overlay {
   position: absolute;
@@ -100,6 +108,26 @@
   font-size: 1rem;
   border-radius: 50px;
   margin-top: 0rem;
+}
+
+/* --- Responsividade para a Seção Hero --- */
+@media (max-width: 768px) {
+  .app-home-wrapper .hero-section {
+    height: 80vh; /* Aumenta a altura em vh para melhor preenchimento em telas altas */
+    min-height: 0; /* Remove a altura mínima fixa que causa o espaço extra */
+  }
+
+  .app-home-wrapper .hero-subtitulo {
+    margin-top: 10rem; /* Ajusta a margem para o subtítulo não ficar tão baixo */
+  }
+
+  .app-home-wrapper .hero-carousel .slick-prev {
+    left: 15px;
+  }
+
+  .app-home-wrapper .hero-carousel .slick-next {
+    right: 15px;
+  }
 }
 
 /* --- Estilos Acessíveis para Controles do Carrossel --- */
