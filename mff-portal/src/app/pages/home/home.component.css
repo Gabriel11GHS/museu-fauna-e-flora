@@ -1,5 +1,5 @@
-@import 'slick-carousel/slick/slick.css';
-@import 'slick-carousel/slick/slick-theme.css';
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 
 /* --- Estilos Globais --- */
 .app-home-wrapper {
@@ -28,7 +28,6 @@
   width: 1px;
   white-space: nowrap;
 }
-
 
 /* --- Seção Hero --- */
 .app-home-wrapper .hero-section {
@@ -63,13 +62,11 @@
   height: 100%;
 }
 
-
 .app-home-wrapper .hero-carousel .slide img {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Essencial para cobrir o espaço sem distorcer */
 }
-
 
 .app-home-wrapper .hero-overlay {
   position: absolute;
@@ -77,7 +74,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.30));
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.3));
   z-index: 2; /* Fica acima do carrossel mas abaixo do conteúdo */
 }
 
@@ -242,34 +239,34 @@
 }
 
 .vozes-container {
-  display: flex;         /* ATIVA O FLEXBOX: O segredo para o alinhamento */
-  align-items: center;   /* Alinha os itens verticalmente ao centro */
+  display: flex; /* ATIVA O FLEXBOX: O segredo para o alinhamento */
+  align-items: center; /* Alinha os itens verticalmente ao centro */
   justify-content: center;
-  gap: 50px;             /* Espaço moderno entre a imagem e o texto */
+  gap: 50px; /* Espaço moderno entre a imagem e o texto */
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap;       /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
+  flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
 }
 
 /* --- Coluna da Imagem --- */
 .nature-sounds-image {
-  flex: 1;               /* Define que a coluna da imagem deve ocupar uma parte do espaço */
-  min-width: 500px;      /* Largura mínima para evitar que a imagem fique muito espremida */
-  max-width: 700px;      /* Largura máxima para manter a proporção */
+  flex: 1; /* Define que a coluna da imagem deve ocupar uma parte do espaço */
+  min-width: 500px; /* Largura mínima para evitar que a imagem fique muito espremida */
+  max-width: 700px; /* Largura máxima para manter a proporção */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .nature-sounds-image img {
-  width: 300%;       
-  height: auto;          
+  width: 300%;
+  height: auto;
   display: block;
 }
 
 /* --- Coluna do Texto --- */
 .texto-vozes {
-  flex: 1.5;            
+  flex: 1.5;
   min-width: 300px;
   max-width: 500px;
   display: flex;
@@ -292,7 +289,7 @@
 .media-box {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .media-box img {
@@ -318,18 +315,16 @@
   margin: 0 auto;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 .mapa-imagem {
   width: 100%;
-  display: block; 
+  display: block;
 }
 
 .nature-sounds-image img {
-  width: 30%; 
+  width: 30%;
   height: auto;
-  display: block; 
-
+  display: block;
 }
-
