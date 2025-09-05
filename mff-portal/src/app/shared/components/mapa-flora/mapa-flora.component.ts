@@ -1,4 +1,5 @@
-import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ElementRef, OnDestroy } from '@angular/core';
+import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ElementRef, OnDestroy, NgZone} from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Planta } from '../../../models/planta.model';
 
@@ -24,7 +25,9 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
   private map: any;
   private markersLayer: any;
 
-  constructor(private elRef: ElementRef) { 
+  constructor(private elRef: ElementRef, 
+              private router: Router, 
+              private ngZone: NgZone) { 
     const iconRetinaUrl = 'assets/mapa/leaflet/marker-icon-2x.png';
     const iconUrl = 'assets/mapa/leaflet/marker-icon.png';
     const shadowUrl = 'assets/mapa/leaflet/marker-shadow.png';
@@ -77,7 +80,11 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
       const lat = parseFloat(planta.latitude!);
       const lng = parseFloat(planta.longitude!);
       if (!isNaN(lat) && !isNaN(lng)) {
-        const marker = L.marker([lat, lng]).bindPopup(`<b>${planta.nomePopular}</b><br><i>${planta.nomeCientifico}</i><i>${planta.idIndividuo}</i>`);
+        const marker = L.marker([lat, lng])
+        .bindPopup(`<b>${planta.nomePopular}</b><br><i>${planta.nomeCientifico}</i><i>${planta.idIndividuo}</i>`)
+        .on('click', () => {
+            this.navegarParaPlanta(planta.idIndividuo);
+          });
         this.markersLayer.addLayer(marker);
       }
     });
@@ -89,5 +96,10 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
         maxZoom: 22
       });
     }, 0);
+  }
+    private navegarParaPlanta(id: string): void {
+    this.ngZone.run(() => {
+      this.router.navigate(['/flora', id]);
+    });
   }
 }
