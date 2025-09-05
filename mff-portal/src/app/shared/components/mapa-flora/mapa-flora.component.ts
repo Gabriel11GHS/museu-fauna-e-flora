@@ -108,7 +108,6 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
           </div>
         `;
 
-        // ATUALIZADO: Removemos o .on('click') daqui e apenas vinculamos o popup
         const marker = L.marker([lat, lng]).bindPopup(popupContent);
         this.markersLayer.addLayer(marker);
       }
