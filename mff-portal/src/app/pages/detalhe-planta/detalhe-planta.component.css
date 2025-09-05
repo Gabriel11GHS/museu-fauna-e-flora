@@ -49,9 +49,8 @@
 
 .detalhe-grid {
   display: grid;
-  grid-template-columns: 4fr 5fr; /* Proporção para as colunas */
+  grid-template-columns: 4fr 5fr;
   gap: 3rem;
-  max-height: calc(85vh - 40px); /* Altura máxima para evitar rolagem da página */
 }
 
 /* Coluna da Esquerda (Mídia) */
@@ -88,12 +87,12 @@
   width: 100%;
 }
 
-/* Coluna da Direita (Informações) com rolagem interna */
+/* Coluna da Direita (Informações) */
 .coluna-info {
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* A MÁGICA: Adiciona rolagem apenas a esta coluna se necessário */
-  padding-right: 1rem; /* Espaço para a barra de rolagem */
+  overflow-y: auto; 
+  padding-right: 1rem; 
 }
 
 .secao-detalhes {
@@ -118,11 +117,13 @@
   padding: 0.75rem 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  gap: 1rem;
 }
 
 .detalhe-label {
   font-weight: 600;
   color: var(--cor-secundaria);
+  flex-shrink: 0;
 }
 .detalhe-value {
   color: var(--cor-texto-principal);
@@ -130,6 +131,19 @@
 }
 .detalhe-value em {
   font-style: italic;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-width: 0; 
+}
+
+.mapa-container {
+  height: 400px; 
+  width: 100%;
+  border-radius: var(--borda-radius); 
+  overflow: hidden;
+  box-shadow: var(--shadow-suave);
+  margin-top: 1.5rem; 
+  border: 1px solid var(--cor-borda);
 }
 
 /* Estilo do feedback de carregamento */
@@ -149,16 +163,22 @@
 /* Responsividade */
 @media (max-width: 900px) {
   .detalhe-container {
+    display: block; 
     min-height: auto;
-    margin: 1rem;
+    padding: 1rem 0; 
+  }
+  
+  .detalhe-card {
+    border-radius: 0;
     padding: 1.5rem;
   }
+
   .detalhe-grid {
     grid-template-columns: 1fr;
-    max-height: none;
+    gap: 2rem;
   }
-  .coluna-info {
-    overflow-y: visible; /* Remove a rolagem interna em telas menores */
-    padding-right: 0;
+
+  .mapa-container {
+    height: 350px; 
   }
 }

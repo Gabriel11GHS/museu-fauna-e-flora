@@ -201,3 +201,29 @@ mat-card-actions {
   border-radius: 8px;
   font-weight: bold;
 }
+
+/* --- Ações e Container do Mapa --- */
+.mapa-actions {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.mapa-actions button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 25px;
+}
+
+.mapa-resultados-container {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: var(--borda-radius);
+  border: 1px solid #eef0ef;
+  box-shadow: var(--shadow-suave);
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

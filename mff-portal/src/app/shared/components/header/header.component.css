@@ -208,18 +208,20 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 100px; 
+    top: 100px; /* Havia uma inconsistência aqui (estava 120px em uma regra e 100px em outra) */
     left: 0;
     right: 0;
     background-color: var(--cor-primaria-escura);
     z-index: 999;
-    transform: translateY(-150%);
+    transform: translateY(-150%); /* Unificando o transform para ser consistente */
     transition: transform 0.3s ease-in-out;
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   }
 
   .mobile-nav.open {
     transform: translateY(0);
+    /* ADIÇÃO PRINCIPAL: Z-INDEX AUMENTADO */
+    z-index: 1002; /* Garante que o menu fique SOBRE o logo animado (que tem z-index: 1001) */
   }
 
   .mobile-nav a {
