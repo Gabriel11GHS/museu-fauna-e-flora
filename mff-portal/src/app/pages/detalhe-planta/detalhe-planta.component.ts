@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MapaFloraComponent } from '../../shared/components/mapa-flora/mapa-flora.component';
 
 @Component({
   selector: 'app-detalhe-planta',
@@ -15,7 +16,8 @@ import { trigger, transition, style, animate } from '@angular/animations';
   imports: [CommonModule,
             MatIcon,
             MatProgressSpinnerModule,
-            RouterLink],
+            RouterLink,
+            MapaFloraComponent],
   templateUrl: './detalhe-planta.component.html',
   styleUrls: ['./detalhe-planta.component.css'],
   animations: [

@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MapaFloraComponent } from './mapa-flora.component';
+import { MapaFloraComponent } from '../../shared/components/mapa-flora/mapa-flora.component';
 
 @Component({
   selector: 'app-flora',
