@@ -28,8 +28,8 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
   constructor(private elRef: ElementRef, 
               private router: Router, 
               private ngZone: NgZone) { 
-    const iconRetinaUrl = 'assets/mapa/leaflet/marker-icon-2x.png';
-    const iconUrl = 'assets/mapa/leaflet/marker-icon.png';
+    const iconRetinaUrl = 'assets/mapa/leaflet/marker-mff-2x.png';
+    const iconUrl = 'assets/mapa/leaflet/marker-mff.png';
     const shadowUrl = 'assets/mapa/leaflet/marker-shadow.png';
     const iconDefault = L.icon({
       iconRetinaUrl, iconUrl, shadowUrl,
@@ -61,6 +61,20 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
       maxZoom: 22    
     }).addTo(this.map);
 
+    this.map.on('popupopen', (e: any) => {
+      const popupContent = e.popup._contentNode;
+      const link = popupContent.querySelector('.popup-navigation-link');
+      if (link) {
+        link.addEventListener('click', (event: MouseEvent) => {
+          event.preventDefault(); // Previne o comportamento padrão do link
+          const id = (event.currentTarget as HTMLElement).dataset['id'];
+          if (id) {
+            this.navegarParaPlanta(id);
+          }
+        });
+      }
+    });
+
     this.atualizarMarcadores();
   }
 
@@ -80,11 +94,22 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
       const lat = parseFloat(planta.latitude!);
       const lng = parseFloat(planta.longitude!);
       if (!isNaN(lat) && !isNaN(lng)) {
-        const marker = L.marker([lat, lng])
-        .bindPopup(`<b>${planta.nomePopular}</b><br><i>${planta.nomeCientifico}</i><i>${planta.idIndividuo}</i>`)
-        .on('click', () => {
-            this.navegarParaPlanta(planta.idIndividuo);
-          });
+        const popupContent = `
+          <div style="text-align: center;">
+            <b style="font-size: 1.1em;">${planta.nomePopular}</b><br>
+            <i style="font-size: 0.9em;">${planta.nomeCientifico}</i>
+            <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ccc;">
+            <a href="/flora/${planta.idIndividuo}" 
+               class="popup-navigation-link" 
+               data-id="${planta.idIndividuo}"
+               style="color: #3a8c3a; font-weight: bold; text-decoration: none;">
+              Ver Detalhes &rarr;
+            </a>
+          </div>
+        `;
+
+        // ATUALIZADO: Removemos o .on('click') daqui e apenas vinculamos o popup
+        const marker = L.marker([lat, lng]).bindPopup(popupContent);
         this.markersLayer.addLayer(marker);
       }
     });
