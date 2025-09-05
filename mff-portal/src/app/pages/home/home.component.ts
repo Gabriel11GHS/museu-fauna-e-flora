@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       link: '/fauna'
     },
     {
-      icone: 'local_florist',
+      imagemIcone: 'assets/icons/flora.png',
       titulo: 'Flora',
       descricao: 'Explore as espécies de plantas catalogadas.',
       link: '/flora'

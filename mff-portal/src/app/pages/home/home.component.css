@@ -212,6 +212,13 @@
   margin-bottom: 20px;
 }
 
+.destaque-icone-imagem {
+  width: 50px; /* Mesmo tamanho do .destaque-icone */
+  height: 50px; /* Mesmo tamanho do .destaque-icone */
+  margin-bottom: 20px; /* Mesmo espaçamento do .destaque-icone */
+  object-fit: contain; /* Garante que a imagem apareça inteira, sem cortar */
+}
+
 .destaque-titulo {
   font-size: 1.5rem;
   font-weight: 500;
@@ -226,7 +233,8 @@
 }
 
 .destaque-link {
-  color: var(--cor-ativo);
+  --mdc-outlined-button-label-text-color: var(--cor-ativo); /* Cor do texto */
+  
 }
 
 /* --- Seção Vozes da Natureza --- */
