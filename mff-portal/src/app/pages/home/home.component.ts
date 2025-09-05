@@ -67,13 +67,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   destaquesPrincipais = [
     {
-      icone: 'eco',
+      imagemIcone: 'assets/icons/fauna.png',
       titulo: 'Fauna',
       descricao: 'Conheça a diversidade de animais do nosso acervo.',
       link: '/fauna'
     },
     {
-      icone: 'local_florist',
+      imagemIcone: 'assets/icons/flora.png',
       titulo: 'Flora',
       descricao: 'Explore as espécies de plantas catalogadas.',
       link: '/flora'
