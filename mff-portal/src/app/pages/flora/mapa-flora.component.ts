@@ -1,5 +1,3 @@
-// src/app/pages/flora/mapa-flora.component.ts
-
 import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ElementRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Planta } from '../../models/planta.model';
@@ -15,10 +13,8 @@ declare var L: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapaFloraComponent implements AfterViewInit, OnDestroy {
-  // Usamos um setter para reagir à chegada de novos dados
   @Input() set plantasFiltradas(plantas: Planta[]) {
     this._plantas = plantas;
-    // Se o mapa já foi inicializado, apenas atualiza os marcadores
     if (this.map) {
       this.atualizarMarcadores();
     }
@@ -53,7 +49,6 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
   private inicializarMapa(): void {
     if (this.map) return;
 
-    // O mapa agora é criado no próprio elemento do componente (<app-mapa-flora>)
     this.map = L.map(this.elRef.nativeElement).setView([-22.0029, -47.8913], 16);
     this.markersLayer = new L.FeatureGroup().addTo(this.map);
 
@@ -82,7 +77,7 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
       const lat = parseFloat(planta.latitude!);
       const lng = parseFloat(planta.longitude!);
       if (!isNaN(lat) && !isNaN(lng)) {
-        const marker = L.marker([lat, lng]).bindPopup(`<b>${planta.nomePopular}</b><br><i>${planta.nomeCientifico}</i>`);
+        const marker = L.marker([lat, lng]).bindPopup(`<b>${planta.nomePopular}</b><br><i>${planta.nomeCientifico}</i><i>${planta.idIndividuo}</i>`);
         this.markersLayer.addLayer(marker);
       }
     });
