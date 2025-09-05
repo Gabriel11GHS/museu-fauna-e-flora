@@ -1,155 +1,163 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/pages/flora/flora.component.ts
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ApiService} from '../../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { Planta } from '../../models/planta.model';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {
-  MatSlideToggleChange,
-  MatSlideToggleModule,
-} from '@angular/material/slide-toggle';
-import { combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MapaFloraComponent } from './mapa-flora.component';
 
 @Component({
   selector: 'app-flora',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    RouterLink,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
+    CommonModule, FormsModule, RouterLink, MatFormFieldModule, MatInputModule,
+    MatIconModule, MatSelectModule, MatProgressSpinnerModule, MatCardModule,
+    MatButtonModule, MatSlideToggleModule, MapaFloraComponent
   ],
   templateUrl: './flora.component.html',
-  styleUrls: ['./flora.component.css'],
+  styleUrls: ['./flora.component.css']
 })
 export class FloraComponent implements OnInit {
-  public isLoading: boolean = true;
-  public selectedLocal: string = '';
-  public searchTerm: string = '';
-  public selectedFamilia: string = '';
-  public filtroAudio: boolean = false;
-
+  public isLoading = true;
+  public isMapLoading = false;
+  public showMap = false;
   public allPlantas: Planta[] = [];
   public data: Planta[] = [];
+  public plantasParaMapa: Planta[] = [];
+  public searchTerm = '';
+  public selectedLocal = '';
+  public selectedFamilia = '';
+  public filtroAudio = false;
   public errorMessage: string | null = null;
-
   public locais: string[] = [];
   public familias: string[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
+    const localFromQuery = this.route.snapshot.queryParamMap.get('local');
+    if (localFromQuery) {
+      this.selectedLocal = localFromQuery;
+    }
     this.carregarPlantas();
   }
 
   carregarPlantas(): void {
     this.isLoading = true;
     this.errorMessage = null;
-
-    this.apiService
-      .getPlantas()
-      .pipe(
-        catchError((error) => {
-          console.error('Erro ao carregar dados das plantas:', error);
-          this.errorMessage =
-            'Não foi possível carregar os dados. Verifique sua conexão ou tente mais tarde.';
-          this.isLoading = false;
-          return of([]);
-        })
-      )
-      .subscribe((plantas) => {
-        // Lógica de ordenação: Plantas com foto primeiro
+    this.apiService.getPlantas().subscribe({
+      next: (plantas) => {
         plantas.sort((a, b) => {
           const aHasPhoto = !!a.fotoIndividuo || !!a.fotoTaxonomia;
           const bHasPhoto = !!b.fotoIndividuo || !!b.fotoTaxonomia;
-
-          if (aHasPhoto && !bHasPhoto) {
-            return -1; // 'a' (com foto) vem antes de 'b' (sem foto)
-          } else if (!aHasPhoto && bHasPhoto) {
-            return 1; // 'b' (com foto) vem antes de 'a' (sem foto)
-          } else {
-            return 0; // Mantém a ordem relativa se ambos têm ou não têm foto
-          }
+          return aHasPhoto === bHasPhoto ? 0 : aHasPhoto ? -1 : 1;
         });
-
         this.allPlantas = plantas;
-        this.data = plantas;
         this.extractFilterOptions();
+        this.filtrarPlantas();
         this.isLoading = false;
-        this.filtrarPlantas(); // Aplica filtros se houver algum selecionado
-      });
+        this.cdr.markForCheck();
+      },
+      error: (error) => {
+        console.error('Erro ao carregar dados:', error);
+        this.errorMessage = 'Não foi possível carregar os dados. Tente mais tarde.';
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   extractFilterOptions(): void {
-    const locaisSet = new Set<string>();
-    const familiasSet = new Set<string>();
-
-    this.allPlantas.forEach((planta) => {
-      if (planta.nomeLocal) locaisSet.add(planta.nomeLocal);
-      if (planta.familia && planta.familia !== 'Não identificada')
-        familiasSet.add(planta.familia);
-    });
-
-    this.locais = Array.from(locaisSet).sort();
-    this.familias = Array.from(familiasSet).sort();
+    const locais = this.allPlantas.map(p => p.nomeLocal).filter((l): l is string => !!l);
+    this.locais = [...new Set(locais)].sort();
+    const familias = this.allPlantas.map(p => p.familia).filter((f): f is string => !!f && f !== 'Não identificada');
+    this.familias = [...new Set(familias)].sort();
   }
 
-  public filtrarPlantas(): void {
+  filtrarPlantas(): void {
     let filteredData = [...this.allPlantas];
-
     if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase();
-      filteredData = filteredData.filter(
-        (planta) =>
-          (planta.nomePopular &&
-            planta.nomePopular.toLowerCase().includes(term)) ||
-          (planta.nomeCientifico &&
-            planta.nomeCientifico.toLowerCase().includes(term))
+      filteredData = filteredData.filter(p =>
+        p.nomePopular?.toLowerCase().includes(term) ||
+        p.nomeCientifico?.toLowerCase().includes(term)
       );
     }
-
     if (this.selectedFamilia) {
-      filteredData = filteredData.filter(
-        (planta) => planta.familia === this.selectedFamilia
-      );
+      filteredData = filteredData.filter(p => p.familia === this.selectedFamilia);
     }
-
     if (this.selectedLocal) {
-      filteredData = filteredData.filter(
-        (planta) => planta.nomeLocal === this.selectedLocal
-      );
+      filteredData = filteredData.filter(p => p.nomeLocal === this.selectedLocal);
     }
-
     if (this.filtroAudio) {
-      filteredData = filteredData.filter(
-        (planta) => planta.trilhaAudio && planta.trilhaAudio.trim() !== ''
-      );
+      filteredData = filteredData.filter(p => !!p.trilhaAudio);
+    }
+    this.data = filteredData;
+    this.showMap = false; 
+  }
+
+  onMapToggleChange(event: MatSlideToggleChange): void {
+    // PONTO DE VERIFICAÇÃO 1: O evento foi disparado?
+    console.log('%c1. Toggle do mapa acionado. Novo estado:', 'color: blue; font-weight: bold;', event.checked);
+
+    this.showMap = event.checked;
+    
+    // Se o toggle for desativado, não fazemos mais nada
+    if (!event.checked) {
+      return;
     }
 
-    this.data = filteredData;
+    if (this.data.length > 0) {
+      this.isMapLoading = true;
+      
+      // PONTO DE VERIFICAÇÃO 2: Estamos prestes a buscar os dados?
+      console.log(`%c2. Buscando coordenadas para ${this.data.length} indivíduos.`, 'color: blue; font-weight: bold;');
+
+      const requests = this.data.map(planta => 
+        this.apiService.getIndividuo(planta.idIndividuo).pipe(
+          catchError((err) => {
+            // PONTO DE VERIFICAÇÃO 3 (Alerta): A busca para um indivíduo falhou?
+            console.warn(`Falha ao buscar detalhes para o indivíduo ID: ${planta.idIndividuo}`, err);
+            return of(planta); // Retorna a planta original sem coordenadas para não quebrar o forkJoin
+          })
+        )
+      );
+
+      forkJoin(requests).subscribe(plantasComCoordenadas => {
+        // PONTO DE VERIFICAÇÃO 4: O que a API retornou?
+        console.log('%c4. Resposta da API (forkJoin) recebida:', 'color: blue; font-weight: bold;', plantasComCoordenadas);
+
+        this.plantasParaMapa = plantasComCoordenadas.filter(p => p.latitude && p.longitude);
+        
+        // PONTO DE VERIFICAÇÃO 5: Quantas plantas têm coordenadas válidas?
+        console.log(`%c5. Plantas com coordenadas válidas encontradas: ${this.plantasParaMapa.length}`, 'color: blue; font-weight: bold;');
+
+        this.isMapLoading = false;
+        this.cdr.markForCheck();
+      });
+    }
   }
 
   trackByPlantId(index: number, planta: Planta): string {
     return planta.idIndividuo;
   }
 
-  public updateImageOnError(event: Event): void {
-    const imgElement = event.target as HTMLImageElement;
-    imgElement.src = 'assets/error/placeholder-image.png';
+  updateImageOnError(event: Event): void {
+    (event.target as HTMLImageElement).src = 'assets/error/placeholder-image.png';
   }
 }
