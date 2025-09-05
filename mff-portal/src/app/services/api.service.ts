@@ -21,7 +21,7 @@ export class ApiService {
   }
 
   // Busca um indivíduo específico pelo ID
-  getPlantaById(id: string): Observable<Planta> {
+  getIndividuo(id: string): Observable<Planta> {
     return this.http.get<Planta>(`${this.apiUrl}/obterIndividuo/${id}`).pipe(
       map(planta => this.processarPlanta(planta))
     );
