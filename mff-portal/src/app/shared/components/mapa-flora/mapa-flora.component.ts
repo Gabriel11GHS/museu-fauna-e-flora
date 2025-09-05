@@ -1,6 +1,6 @@
 import { Component, Input, AfterViewInit, ChangeDetectionStrategy, ElementRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Planta } from '../../models/planta.model';
+import { Planta } from '../../../models/planta.model';
 
 declare var L: any;
 
@@ -82,8 +82,6 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
       }
     });
     
-    // Forçamos o recalculo do tamanho e ajustamos o zoom
-    // O setTimeout garante que isso ocorra após a renderização final do Angular
     setTimeout(() => {
       this.map.invalidateSize();
       this.map.fitBounds(this.markersLayer.getBounds(), { 
