@@ -212,6 +212,13 @@
   margin-bottom: 20px;
 }
 
+.destaque-icone-imagem {
+  width: 50px; 
+  height: 50px; 
+  margin-bottom: 20px; 
+  object-fit: contain; 
+}
+
 .destaque-titulo {
   font-size: 1.5rem;
   font-weight: 500;
@@ -226,57 +233,47 @@
 }
 
 .destaque-link {
-  color: var(--cor-ativo);
+  --mdc-outlined-button-label-text-color: var(--cor-ativo); /* Cor do texto */
+  
 }
 
-/* --- Seção Vozes da Natureza & Carrossel --- */
 /* --- Seção Vozes da Natureza --- */
 .vozes-section {
-  background-color: #e8f5e9; /* Tom de verde claro */
+  background-color: #e8f5e9;
   padding: 80px 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .vozes-container {
-  display: flex; /* ATIVA O FLEXBOX: O segredo para o alinhamento */
-  align-items: center; /* Alinha os itens verticalmente ao centro */
+  display: flex;
+  align-items: center; 
   justify-content: center;
-  gap: 50px; /* Espaço moderno entre a imagem e o texto */
+  gap: 20px; 
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap; /* Permite que os itens quebrem para a linha de baixo em telas pequenas */
+  flex-direction: column; 
 }
 
-/* --- Coluna da Imagem --- */
-.nature-sounds-image {
-  flex: 1; /* Define que a coluna da imagem deve ocupar uma parte do espaço */
-  min-width: 500px; /* Largura mínima para evitar que a imagem fique muito espremida */
-  max-width: 700px; /* Largura máxima para manter a proporção */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* Coluna da Imagem */
 .nature-sounds-image img {
-  width: 300%;
-  height: auto;
   display: block;
+  width: 100%; 
+  max-width: 10 00px; 
+  height: auto; 
+  margin: 0 auto;
+  position: left;
 }
 
-/* --- Coluna do Texto --- */
+/* Coluna do Texto */
 .texto-vozes {
   flex: 1.5;
   min-width: 300px;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  text-align: center; 
+  width: 100%; 
 }
 
 .texto-vozes h2 {
   font-size: 2.5rem;
-  color: #27632a;
+  color: var(--cor-primaria);
   margin-top: 0;
 }
 
@@ -284,18 +281,6 @@
   font-size: 1.1rem;
   line-height: 1.7;
   margin-bottom: 30px;
-}
-
-.media-box {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.media-box img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
 }
 
 /* --- Seção do Mapa --- */
