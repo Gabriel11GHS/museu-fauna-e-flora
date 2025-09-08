@@ -32,19 +32,16 @@ export class ContatoComponent {
     this.iconRegistry.addSvgIcon('google', this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/google.svg'));
   }
 
-  /**
-   * Placeholder para a ação de agendar uma visita.
-   * Futuramente, pode abrir um modal ou redirecionar para um formulário.
-   */
+  abrirFormularioFeedback(): void {
+    const googleFormUrl = 'https://forms.gle/jtHoA936khiEchiW8';
+    window.open(googleFormUrl, '_blank');
+  }
+
   agendarVisita(): void {
     console.log('Botão "Agendar Visita" clicado. Implementar lógica de agendamento.');
     // Ex: this.router.navigate(['/agendamento']);
   }
 
-  /**
-   * Placeholder para a ação de conectar com a conta Google.
-   * Futuramente, iniciará o fluxo de autenticação OAuth2.
-   */
   conectarGoogle(): void {
     console.log('Botão "Conectar com Google" clicado. Implementar fluxo OAuth2.');
   }

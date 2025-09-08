@@ -37,11 +37,17 @@
 <section class="destaques-section">
   <div class="destaques-container">
     <div *ngFor="let destaque of destaquesPrincipais" class="destaque-card">
-      <mat-icon class="destaque-icone">{{ destaque.icone }}</mat-icon>
+      
+      <ng-container *ngIf="destaque.imagemIcone; else iconePadrao">
+        <img [src]="destaque.imagemIcone" alt="" class="destaque-icone-imagem">
+      </ng-container>
+      <ng-template #iconePadrao>
+        <mat-icon class="destaque-icone">{{ destaque.icone }}</mat-icon>
+      </ng-template>
+
       <h3 class="destaque-titulo">{{ destaque.titulo }}</h3>
       <p class="destaque-descricao">{{ destaque.descricao }}</p>
-      <a mat-stroked-button color="primary" [routerLink]="destaque.link"
-        class="destaque-link">
+      <a mat-stroked-button [routerLink]="destaque.link" class="destaque-link">
         Ver mais
       </a>
     </div>
@@ -56,7 +62,7 @@
     </div>
     <div class="texto-vozes">
       <h2>Vozes da Natureza</h2>
-      <p>O projeto "Vozes da Natureza" convida professores da USP para dar voz
+      <p>O projeto "Vozes da Natureza" convida a comunidade da USP para dar voz
         às árvores, transformando dados científicos em histórias cativantes.
         Ouça os áudios e enriqueça sua experiência..</p>
       <a mat-raised-button color="accent" routerLink="/flora">

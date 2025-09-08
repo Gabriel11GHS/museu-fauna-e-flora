@@ -138,6 +138,10 @@ margin-right: 8px;
 }
 
 /* Estilo para o botão primário ("Agendar Visita") */
+.acao-secao {
+  text-align: center; /* Adicione esta linha */
+}
+
 .acao-secao button.mat-raised-button.mat-primary {
 background-color: #E91E63; 
 color: white; 
