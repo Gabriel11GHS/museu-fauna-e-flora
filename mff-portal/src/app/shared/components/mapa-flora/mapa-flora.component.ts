@@ -93,7 +93,7 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
     plantasComCoord.forEach(planta => {
       const lat = parseFloat(planta.latitude!);
       const lng = parseFloat(planta.longitude!);
-      if (!isNaN(lat) && !isNaN(lng)) {
+      if (!isNaN(lat) && !isNaN(lng) && (lat !== 0 || lng !== 0)) {
         const popupContent = `
           <div style="text-align: center;">
             <b style="font-size: 1.1em;">${planta.nomePopular}</b><br>

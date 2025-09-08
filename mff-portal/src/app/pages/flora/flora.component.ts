@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MapaFloraComponent } from '../../shared/components/mapa-flora/mapa-flora.component';
@@ -23,7 +24,7 @@ import { MapaFloraComponent } from '../../shared/components/mapa-flora/mapa-flor
   imports: [
     CommonModule, FormsModule, RouterLink, MatFormFieldModule, MatInputModule,
     MatIconModule, MatSelectModule, MatProgressSpinnerModule, MatCardModule,
-    MatButtonModule, MatSlideToggleModule, MapaFloraComponent
+    MatButtonModule, MatSlideToggleModule, MapaFloraComponent, MatCheckboxModule
   ],
   templateUrl: './flora.component.html',
   styleUrls: ['./flora.component.css']
@@ -40,6 +41,7 @@ export class FloraComponent implements OnInit {
   public selectedFamilia = '';
   public filtroAudio = false;
   public errorMessage: string | null = null;
+
   public locais: string[] = [];
   public familias: string[] = [];
 
@@ -55,8 +57,14 @@ export class FloraComponent implements OnInit {
       this.selectedLocal = localFromQuery;
     }
     this.carregarPlantas();
+
+    const comAudioParam = this.route.snapshot.queryParamMap.get('comAudio');
+    if (comAudioParam === 'true') {
+      this.filtroAudio = true;
+    }
   }
 
+  
   carregarPlantas(): void {
     this.isLoading = true;
     this.errorMessage = null;
@@ -112,7 +120,7 @@ export class FloraComponent implements OnInit {
   }
 
   onMapToggleChange(event: MatSlideToggleChange): void {
-    // PONTO DE VERIFICAÇÃO 1: O evento foi disparado?
+
     console.log('%c1. Toggle do mapa acionado. Novo estado:', 'color: blue; font-weight: bold;', event.checked);
 
     this.showMap = event.checked;

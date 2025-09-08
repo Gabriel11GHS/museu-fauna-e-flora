@@ -31,7 +31,6 @@
 .museu-logo {
   height: 80px;
   width: auto;
-  margin-right: 12px;
   transition: transform 0.2s ease-in-out;
 }
 
@@ -54,7 +53,7 @@
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0 16px;
-  line-height: 64px; /* Centraliza verticalmente no toolbar */
+  line-height: 64px; 
   text-decoration: none;
   color: var(--cor-texto);
   position: relative;
@@ -102,24 +101,24 @@
     display: block; /* Mostra o botão hambúrguer */
   }
 
-  .mobile-nav {
+ .mobile-nav {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 120px;
+    top: 100px;
     left: 0;
     right: 0;
     background-color: var(--cor-primaria-escura);
     z-index: 999;
-    transform: translateY(-120%);
+    transform: translateY(-150%); 
     transition: transform 0.3s ease-in-out;
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   }
 
   .mobile-nav.open {
     transform: translateY(0);
+    z-index: 1002;
   }
-
   .mobile-nav a {
     color: var(--cor-texto);
     padding: 20px;
@@ -208,7 +207,7 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 100px; /* Havia uma inconsistência aqui (estava 120px em uma regra e 100px em outra) */
+    top: 0px;
     left: 0;
     right: 0;
     background-color: var(--cor-primaria-escura);
@@ -220,8 +219,7 @@
 
   .mobile-nav.open {
     transform: translateY(0);
-    /* ADIÇÃO PRINCIPAL: Z-INDEX AUMENTADO */
-    z-index: 1002; /* Garante que o menu fique SOBRE o logo animado (que tem z-index: 1001) */
+    z-index: 1002; 
   }
 
   .mobile-nav a {

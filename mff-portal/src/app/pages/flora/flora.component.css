@@ -99,9 +99,9 @@
 
 .plant-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.5rem;
-  max-width: 1600px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1400px;
   margin: auto;
 }
 
@@ -157,16 +157,17 @@ mat-card-header {
 }
 
 mat-card-title {
-  color: var(--cor-principal);
-  font-weight: 600;
   font-size: 1.4rem;
-  margin-bottom: 4px;
+  font-weight: 600;
+  color: #27632a;
+  margin: 0 0 4px 0;
 }
 
 mat-card-subtitle {
-  font-style: italic;
   font-size: 1rem;
-  color: var(--cor-texto-secundario);
+  color: #555;
+  margin: 0 0 12px 0;
+  font-style: italic;
 }
 
 mat-card-content {
