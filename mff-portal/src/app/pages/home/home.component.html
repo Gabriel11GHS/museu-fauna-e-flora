@@ -65,7 +65,10 @@
       <p>O projeto "Vozes da Natureza" convida a comunidade da USP para dar voz
         às árvores, transformando dados científicos em histórias cativantes.
         Ouça os áudios e enriqueça sua experiência..</p>
-      <a mat-raised-button color="accent" routerLink="/flora">
+      <a mat-raised-button 
+        color="accent" 
+        routerLink="/flora"
+        [queryParams]="{ comAudio: 'true' }">
         <mat-icon>graphic_eq</mat-icon>
         Ouvir agora
       </a>
