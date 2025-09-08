@@ -19,8 +19,9 @@
   </div>
 
   <div class="hero-content">
-    <p class="hero-subtitulo">Um acervo digital a céu aberto no instituto do
-      ICMC/USP</p>
+    <p class="hero-subtitulo">
+      Um acervo digital a céu aberto no instituto do ICMC/USP
+    </p>
     <a mat-raised-button class="hero-cta" routerLink="/historia">
       Conheça nossa história
     </a>
@@ -65,7 +66,10 @@
       <p>O projeto "Vozes da Natureza" convida a comunidade da USP para dar voz
         às árvores, transformando dados científicos em histórias cativantes.
         Ouça os áudios e enriqueça sua experiência..</p>
-      <a mat-raised-button color="accent" routerLink="/flora">
+      <a mat-raised-button 
+        color="accent" 
+        routerLink="/flora"
+        [queryParams]="{ comAudio: 'true' }">
         <mat-icon>graphic_eq</mat-icon>
         Ouvir agora
       </a>
