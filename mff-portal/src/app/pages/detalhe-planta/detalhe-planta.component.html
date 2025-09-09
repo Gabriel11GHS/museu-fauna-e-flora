@@ -3,10 +3,14 @@
 
   <div class="detalhe-card" @fadeIn>
 
-    <a routerLink="/flora" class="back-button">
-      <mat-icon>arrow_back</mat-icon>
-      Voltar para a Flora
-    </a>
+    <div class="header">
+      <a routerLink="/flora" class="back-button">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar para a Flora
+      </a>
+      <h1 class="plant-title">{{ planta.nomePopular }}</h1>
+      <h2 class="plant-subtitle"><em>{{ planta.nomeCientifico }}</em></h2>
+    </div>
 
     <div class="detalhe-grid">
 
@@ -74,16 +78,15 @@
           </div>
 
         </div>
-        <div *ngIf="planta.latitude && planta.longitude"class="secao-detalhes">
-            <h2 class="secao-titulo">Localização</h2>
-            <div class="mapa-container">
-              <app-mapa-flora [plantasFiltradas]="[planta]"></app-mapa-flora>
-            </div>
-          </div>
+      </div>
+    </div>
+    <div *ngIf="planta.latitude && planta.longitude" class="secao-detalhes">
+      <h2 class="secao-titulo">Localização</h2>
+      <div class="mapa-container">
+        <app-mapa-flora [plantasFiltradas]="[planta]"></app-mapa-flora>
       </div>
     </div>
   </div>
-
 </div>
 
 <ng-template #loadingOrNotFound>
