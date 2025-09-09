@@ -9,6 +9,20 @@
   --shadow-suave: 0 10px 35px rgba(0, 0, 0, 0.1);
 }
 
+.plant-title {
+  color: #333;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.plant-subtitle {
+  font-size: 1.5rem;
+  color: #666;
+  font-weight: 400;
+  margin: 0.25rem 0 0 0;
+}
+
 /* O container agora ocupa a tela inteira e centraliza o card */
 .detalhe-container {
   display: flex;
@@ -17,6 +31,13 @@
   min-height: calc(100vh - 80px); /* Desconta a altura aproximada do header */
   padding: 2rem;
   background: linear-gradient(135deg, #e8f5e9 0%, #d8e8d8 100%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1.5rem;
 }
 
 /* O card principal com o efeito de vidro fosco */
