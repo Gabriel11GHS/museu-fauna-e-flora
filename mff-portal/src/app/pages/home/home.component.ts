@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -82,15 +82,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       icone: 'map',
       titulo: 'Mapa',
       descricao: 'Veja onde estão localizados os principais pontos do Instituto.',
-      link: '/mapa'
+      link: 'mapa-section'
     }
   ];
 
   constructor(
-    private headerStateService: HeaderStateService, // Injetado
+    private headerStateService: HeaderStateService,
     private apiService: ApiService,
     private faunaService: FaunaService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -171,6 +172,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         map.addLayer(track);
         map.fitBounds(track.getBounds());
       });
+  }
+
+  navigateTo(link: string): void {
+    // Se o link começar com '/', é uma rota externa
+    if (link.startsWith('/')) {
+      this.router.navigate([link]);
+    } else {
+      // Caso contrário, é um ID de âncora para rolagem
+      const element = document.getElementById(link);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
   }
 
   togglePlayPause(): void {
