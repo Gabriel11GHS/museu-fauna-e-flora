@@ -6,12 +6,23 @@
 
   <div class="timeline">
     <div *ngFor="let evento of eventos; let i = index" class="timeline-container" [ngClass]="{ 'direita': i % 2 !== 0, 'esquerda': i % 2 === 0 }">
-      <div class="timeline-content">
+      
+      <a *ngIf="evento.link" [href]="evento.link" target="_blank" rel="noopener noreferrer" class="timeline-content-link">
+        <div class="timeline-content">
+          <h2>{{ evento.titulo }}</h2>
+          <small class="data">{{ evento.ano }}</small>
+          <p>{{ evento.descricao }}</p>
+          <img *ngIf="evento.imagem" [src]="evento.imagem" [alt]="evento.titulo" class="evento-imagem">
+        </div>
+      </a>
+
+      <div *ngIf="!evento.link" class="timeline-content">
         <h2>{{ evento.titulo }}</h2>
         <small class="data">{{ evento.ano }}</small>
         <p>{{ evento.descricao }}</p>
         <img *ngIf="evento.imagem" [src]="evento.imagem" [alt]="evento.titulo" class="evento-imagem">
       </div>
+      
     </div>
   </div>
 </div>
