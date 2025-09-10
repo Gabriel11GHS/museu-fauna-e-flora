@@ -25,8 +25,8 @@
 }
 
 .footer-logo {
-  height: 70px; /* Reduzimos a altura para um tamanho mais sutil */
-  max-width: 400px; /* Adicionamos uma largura máxima para controlar a imagem */
+  height: 70px;
+  max-width: 400px; 
   width: auto;
   display: block;
 }
@@ -41,12 +41,27 @@
   .separator {
     display: none;
   }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center; /* Centraliza o texto de copyright */
+  }
+
+  .footer-logos {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px; 
+  }
+
+  .footer-logo {
+    height: 55px;
+  }
 }
 
 .search-form-field {
-  width: 250px; /* Ajuste a largura conforme necessário */
+  width: 250px; 
 }
-/* Remove a borda e o padding extra do mat-form-field */
+
 .search-form-field .mdc-notched-outline {
   border: none !important;
 }
