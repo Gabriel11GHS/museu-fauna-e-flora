@@ -62,12 +62,12 @@ export class HistoriaComponent {
       ano: '2023',
       titulo: 'Projeto "Vozes da Natureza"',
       descricao: 'É lançado o projeto de extensão "Vozes da Natureza", uma iniciativa para criar um acervo digital com áudios de professores da USP, narrando histórias e curiosidades sobre as árvores do campus.',
-      imagem: 'assets/historia/vozes-natureza.jpg'
+      imagem: 'assets/historia/vozes-natureza.jpg'  
     },
     {
       ano: '2025',
       titulo: 'Lançamento do Portal público do Museu',
-      descricao: 'O portal do Museu de Fauna e Flora é lançado, unindo tecnologia e natureza para oferecer ao público um catálogo digital completo, com filtros interativos, mapas e os áudios do projeto "Vozes da Natureza".',
+      descricao: 'O portal do Museu de Fauna e Flora é lançado, unindo tecnologia e natureza para oferecer ao público interação com o acervo vivo que há no instituto.',
       imagem: 'assets/logos/mff-novo.png'
     }
   ];
