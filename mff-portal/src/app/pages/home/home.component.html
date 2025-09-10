@@ -48,7 +48,7 @@
 
       <h3 class="destaque-titulo">{{ destaque.titulo }}</h3>
       <p class="destaque-descricao">{{ destaque.descricao }}</p>
-      <a mat-stroked-button [routerLink]="destaque.link" class="destaque-link">
+      <a mat-stroked-button (click)="navigateTo(destaque.link)" class="destaque-link">
         Ver mais
       </a>
     </div>
@@ -78,7 +78,7 @@
 </section>
 
 <!-- Seção do Mapa -->
-<section class="locais-section">
+<section class="locais-section" id="mapa-section">
   <h2>Conheça os locais do Instituto</h2>
   <div class="mapa-container">
     <div id="map" style="height:500px; width:100%;"></div>

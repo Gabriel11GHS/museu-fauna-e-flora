@@ -148,6 +148,17 @@
   margin-top: 15px;
 }
 
+.timeline-content-link {
+  display: block; /* Faz o link se comportar como um bloco, ocupando todo o espaço do card */
+  text-decoration: none; /* Remove o sublinhado do link */
+  color: inherit; /* Faz o texto do link herdar a cor do elemento pai, mantendo seu estilo original */
+}
+
+.timeline-content-link:hover .timeline-content {
+  transform: scale(1.02); /* Aumenta ligeiramente o card ao passar o mouse */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* Adiciona uma sombra mais pronunciada */
+}
+
 /* --- Responsividade para Telas Pequenas --- */
 @media screen and (max-width: 768px) {
   .timeline::after {
