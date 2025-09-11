@@ -131,9 +131,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   mediaItems = [
-    { image: 'assets/home/carrossel-1.jpg', alt: 'Vista do campus do ICMC' },
-    { image: 'assets/home/carrossel-2.jpg', alt: 'Detalhe de uma flor de Ipê Amarelo' },
-    { image: 'assets/home/carrossel-3.jpg', alt: 'Capivara no gramado da USP' }
+    { image: 'assets/home/carrossel-1.jpg', alt: '' },
+    { image: 'assets/home/carrossel-2.jpg', alt: '' },
+    { image: 'assets/home/carrossel-3.jpg', alt: '' },
+    { image: 'assets/home/carrossel-4.jpg', alt: '' },
+    { image: 'assets/home/carrossel-5.jpg', alt: '' },
+    { image: 'assets/home/carrossel-6.jpg', alt: '' }
   ];
 
   slideConfig = {
