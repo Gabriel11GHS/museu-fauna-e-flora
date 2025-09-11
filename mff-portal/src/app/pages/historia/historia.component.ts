@@ -29,14 +29,15 @@ export class HistoriaComponent {
       ano: '2013',
       titulo: 'Nasce a Brigada de Arboristas',
       descricao: 'Inspirada nas brigadas de incêndio, uma equipe pioneira de funcionários e docentes do ICMC é criada para cuidar das árvores, zelar pela segurança da comunidade e preservar o patrimônio arbóreo do campus.',
-      imagem: 'assets/historia/brigada-arboristas.jpg'
+      imagem: 'assets/historia/2013-Brigadadearboristas.png',
+      link: 'https://www5.usp.br/noticias/meio-ambiente/icmc-forma-primeira-brigada-de-arboristas-da-usp/'
     },
     {
       ano: '2013',
-      titulo: 'A Semente do Museu é Plantada',
-      descricao: 'A imprensa começa a divulgar a iniciativa de criar um museu a céu aberto e colaborativo no ICMC, destacando a rica fauna e flora do campus e o potencial de um acervo virtual.',
+      titulo: 'ICMC Lança Projeto para Criar Museu da Fauna e da Flora',
+      descricao: 'O ICMC lança um projeto inédito para catalogar todas as espécies de sua fauna e flora, com o objetivo de criar um museu virtual para disponibilizar as informações para a comunidade.',
       imagem: 'assets/historia/2014-mffantigo.png',
-      link: 'https://jornal.usp.br/universidade/diversidade-de-especies-faz-de-sao-carlos-um-museu-a-ceu-aberto/'
+      link: 'https://www.icmc.usp.br/noticias/1379-catalogacao-de-especies-icmc-lanca-projeto-para-criar-museu-da-fauna-e-da-flora'
     },
     {
       ano: '2016',
@@ -51,12 +52,6 @@ export class HistoriaComponent {
       descricao: 'O Jornal da USP destaca a iniciativa do ICMC, que transformou o campus em um museu a céu aberto. A matéria ressalta a catalogação de mais de 50 espécies arbóreas e o desenvolvimento de um aplicativo para visitação virtual, consolidando a visibilidade do projeto.',
       imagem: 'assets/historia/2017-JornalUSP.png',
       link: 'https://jornal.usp.br/universidade/diversidade-de-especies-faz-de-sao-carlos-um-museu-a-ceu-aberto/'
-    },
-    {
-      ano: '2019',
-      titulo: 'Capacitação e Manejo',
-      descricao: 'A segunda edição do treinamento da Brigada de Arboristas no ICMC reforça o compromisso com as boas práticas de manejo arbóreo e as ações da Seção de Áreas Verdes do campus.',
-      imagem: 'assets/historia/catalogacao.jpg'
     },
     {
       ano: '2023',
