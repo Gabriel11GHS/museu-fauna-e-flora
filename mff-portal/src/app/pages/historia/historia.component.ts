@@ -26,6 +26,13 @@ export class HistoriaComponent {
       imagem: 'assets/historia/1971-FundacaoIcmc.jpg' 
     },
     {
+      ano: '2004',
+      titulo: 'Lançamento do Projeto "Memória Virtual"',
+      descricao: 'Início do projeto "Memória Virtual", liderado pelos professores José Carlos Maldonado, Elisa Yumi Nakagawa e Thiago Bianchi do ICMC-USP. A iniciativa de criar um sistema para catalogar acervos históricos serviu como uma importante inspiração para a concepção do nosso museu digital.',
+      imagem: 'assets/historia/2004-memoria-virtual.png',
+      link: 'https://napsol.icmc.usp.br/pt-br/node/111.html'
+    },
+    {
       ano: '2013',
       titulo: 'Nasce a Brigada de Arboristas',
       descricao: 'Inspirada nas brigadas de incêndio, uma equipe pioneira de funcionários e docentes do ICMC é criada para cuidar das árvores, zelar pela segurança da comunidade e preservar o patrimônio arbóreo do campus.',
@@ -57,7 +64,7 @@ export class HistoriaComponent {
       ano: '2023',
       titulo: 'Projeto "Vozes da Natureza"',
       descricao: 'É lançado o projeto de extensão "Vozes da Natureza", uma iniciativa para criar um acervo digital com áudios de professores da USP, narrando histórias e curiosidades sobre as árvores do campus.',
-      imagem: 'assets/historia/vozes-natureza.jpg'  
+      imagem: 'assets/historia/2023-VozesNatureza.png'  
     },
     {
       ano: '2025',
