@@ -47,7 +47,7 @@
     "habitat": "Habita cerrados, matas de galeria e áreas abertas com árvores. Pode ser visto (e ouvido) nas árvores mais altas do campus.",
     "dieta": "Onívoro, com preferência por frutas e sementes. Também se alimenta de insetos, ovos e filhotes de outras aves.",
     "curiosidade": "Seu bico, apesar de grande, é muito leve, pois é oco por dentro. Ele é usado para alcançar frutos, regular a temperatura corporal e em rituais de acasalamento.",
-    "imagem": "assets/fauna/tucano-toco.jpg"
+    "imagem": "assets/fauna/tucano Ramphastos toco.webp"
   },
   {
     "id": 6,
@@ -78,7 +78,95 @@
     "dieta": "As lagartas se alimentam de folhas de plantas cítricas e outras da família Rutaceae. Os adultos visitam flores para se alimentar de néctar.",
     "curiosidade": "O nome popular 'Caixão-de-defunto' vem do fato de que, em algumas regiões, acredita-se que sua visita anuncia a morte de alguém. É uma das maiores borboletas diurnas do Brasil.",
     "imagem": "assets/fauna/borboleta-caixao-de-defunto.jpg"
+  },
+  {
+    "id": 9,
+    "nomePopular": "Bem-te-vi",
+    "nomeCientifico": "Pitangus sulphuratus",
+    "grupo": "Aves",
+    "habitat": "Muito adaptável, é encontrado em zonas urbanas, rurais, matas de galeria e bordas de florestas. Gosta de ficar em fios e galhos expostos.",
+    "dieta": "Onívoro. Alimenta-se principalmente de insetos capturados em voo, mas também consome frutas, minhocas, pequenos peixes e até ovos de outras aves.",
+    "curiosidade": "Seu canto característico, que se assemelha ao seu nome 'bem-te-vi', é uma das vocalizações mais conhecidas do Brasil. É uma ave territorialista e agressiva com outras espécies que invadem seu espaço.",
+    "imagem": "assets/fauna/bem-te-vi Pitangus sulphuratus.webp"
+  },
+  {
+    "id": 10,
+    "nomePopular": "João-de-barro",
+    "nomeCientifico": "Furnarius rufus",
+    "grupo": "Aves",
+    "habitat": "Áreas abertas, como campos, pastagens, jardins e áreas urbanas. Evita o interior de florestas densas.",
+    "dieta": "Insetívoro. Alimenta-se de insetos, larvas, aranhas, e outros pequenos invertebrados que procura no chão.",
+    "curiosidade": "É famoso por seu ninho de barro em formato de forno, construído pelo casal. Curiosamente, o casal abandona o ninho após a reprodução, que pode ser reutilizado por outras espécies de aves.",
+    "imagem": "assets/fauna/joão de barro Furnarius rufus.jpg"
+  },
+  {
+    "id": 11,
+    "nomePopular": "Lavadeira-mascarada",
+    "nomeCientifico": "Fluvicola nengeta",
+    "grupo": "Aves",
+    "habitat": "Vive em áreas próximas a corpos d'água, como margens de rios, lagos e brejos, inclusive em ambientes urbanos.",
+    "dieta": "Principalmente insetos aquáticos e terrestres, que captura próximo à água ou no chão.",
+    "curiosidade": "Também conhecida como 'noivinha', é uma ave muito ativa e que não teme a presença humana, sendo facilmente observada em parques e jardins com lagos. Costuma balançar a cauda para cima e para baixo constantemente.",
+    "imagem": "assets/fauna/Lavadeira ou noivinha Fluvicola nengeta.jpg"
+  },
+  {
+    "id": 12,
+    "nomePopular": "Maritaca",
+    "nomeCientifico": "Pionus maximiliani",
+    "grupo": "Aves",
+    "habitat": "Florestas úmidas, matas de galeria e áreas arborizadas, incluindo parques e cidades.",
+    "dieta": "Alimenta-se de sementes, frutos e flores. Seu bico forte é adaptado para quebrar sementes duras.",
+    "curiosidade": "São aves muito barulhentas, especialmente ao amanhecer e ao entardecer, quando se reúnem em bandos para dormir. São sociáveis e inteligentes.",
+    "imagem": "assets/fauna/maritacas Pionus maximiliani.jpg"
+  },
+  {
+    "id": 13,
+    "nomePopular": "Pica-pau-verde-barrado",
+    "nomeCientifico": "Colaptes melanochloros",
+    "grupo": "Aves",
+    "habitat": "Bordas de matas, cerrados, caatingas e áreas urbanas com árvores. É um pica-pau bastante adaptável.",
+    "dieta": "Insetívoro, com preferência por formigas e cupins, que captura no solo ou em troncos de árvores. Também pode consumir frutos.",
+    "curiosidade": "Diferente de muitos pica-paus, o pica-pau-verde-barrado passa bastante tempo no chão, procurando por formigueiros. O macho se diferencia da fêmea pela faixa vermelha abaixo do bico.",
+    "imagem": "assets/fauna/picapau verde barrado Colaptes melanochloros.jpg"
+  },
+  {
+    "id": 14,
+    "nomePopular": "Pica-pau-do-campo",
+    "nomeCientifico": "Colaptes campestris",
+    "grupo": "Aves",
+    "habitat": "Áreas abertas como campos, cerrados e pastagens. É o pica-pau mais terrestre do Brasil.",
+    "dieta": "Principalmente formigas e cupins, que escava do solo com seu bico forte. Pode passar horas se alimentando em um único formigueiro.",
+    "curiosidade": "Constrói seus ninhos em barrancos, cupinzeiros terrestres e até em postes de madeira, uma adaptação à vida em campos com poucas árvores grandes.",
+    "imagem": "assets/fauna/Picapau papo amarelo colaptes campestris.jpg"
+  },
+  {
+    "id": 15,
+    "nomePopular": "Pomba-asa-branca",
+    "nomeCientifico": "Patagioenas picazuro",
+    "grupo": "Aves",
+    "habitat": "Campos, áreas agrícolas, savanas e também em centros urbanos, onde se adaptou muito bem.",
+    "dieta": "Granívora, alimentando-se de sementes, grãos e, em menor grau, de pequenos frutos e folhas.",
+    "curiosidade": "O nome 'asa-branca' vem da faixa branca visível na borda de suas asas quando estão em voo. É uma das pombas mais comuns e conhecidas do Brasil.",
+    "imagem": "assets/fauna/pomba-asa-branca Patagioenas picazuro.jpg"
+  },
+  {
+    "id": 16,
+    "nomePopular": "Rolinha-picui",
+    "nomeCientifico": "Columbina picui",
+    "grupo": "Aves",
+    "habitat": "Habita áreas abertas, campos, cerrados, bordas de matas e é muito comum em áreas urbanas e jardins.",
+    "dieta": "Sementes e pequenos grãos que encontra no chão.",
+    "curiosidade": "É uma das menores pombas do Brasil. O macho e a fêmea são muito parecidos, mas o macho geralmente possui a cabeça com um tom acinzentado um pouco mais intenso.",
+    "imagem": "assets/fauna/pomba rolinha Columbina picui.jpg"
+  },
+  {
+    "id": 17,
+    "nomePopular": "Sabiá-pardo",
+    "nomeCientifico": "Turdus fumigatus",
+    "grupo": "Aves",
+    "habitat": "Interior e bordas de florestas úmidas e matas de galeria.",
+    "dieta": "Onívoro, alimenta-se de minhocas, insetos e outros invertebrados no solo da floresta, além de frutos e sementes.",
+    "curiosidade": "Apesar de pertencer ao mesmo gênero do famoso sabiá-laranjeira, o sabiá-pardo não possui um canto tão melodioso. Sua plumagem marrom uniforme o ajuda a se camuflar no chão da mata.",
+    "imagem": "assets/fauna/sabia Turdus fumigatus.jpg"
   }
-
-  
 ]
