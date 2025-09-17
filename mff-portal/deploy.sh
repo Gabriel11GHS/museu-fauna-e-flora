@@ -44,7 +44,7 @@ echo ""
 # 4. Iniciar o Novo Contêiner
 # Inicia um novo contêiner a partir da imagem recém-criada.
 echo "➡️  Passo 4/4: Iniciando o novo contêiner..."
-docker run --name $CONTAINER_NAME -d -p $EXT_PORT:$INT_PORT $IMAGE_NAME
+docker run --restart unless-stopped --name $CONTAINER_NAME -d -p $EXT_PORT:$INT_PORT $IMAGE_NAME
 echo ""
 
 # --- Fim do Script ---
