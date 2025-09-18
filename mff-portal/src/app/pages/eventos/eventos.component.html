@@ -1,0 +1,41 @@
+<div class="pagina-container">
+  <header class="pagina-header">
+    <h1>Agenda de Eventos</h1>
+    <p>Acompanhe nossa programação de palestras, oficinas, visitas guiadas e outras atividades.</p>
+  </header>
+
+   <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Próximos Eventos">
+      <div class="tab-content-wrapper">
+        <div class="calendario-wrapper">
+          <iframe 
+            [src]="safeCalendarUrl" 
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Eventos Realizados">
+      <div class="tab-content-wrapper">
+        <div class="timeline-container">
+          <div class="timeline">
+            <div class="timeline-item" *ngFor="let evento of eventosRealizados; trackBy: trackByEvento">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">{{ evento.data }}</span>
+                <h3 class="timeline-title">{{ evento.titulo }}</h3>
+                <p class="timeline-description">{{ evento.descricao }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
