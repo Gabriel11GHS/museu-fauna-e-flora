@@ -7,6 +7,7 @@ import { HistoriaComponent } from './pages/historia/historia.component';
 import { ContatoComponent } from './pages/contato/contato.component';
 import { FaunaComponent } from './pages/fauna/fauna.component';
 import { DetalheAnimalComponent } from './pages/detalhe-animal/detalhe-animal.component';
+import { EventosComponent } from './pages/eventos/eventos.component';
 
 
 export const routes: Routes = [
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'historia', component: HistoriaComponent },
   { path: 'contato', component: ContatoComponent },
   { path: 'fauna', component: FaunaComponent },
-  { path: 'fauna/:id', component: DetalheAnimalComponent }
+  { path: 'fauna/:id', component: DetalheAnimalComponent },
+  { path: 'eventos', component: EventosComponent }
 ];
