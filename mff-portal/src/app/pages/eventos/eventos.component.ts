@@ -23,7 +23,7 @@ export interface EventoRealizado {
 export class EventosComponent {
   
   // URL de incorporação do Google Calendar
-  private calendarUrl = 'https://calendar.google.com/calendar/embed?src=gabriel.dossantos%40usp.br&ctz=America%2FSao_Paulo';
+  private calendarUrl = 'https://calendar.google.com/calendar/u/0?cid=Z2FicmllbC5kb3NzYW50b3NAdXNwLmJy';
   public safeCalendarUrl: SafeResourceUrl;
 
   public eventosRealizados: EventoRealizado[] = [
