@@ -1,8 +1,9 @@
 // src/app/services/api.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs'; 
+import { map, Observable, catchError, of } from 'rxjs'; 
 import { Planta } from '../models/planta.model';
+import { Noticia } from '../models/noticia.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,4 +46,16 @@ export class ApiService {
       trilhaAudio: construirUrl(planta.trilhaAudio)
     };
   }
+
+  getNoticias(): Observable<Noticia[]> {
+    return this.http.get<Noticia[]>('assets/data/noticias.json')
+      .pipe(
+        catchError(error => {
+          console.error('Erro ao carregar notícias:', error);
+          // Retorna um array vazio em caso de erro para não quebrar a aplicação.
+          return of([]);
+        })
+      );
+  }
+
 }

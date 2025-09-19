@@ -54,13 +54,6 @@ export class HistoriaComponent {
       link: 'https://drive.google.com/file/d/1SeYHwLaSuu2lPEUrmIUJrJLNAZKD6U8D/view?usp=drive_link'
     },
     {
-      ano: '2017',
-      titulo: 'Museu a Céu Aberto na Mídia',
-      descricao: 'O Jornal da USP destaca a iniciativa do ICMC, que transformou o campus em um museu a céu aberto. A matéria ressalta a catalogação de mais de 50 espécies arbóreas e o desenvolvimento de um aplicativo para visitação virtual, consolidando a visibilidade do projeto.',
-      imagem: 'assets/historia/2017-JornalUSP.png',
-      link: 'https://jornal.usp.br/universidade/diversidade-de-especies-faz-de-sao-carlos-um-museu-a-ceu-aberto/'
-    },
-    {
       ano: '2023',
       titulo: 'Projeto "Vozes da Natureza"',
       descricao: 'É lançado o projeto de extensão "Vozes da Natureza", uma iniciativa para criar um acervo digital com áudios de professores da USP, narrando histórias e curiosidades sobre as árvores do campus.',
