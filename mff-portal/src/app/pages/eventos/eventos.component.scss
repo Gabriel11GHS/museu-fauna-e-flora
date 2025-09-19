@@ -1,0 +1,96 @@
+// Importa as variáveis e mixins do tema para uso local, se necessário (boa prática)
+@use '../../../../custom-theme.scss' as theme;
+
+.pagina-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pagina-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  // h1 e p já são estilizados globalmente, mas podemos ajustar se necessário.
+  p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// Estilizando a linha do tempo usando nossas variáveis globais
+.timeline-container {
+  position: relative;
+  padding: 2rem 0;
+
+  // A linha vertical central
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 100%;
+    background-color: var(--cor-fundo-header); // Usando variável!
+  }
+}
+
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 1rem 2rem;
+  // Alterna os itens entre esquerda e direita
+  &:nth-child(odd) {
+    left: 0;
+    text-align: right;
+  }
+  &:nth-child(even) {
+    left: 50%;
+  }
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 1.5rem;
+  width: 16px;
+  height: 16px;
+  background-color: var(--cor-principal); // Usando variável!
+  border: 3px solid var(--cor-fundo-pagina); // Usando variável!
+  border-radius: 50%;
+  z-index: 1;
+
+  // Posiciona o ponto na linha
+  .timeline-item:nth-child(odd) & {
+    right: -8px;
+  }
+  .timeline-item:nth-child(even) & {
+    left: -8px;
+  }
+}
+
+.timeline-content {
+  background-color: var(--cor-texto-claro); // Usando variável!
+  padding: 1.5rem;
+  border-radius: var(--borda-radius); // Usando variável!
+  box-shadow: var(--shadow-suave); // Usando variável!
+}
+
+.timeline-date {
+  font-weight: 500;
+  color: var(--cor-secundaria); // Usando variável!
+}
+
+.timeline-title {
+  // Já estilizado pelo h3 global
+  margin-top: 0.5rem;
+}
+
+.calendario-wrapper {
+  height: 70vh;
+  border-radius: var(--borda-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-suave);
+}
