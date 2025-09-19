@@ -8,6 +8,7 @@ import { ContatoComponent } from './pages/contato/contato.component';
 import { FaunaComponent } from './pages/fauna/fauna.component';
 import { DetalheAnimalComponent } from './pages/detalhe-animal/detalhe-animal.component';
 import { EventosComponent } from './pages/eventos/eventos.component';
+import { NoticiasComponent } from './pages/noticias/noticias.component';
 
 
 export const routes: Routes = [
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'contato', component: ContatoComponent },
   { path: 'fauna', component: FaunaComponent },
   { path: 'fauna/:id', component: DetalheAnimalComponent },
-  { path: 'eventos', component: EventosComponent }
+  { path: 'eventos', component: EventosComponent },
+  { path: 'noticias', component: NoticiasComponent }
 ];
