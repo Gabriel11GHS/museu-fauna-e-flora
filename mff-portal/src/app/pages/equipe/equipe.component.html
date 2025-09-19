@@ -1,0 +1,40 @@
+<div class="pagina-container">
+  <header class="pagina-header">
+    <h1>Nossa Equipe</h1>
+    <p>Conheça as pessoas que fazem e fizeram parte da história do Museu de Fauna e Flora.</p>
+  </header>
+
+  <section class="equipe-section">
+    <h2 class="section-titulo">Equipe Atual</h2>
+    <div class="cards-container">
+      <div *ngFor="let membro of equipeAtual" class="membro-card">
+        <!--><img 
+          [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'" 
+          alt="Foto de {{ membro.nome }}" 
+          class="membro-imagem"><-->
+        <div class="membro-info">
+          <h3 class="membro-nome">{{ membro.nome }}</h3>
+          <p class="membro-funcao">{{ membro.funcao }}</p>
+          <p class="membro-periodo">{{ membro.periodo }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="equipe-section">
+    <h2 class="section-titulo">Equipes Anteriores</h2>
+    <div class="cards-container">
+      <div *ngFor="let membro of equipesAnteriores" class="membro-card">
+        <!--><img 
+          [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'" 
+          alt="Foto de {{ membro.nome }}" 
+          class="membro-imagem"><-->
+        <div class="membro-info">
+          <h3 class="membro-nome">{{ membro.nome }}</h3>
+          <p class="membro-funcao">{{ membro.funcao }}</p>
+          <p class="membro-periodo">{{ membro.periodo }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
