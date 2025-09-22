@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 export interface MembroEquipe {
   nome: string;
   funcao?: string;
-  periodo?: string;
   imagemUrl?: string;
 }
 
@@ -19,66 +18,216 @@ export class EquipeComponent {
   equipeAtual: MembroEquipe[] = [
     {
       nome: 'Júlio Cezar Estrella',
-      funcao: 'Presidente do projeto',
-      periodo: '2023 - Atualmente',
+      funcao: 'Curador do projeto',
       imagemUrl: ''
     },
     {
       nome: 'Gabriel Henrique dos Santos',
       funcao: 'Bolsista PUB - Desenvolvedor do Novo Portal',
-      periodo: '2024 - Atualmente',
       imagemUrl: ''
     },
     {
       nome: 'Cassio Henrique Jorge',
       funcao: '',
-      periodo: '2013 - Atualmente',
-      imagemUrl: '' 
+      imagemUrl: ''
     },
     {
       nome: 'Sueli Aparecida HonorioFerreira',
-      funcao: '',
-      periodo: '',
-      imagemUrl: '' 
+      funcao: 'Coordenadora do Grupo Executivo',
+      imagemUrl: ''
     },
     {
       nome: 'Juliana Merlotti',
       funcao: '',
-      periodo: '',
-      imagemUrl: '' 
+      imagemUrl: ''
     },
     {
       nome: 'Carlos Eduardo Favaro',
       funcao: '',
-      periodo: '',
-      imagemUrl: '' 
+      imagemUrl: ''
     },
     {
       nome: 'Artur José Ferro Sampaio',
       funcao: '',
-      periodo: '',
-      imagemUrl: '' 
+      imagemUrl: ''
     },
     {
       nome: 'Marco Antonio Serafim Jacques',
       funcao: '',
-      periodo: '',
-      imagemUrl: '' 
+      imagemUrl: ''
     },
     {
       nome: 'Osmar Aparecido Antonio',
       funcao: '',
-      periodo: '',
-      imagemUrl: '' 
+      imagemUrl: ''
     },
   ];
 
-  equipesAnteriores: MembroEquipe[] = [
+  equipe23_24: MembroEquipe[] = [
+    {
+      nome: 'Júlio Cezar Estrella',
+      funcao: 'Curador do projeto',
+      imagemUrl: ''
+    },
     {
       nome: 'Gustavo de Oliveira Martins',
       funcao: 'Bolsista PUB - Desenvolvedor do portal administrativo',
-      periodo: '2023 - 2024',
       imagemUrl: ''
     },
+    {
+      nome: 'Sueli Aparecida Honório Ferreira',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Ana Quintina de Oliveira Fernandes',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Carlos Eduardo Favaro',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Juliana Merlotti',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Marco Antônio Serafim Jacques',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Marco Antônio Serafim Jacques',
+      funcao: '',
+      imagemUrl: 'Osmar Aparecido Antônio'
+    },
+  ];
+
+  equipe22_23: MembroEquipe[] = [
+    {
+      nome: 'Júlio Cezar Estrella',
+      funcao: 'Curador do projeto',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Sueli Aparecida Honório Ferreira',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Amanda Kelly Durici dos Santos',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Ana Quintina de Oliveira Fernandes',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Carlos Eduardo Favaro',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'João Antônio Aparecido Salla',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Juliana Merlotti',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Marco Antônio Serafim Jacques',
+      funcao: '',
+      imagemUrl: ''
+    },
+  ];
+
+  equipe21_22: MembroEquipe[] = [
+    {
+      nome: 'Sueli Aparecida Honório Ferreira',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Amanda Kelly Durici dos Santos',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Ana Quintina de Oliveira Fernandes',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Carlos Eduardo Favaro',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'João Antônio Aparecido Salla',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Juliana Merlotti',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Luís Roberto Peletero',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Marco Antônio Serafim Jacques',
+      funcao: '',
+      imagemUrl: ''
+    },
+  ];
+
+  equipe19_21: MembroEquipe[] = [
+    {
+      nome: 'Sueli Aparecida Honório Ferreira',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Ana Quintina de Oliveira Fernandes',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Carlos Eduardo Favaro',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Juliana Merlotti',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Luís Roberto Peletero',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Marco Antônio Serafim Jacques',
+      funcao: '',
+      imagemUrl: ''
+    },
+    {
+      nome: 'Wanderley Antônio Laurindo Júnior',
+      funcao: '',
+      imagemUrl: ''
+    },
+
   ];
 }

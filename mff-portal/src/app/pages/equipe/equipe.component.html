@@ -15,16 +15,15 @@
         <div class="membro-info">
           <h3 class="membro-nome">{{ membro.nome }}</h3>
           <p class="membro-funcao">{{ membro.funcao }}</p>
-          <p class="membro-periodo">{{ membro.periodo }}</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="equipe-section">
-    <h2 class="section-titulo">Equipes Anteriores</h2>
+    <h2 class="section-titulo">Equipe 2023 - 2024</h2>
     <div class="cards-container">
-      <div *ngFor="let membro of equipesAnteriores" class="membro-card">
+      <div *ngFor="let membro of equipe23_24" class="membro-card">
         <!--><img 
           [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'" 
           alt="Foto de {{ membro.nome }}" 
@@ -32,7 +31,54 @@
         <div class="membro-info">
           <h3 class="membro-nome">{{ membro.nome }}</h3>
           <p class="membro-funcao">{{ membro.funcao }}</p>
-          <p class="membro-periodo">{{ membro.periodo }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="equipe-section">
+    <h2 class="section-titulo">Equipe 2022 - 2023</h2>
+    <div class="cards-container">
+      <div *ngFor="let membro of equipe22_23" class="membro-card">
+        <!--><img 
+          [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'" 
+          alt="Foto de {{ membro.nome }}" 
+          class="membro-imagem"><-->
+        <div class="membro-info">
+          <h3 class="membro-nome">{{ membro.nome }}</h3>
+          <p class="membro-funcao">{{ membro.funcao }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="equipe-section">
+    <h2 class="section-titulo">Equipe 2021 - 2022</h2>
+    <div class="cards-container">
+      <div *ngFor="let membro of equipe21_22" class="membro-card">
+        <!--><img 
+          [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'" 
+          alt="Foto de {{ membro.nome }}" 
+          class="membro-imagem"><-->
+        <div class="membro-info">
+          <h3 class="membro-nome">{{ membro.nome }}</h3>
+          <p class="membro-funcao">{{ membro.funcao }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="equipe-section">
+    <h2 class="section-titulo">Equipe 2019 - 2021</h2>
+    <div class="cards-container">
+      <div *ngFor="let membro of equipe19_21" class="membro-card">
+        <!--><img 
+          [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'" 
+          alt="Foto de {{ membro.nome }}" 
+          class="membro-imagem"><-->
+        <div class="membro-info">
+          <h3 class="membro-nome">{{ membro.nome }}</h3>
+          <p class="membro-funcao">{{ membro.funcao }}</p>
         </div>
       </div>
     </div>

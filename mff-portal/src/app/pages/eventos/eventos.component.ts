@@ -31,46 +31,6 @@ export class EventosComponent {
       data: '25/09/2025',
       titulo: 'Lançamento do Portal público',
       descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
-    },
-    {
-      data: '25/09/2025',
-      titulo: 'Lançamento do Portal público',
-      descricao: 'Evento de lançamento do novo portal do Museu da Fauna e Flora'
     }
   ];
 
