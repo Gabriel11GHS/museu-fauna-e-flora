@@ -18,7 +18,7 @@ export class EquipeComponent {
   equipeAtual: MembroEquipe[] = [
     {
       nome: 'Júlio Cezar Estrella',
-      funcao: 'Curador do projeto',
+      funcao: 'Curador do Museu',
       imagemUrl: ''
     },
     {
@@ -66,7 +66,7 @@ export class EquipeComponent {
   equipe23_24: MembroEquipe[] = [
     {
       nome: 'Júlio Cezar Estrella',
-      funcao: 'Curador do projeto',
+      funcao: 'Curador do Museu',
       imagemUrl: ''
     },
     {
@@ -76,11 +76,11 @@ export class EquipeComponent {
     },
     {
       nome: 'Sueli Aparecida Honório Ferreira',
-      funcao: '',
+      funcao: 'Coordenadora do Grupo Executivo',
       imagemUrl: ''
     },
     {
-      nome: 'Ana Quintina de Oliveira Fernandes',
+      nome: 'Artur José Ferro Sampaio',
       funcao: '',
       imagemUrl: ''
     },
@@ -114,7 +114,7 @@ export class EquipeComponent {
     },
     {
       nome: 'Sueli Aparecida Honório Ferreira',
-      funcao: '',
+      funcao: 'Coordenadora do Grupo Executivo',
       imagemUrl: ''
     },
     {
@@ -152,7 +152,7 @@ export class EquipeComponent {
   equipe21_22: MembroEquipe[] = [
     {
       nome: 'Sueli Aparecida Honório Ferreira',
-      funcao: '',
+      funcao: 'Coordenadora do Grupo Executivo',
       imagemUrl: ''
     },
     {
@@ -195,7 +195,7 @@ export class EquipeComponent {
   equipe19_21: MembroEquipe[] = [
     {
       nome: 'Sueli Aparecida Honório Ferreira',
-      funcao: '',
+      funcao: 'Coordenadora do Grupo Executivo',
       imagemUrl: ''
     },
     {
