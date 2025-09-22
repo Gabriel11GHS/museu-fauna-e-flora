@@ -56,7 +56,7 @@ export class HistoriaComponent {
     {
       ano: '2023',
       titulo: 'Projeto "Vozes da Natureza"',
-      descricao: 'É lançado o projeto de extensão "Vozes da Natureza", uma iniciativa para criar um acervo digital com áudios de professores da USP, narrando histórias e curiosidades sobre as árvores do campus.',
+      descricao: 'É lançado o projeto de extensão "Vozes da Natureza", uma iniciativa para criar um acervo digital com áudios sobre histórias e curiosidades sobre as árvores do campus, inicialmente gravadas pela locutora Claudia Lieri. Narrando histórias e curiosidades sobre as árvores do campus.',
       imagem: 'assets/historia/2023-VozesNatureza.png'  
     },
     {
