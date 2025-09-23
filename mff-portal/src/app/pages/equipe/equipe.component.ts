@@ -109,7 +109,7 @@ export class EquipeComponent {
   equipe22_23: MembroEquipe[] = [
     {
       nome: 'Júlio Cezar Estrella',
-      funcao: 'Curador do projeto',
+      funcao: 'Curador do Museu',
       imagemUrl: ''
     },
     {
