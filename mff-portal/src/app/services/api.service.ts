@@ -14,14 +14,12 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  // Este método continua como está, para a listagem
   getPlantas(): Observable<Planta[]> {
     return this.http.get<Planta[]>(`${this.apiUrl}/listarIndividuos`).pipe(
       map(plantas => plantas.map(planta => this.processarPlanta(planta)))
     );
   }
 
-  // Busca um indivíduo específico pelo ID
   getIndividuo(id: string): Observable<Planta> {
     return this.http.get<Planta>(`${this.apiUrl}/obterIndividuo/${id}`).pipe(
       map(planta => this.processarPlanta(planta))
