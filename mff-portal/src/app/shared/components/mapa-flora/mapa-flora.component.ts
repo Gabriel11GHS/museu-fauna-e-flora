@@ -123,7 +123,7 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
   }
     private navegarParaPlanta(id: string): void {
     this.ngZone.run(() => {
-      this.router.navigate(['/flora', id]);
+      this.router.navigate(['/Ficha', id]);
     });
   }
 }
