@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       imagemIcone: 'assets/icons/flora.png',
       titulo: 'Flora',
       descricao: 'Explore as espécies de plantas catalogadas.',
-      link: '/flora'
+      link: '/Ficha'
     },
     {
       icone: 'map',
@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             nome: planta.nomePopular || 'Planta não identificada',
             imagem: (planta.fotoIndividuo || planta.fotoTaxonomia) ?? 'assets/placeholder.jpg',
             tipo: 'Flora',
-            link: `/flora/${planta.idIndividuo}`
+            link: `/Ficha`
           }));
 
         const destaquesFauna: Destaque[] = animais.map(animal => ({
