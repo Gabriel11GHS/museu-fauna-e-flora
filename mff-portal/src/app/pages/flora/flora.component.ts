@@ -125,7 +125,7 @@ export class FloraComponent implements OnInit {
 
     this.showMap = event.checked;
     
-    // Se o toggle for desativado, não fazemos mais nada
+
     if (!event.checked) {
       return;
     }
@@ -133,26 +133,24 @@ export class FloraComponent implements OnInit {
     if (this.data.length > 0) {
       this.isMapLoading = true;
       
-      // PONTO DE VERIFICAÇÃO 2: Estamos prestes a buscar os dados?
       console.log(`%c2. Buscando coordenadas para ${this.data.length} indivíduos.`, 'color: blue; font-weight: bold;');
 
       const requests = this.data.map(planta => 
         this.apiService.getIndividuo(planta.idIndividuo).pipe(
           catchError((err) => {
-            // PONTO DE VERIFICAÇÃO 3 (Alerta): A busca para um indivíduo falhou?
             console.warn(`Falha ao buscar detalhes para o indivíduo ID: ${planta.idIndividuo}`, err);
-            return of(planta); // Retorna a planta original sem coordenadas para não quebrar o forkJoin
+            return of(planta);
           })
         )
       );
 
       forkJoin(requests).subscribe(plantasComCoordenadas => {
-        // PONTO DE VERIFICAÇÃO 4: O que a API retornou?
+       
         console.log('%c4. Resposta da API (forkJoin) recebida:', 'color: blue; font-weight: bold;', plantasComCoordenadas);
 
         this.plantasParaMapa = plantasComCoordenadas.filter(p => p.latitude && p.longitude);
         
-        // PONTO DE VERIFICAÇÃO 5: Quantas plantas têm coordenadas válidas?
+     
         console.log(`%c5. Plantas com coordenadas válidas encontradas: ${this.plantasParaMapa.length}`, 'color: blue; font-weight: bold;');
 
         this.isMapLoading = false;
