@@ -99,7 +99,7 @@ export class MapaFloraComponent implements AfterViewInit, OnDestroy {
             <b style="font-size: 1.1em;">${planta.nomePopular}</b><br>
             <i style="font-size: 0.9em;">${planta.nomeCientifico}</i>
             <hr style="margin: 8px 0; border: 0; border-top: 1px solid #ccc;">
-            <a href="/flora/${planta.idIndividuo}" 
+            <a href="/Ficha/${planta.idIndividuo}" 
                class="popup-navigation-link" 
                data-id="${planta.idIndividuo}"
                style="color: #3a8c3a; font-weight: bold; text-decoration: none;">
