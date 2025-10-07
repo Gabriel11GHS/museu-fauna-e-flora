@@ -15,8 +15,8 @@ import { NoticiasComponent } from './pages/noticias/noticias.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'ficha', component: FloraComponent },
-  { path: 'ficha/:id', component: DetalhePlantaComponent },
+  { path: 'Ficha', component: FloraComponent },
+  { path: 'Ficha/:id', component: DetalhePlantaComponent },
   { path: 'historia', component: HistoriaComponent },
   { path: 'contato', component: ContatoComponent },
   { path: 'fauna', component: FaunaComponent },
