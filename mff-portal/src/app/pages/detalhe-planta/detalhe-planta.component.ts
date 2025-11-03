@@ -31,7 +31,7 @@ import { MapaFloraComponent } from '../../shared/components/mapa-flora/mapa-flor
 })
 export class DetalhePlantaComponent implements OnInit {
   
-  planta$!: Observable<Planta>; 
+  planta$!: Observable<Planta | undefined>; 
 
   constructor(
     private route: ActivatedRoute,
