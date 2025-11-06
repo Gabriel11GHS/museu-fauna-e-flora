@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.headerStateService.setIsHomePage(true);
 
     this.destaques$ = forkJoin({
-      plantas: this.apiService.getPlantas().pipe(catchError(() => of([]))),
+      plantas: this.apiService.getPlantasAtivas().pipe(catchError(() => of([]))),
       animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))
     }).pipe(
       map(({ plantas, animais }) => {

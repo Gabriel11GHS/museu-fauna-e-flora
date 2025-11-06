@@ -1,7 +1,7 @@
 // src/app/services/api.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, catchError, of } from 'rxjs'; 
+import { map, Observable, catchError, of, shareReplay } from 'rxjs'; 
 import { Planta } from '../models/planta.model';
 import { Noticia } from '../models/noticia.model';
 
@@ -11,22 +11,43 @@ import { Noticia } from '../models/noticia.model';
 export class ApiService {
   private apiUrl = '/api/Webservice'; 
   private baseUrl = 'https://mff.icmc.usp.br';
+  private allPlantas$: Observable<Planta[]>;
 
-  constructor(private http: HttpClient) {}
-
-  getPlantas(): Observable<Planta[]> {
-    return this.http.get<Planta[]>(`${this.apiUrl}/listarIndividuos`).pipe(
-      map(plantas => plantas.map(planta => this.processarPlanta(planta)))
+  constructor(private http: HttpClient) {
+    this.allPlantas$ = this.http.get<Planta[]>(`${this.apiUrl}/listarIndividuos`).pipe(
+      // Processa *todas* as plantas primeiro
+      map(plantas => plantas.map(planta => this.processarPlanta(planta))),
+      // Cacheia o resultado (a lista processada) para todos os futuros inscritos
+      shareReplay(1) 
     );
   }
 
-  getIndividuo(id: string): Observable<Planta> {
-    return this.http.get<Planta>(`${this.apiUrl}/obterIndividuo/${id}`).pipe(
-      map(planta => this.processarPlanta(planta))
+  getPlantasAtivas(): Observable<Planta[]> {
+    return this.allPlantas$.pipe(
+      map(plantas => 
+        plantas.filter(planta => 
+          !planta.suprimido || 
+          planta.suprimido === "0"
+        )
+      )
+    );
+  }
+
+  getPlantasSuprimidas(): Observable<Planta[]> {
+    return this.allPlantas$.pipe(
+      map(plantas => 
+        plantas.filter(planta => planta.suprimido === "1") // Filtra apenas as suprimidas
+      )
+    );
+  }
+
+  getIndividuo(id: string): Observable<Planta | undefined> {
+    return this.allPlantas$.pipe(
+      map(plantas => plantas.find(planta => planta.idIndividuo === id))
     );
   }
   
-  private processarPlanta(planta: any): Planta { // Recebe 'any' para flexibilidade
+  private processarPlanta(planta: any): Planta {
     const construirUrl = (path: string | null): string | null => {
       if (!path) return null;
       const cleanPath = path.startsWith('./') ? path.substring(2) : path;

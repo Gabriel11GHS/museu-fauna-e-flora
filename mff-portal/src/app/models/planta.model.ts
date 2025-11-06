@@ -19,4 +19,5 @@ export interface Planta {
   ano_supressao?: string | null;
   idTaxonomia: string;
   idLocal: string;
+  suprimido?: string | null;
 }

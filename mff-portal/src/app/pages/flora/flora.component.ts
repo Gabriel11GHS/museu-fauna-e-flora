@@ -68,7 +68,7 @@ export class FloraComponent implements OnInit {
   carregarPlantas(): void {
     this.isLoading = true;
     this.errorMessage = null;
-    this.apiService.getPlantas().subscribe({
+    this.apiService.getPlantasAtivas().subscribe({
       next: (plantas) => {
         plantas.sort((a, b) => {
           const aHasPhoto = !!a.fotoIndividuo || !!a.fotoTaxonomia;
@@ -148,7 +148,7 @@ export class FloraComponent implements OnInit {
        
         console.log('%c4. Resposta da API (forkJoin) recebida:', 'color: blue; font-weight: bold;', plantasComCoordenadas);
 
-        this.plantasParaMapa = plantasComCoordenadas.filter(p => p.latitude && p.longitude);
+        this.plantasParaMapa = plantasComCoordenadas.filter((p): p is Planta => p !== undefined && p.latitude !== undefined && p.longitude !== undefined);
         
      
         console.log(`%c5. Plantas com coordenadas válidas encontradas: ${this.plantasParaMapa.length}`, 'color: blue; font-weight: bold;');
