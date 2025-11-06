@@ -14,7 +14,7 @@ export class ApiService {
   private allPlantas$: Observable<Planta[]>;
 
   constructor(private http: HttpClient) {
-    this.allPlantas$ = this.http.get<Planta[]>(this.apiUrl).pipe(
+    this.allPlantas$ = this.http.get<Planta[]>(`${this.apiUrl}/listarIndividuos`).pipe(
       // Processa *todas* as plantas primeiro
       map(plantas => plantas.map(planta => this.processarPlanta(planta))),
       // Cacheia o resultado (a lista processada) para todos os futuros inscritos
@@ -47,7 +47,7 @@ export class ApiService {
     );
   }
   
-  private processarPlanta(planta: any): Planta { // Recebe 'any' para flexibilidade
+  private processarPlanta(planta: any): Planta {
     const construirUrl = (path: string | null): string | null => {
       if (!path) return null;
       const cleanPath = path.startsWith('./') ? path.substring(2) : path;
