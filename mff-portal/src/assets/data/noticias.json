@@ -33,6 +33,19 @@
     "data": "09 de Junho de 2017",
     "url": "https://jornal.usp.br/universidade/diversidade-de-especies-faz-de-sao-carlos-um-museu-a-ceu-aberto/",
     "imagem": "assets/noticias/5-noticia.png"
-  }
-  
+  },
+  {
+    "titulo": "9ª edição do Vem Chegando a Primavera marca chegada da estação com lançamento do novo portal do Museu da Fauna e da Flora",
+    "veiculo": "Portal do ICMC",
+    "data": "25 de Setembro de 2025",
+    "url": "https://www.icmc.usp.br/noticias/7187-9a-edicao-do-vem-chegando-a-primavera-marca-chegada-da-estacao-com-lancamento-do-novo-portal-do-museu-da-fauna-e-da-flora",
+    "imagem": "assets/noticias/6-noticia.png" 
+  },
+  {
+    "titulo": "Participação do evento: Fórum Permanente sobre Saúde Planetária em São Carlos",
+    "veiculo": "ie - Polo São Carlos",
+    "data": "29 de Outubro de 2025",
+    "url": "https://sc.iea.usp.br/forumsaudeplanetaria/",
+    "imagem": "assets/noticias/7-noticia.png"
+  } 
 ]
