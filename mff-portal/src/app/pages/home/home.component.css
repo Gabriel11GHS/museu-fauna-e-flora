@@ -342,3 +342,30 @@
   height: auto;
   display: block;
 }
+
+:host ::ng-deep .carousel-vozes .slick-arrow {
+  z-index: 10; /* Eleva as setas para garantir que fiquem sobre a imagem */
+  display: block !important; /* Força a exibição, mesmo que o tema tente esconder */
+}
+
+/* Ajusta a posição para não ficar colado na borda */
+:host ::ng-deep .carousel-vozes .slick-prev {
+  left: 15px; 
+}
+:host ::ng-deep .carousel-vozes .slick-next {
+  right: 15px; 
+}
+
+/* Melhora a visibilidade das setas contra imagens escuras ou claras */
+:host ::ng-deep .carousel-vozes .slick-prev::before,
+:host ::ng-deep .carousel-vozes .slick-next::before {
+  color: white; /* Cor da seta */
+  opacity: 0.75; /* Um pouco transparente para não poluir */
+  font-size: 25px; /* Tamanho do ícone da seta */
+  /* Sombra leve para criar contraste com o fundo */
+  text-shadow: 0 0 8px rgba(0,0,0,0.6); 
+}
+
+:host ::ng-deep .carousel-vozes .slick-arrow:hover::before {
+  opacity: 1; /* Opacidade total no hover */
+}
