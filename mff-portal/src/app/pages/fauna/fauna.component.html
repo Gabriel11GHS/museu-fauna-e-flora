@@ -1,68 +1,101 @@
-<div class="header-filtros">
-  <!--- ->
-  <div class="header-imagem-container">
-    <img src="./assets/icons/fauna.png" alt="Arara Canindé estilizada" class="header-imagem">
-  </div>
-  <---->
-  <div class="header-conteudo">
-    <h1>Explore a Fauna do Instituto</h1>
-    <p>Utilize os filtros para encontrar espécies visitantes por nome ou grupo.</p>
-  </div>
-  <div class="filtros-container">
-    <mat-form-field appearance="outline" class="filtro-item">
-      <mat-label>Buscar por nome...</mat-label>
-      <input 
-        matInput 
-        type="text"
-        placeholder="Ex: Tucano-toco"
-        [(ngModel)]="searchTerm"
-        (ngModelChange)="filtrarAnimais()">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
+<div class="pagina-container">
 
-    <mat-form-field appearance="outline" class="filtro-item">
-      <mat-label>Filtrar por Grupo</mat-label>
-      <mat-select [(ngModel)]="selectedGrupo" (selectionChange)="filtrarAnimais()">
-        <mat-option value="">Todos os Grupos</mat-option>
-        <mat-option *ngFor="let grupo of grupos" [value]="grupo">
-          {{ grupo }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+  <header class="pagina-header">
+    <h1>Projeto Click: O Jardim Secreto Ao Vivo</h1>
+    <p>
+      Acompanhe em tempo real a vida selvagem no Local 2 (Jardim Secreto) do ICMC.
+      Esta câmera monitora os visitantes do nosso museu.
+    </p>
+  </header>
+
+  <section class="stream-section">
+    <mat-card class="stream-card">
+      <mat-card-header>
+        <mat-card-title>Câmera Ao Vivo</mat-card-title>
+        <mat-card-subtitle>Local 2 - Jardim Secreto</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="stream-aspect-ratio-container">
+          
+          <img 
+            *ngIf="isStreamOnline"
+            class="stream-video" 
+            [src]="streamUrl" 
+            alt="Transmissão ao vivo do Jardim Secreto">
+
+          <div *ngIf="!isStreamOnline" class="stream-offline">
+            <p>A transmissão está offline no momento.</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
 </div>
-
-<div class="content-wrapper">
-  <div *ngIf="isLoading" class="loading-message">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p style="margin-top: 20px;">Carregando dados da fauna...</p>
+  <mat-divider class="section-divider"></mat-divider>
+  <div class="header-filtros">
+    <div class="header-conteudo">
+      <h2>Explore a Fauna do Instituto</h2>
+      <p>Utilize os filtros para encontrar espécies visitantes por nome ou grupo.</p>
+    </div>
+    
+    <div class="filtros-container">
+      <mat-form-field appearance="outline" class="filtro-item">
+        <mat-label>Buscar por nome...</mat-label>
+        <input 
+          matInput 
+          type="text"
+          placeholder="Ex: Tucano-toco"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="filtrarAnimais()">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="filtro-item">
+        <mat-label>Filtrar por Grupo</mat-label>
+        <mat-select [(ngModel)]="selectedGrupo" (selectionChange)="filtrarAnimais()">
+          <mat-option value="">Todos os Grupos</mat-option>
+          <mat-option *ngFor="let grupo of grupos" [value]="grupo">
+            {{ grupo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
-
-  <div *ngIf="!isLoading">
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
+  
+  <div class="content-wrapper">
+    <div *ngIf="isLoading" class="loading-message">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p style="margin-top: 20px;">Carregando dados da fauna...</p>
     </div>
+  
+    <div *ngIf="!isLoading">
+      <div *ngIf="errorMessage" class="error-message">
+        <p>{{ errorMessage }}</p>
+      </div>
+  
+      <div *ngIf="!errorMessage && data.length === 0" class="no-results-message">
+        <p>Nenhum animal encontrado com os filtros selecionados.</p>
+      </div>
+  
+      <div *ngIf="data.length > 0" class="card-list">
+        
+        <div *ngFor="let animal of data; trackBy: trackByAnimalId" class="item-card">
+          
+          <div class="card-image-container">
+            <img [src]="animal.imagem || 'assets/placeholder-image.png'" [alt]="'Foto de ' + animal.nomePopular" class="card-image">
+          </div>
+          <div class="card-content">
+            <h3 class="item-name">{{ animal.nomePopular }}</h3>
+            <p class="scientific-name"><em>{{ animal.nomeCientifico }}</em></p>
+            <p class="item-family"><strong>Grupo:</strong> {{ animal.grupo }}</p>
+            <p class="item-habitat"><strong>Habitat:</strong> {{ animal.habitat }}</p>
+          </div>
+          <div class="card-actions">
+            <a [routerLink]="['/fauna', animal.id]" class="details-button">Saiba Mais</a>
+          </div>
+        </div>
 
-    <div *ngIf="!errorMessage && data.length === 0" class="no-results-message">
-      <p>Nenhum animal encontrado com os filtros selecionados.</p>
-    </div>
-
-    <div *ngIf="data.length > 0" class="card-list">
-      <div *ngFor="let animal of data" class="item-card">
-        <div class="card-image-container">
-          <img [src]="animal.imagem || 'assets/placeholder-image.png'" [alt]="'Foto de ' + animal.nomePopular" class="card-image">
-        </div>
-        <div class="card-content">
-          <h3 class="item-name">{{ animal.nomePopular }}</h3>
-          <p class="scientific-name"><em>{{ animal.nomeCientifico }}</em></p>
-          <p class="item-family"><strong>Grupo:</strong> {{ animal.grupo }}</p>
-          <p class="item-habitat"><strong>Habitat:</strong> {{ animal.habitat }}</p>
-        </div>
-        <div class="card-actions">
-          <a [routerLink]="['/fauna', animal.id]" class="details-button">Saiba Mais</a>
-        </div>
       </div>
     </div>
   </div>
-</div>
-
