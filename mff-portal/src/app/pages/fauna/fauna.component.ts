@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Animal } from '../../models/animal.model';
 import { FaunaService } from '../../services/fauna.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
@@ -49,16 +50,32 @@ export class FaunaComponent implements OnInit {
   public grupos: string[] = [];
 
   //Variável para controle do Projeto Click
-  public streamUrl: string | null = 'URL_DO_STREAM_ESP32_AQUI';
+  public streamUrl: SafeResourceUrl | null = null;
 
   // Flag para simular se o stream está ativo
   public isStreamOnline = true; 
+
+  private sanitizer = inject(DomSanitizer);
 
   constructor(private faunaService: FaunaService) { }
 
   // Carregar dados da fauna ao iniciar o componente
   ngOnInit(): void {
+    this.configurarStream();
     this.carregarAnimais();
+  }
+
+  configurarStream(): void {
+    // Usamos o caminho do proxy (/camera-feed) + o ID da câmera
+    const rawUrl = '/camera-feed/61847ce2';
+    
+    // Sanitizamos a URL para o Angular confiar nela
+    this.streamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
+  }
+
+  // Método para lidar com erro de carregamento da imagem
+  handleStreamError(): void {
+    this.isStreamOnline = false;
   }
 
   carregarAnimais(): void {

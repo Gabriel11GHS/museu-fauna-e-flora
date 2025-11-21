@@ -19,13 +19,15 @@
         <div class="stream-aspect-ratio-container">
           
           <img 
-            *ngIf="isStreamOnline"
+            *ngIf="isStreamOnline && streamUrl"
             class="stream-video" 
             [src]="streamUrl" 
+            (error)="handleStreamError()"
             alt="Transmissão ao vivo do Jardim Secreto">
 
           <div *ngIf="!isStreamOnline" class="stream-offline">
             <p>A transmissão está offline no momento.</p>
+            <p class="hint-text">Verifique sua conexão ou tente novamente mais tarde.</p>
           </div>
         </div>
       </mat-card-content>
