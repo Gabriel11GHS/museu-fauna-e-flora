@@ -1,13 +1,9 @@
 <div class="header-filtros">
-  <!--- ->
-  <div class="header-imagem-container">
-    <img src="./assets/icons/fauna.png" alt="Arara Canindé estilizada" class="header-imagem">
-  </div>
-  <---->
   <div class="header-conteudo">
     <h1>Explore a Fauna do Instituto</h1>
     <p>Utilize os filtros para encontrar espécies visitantes por nome ou grupo.</p>
   </div>
+  
   <div class="filtros-container">
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Buscar por nome...</mat-label>
@@ -15,54 +11,87 @@
         matInput 
         type="text"
         placeholder="Ex: Tucano-toco"
-        [(ngModel)]="searchTerm"
-        (ngModelChange)="filtrarAnimais()">
+        [ngModel]="searchTerm()" 
+        (ngModelChange)="updateSearchTerm($event)">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Grupo</mat-label>
-      <mat-select [(ngModel)]="selectedGrupo" (selectionChange)="filtrarAnimais()">
+      <mat-select 
+        [value]="selectedGrupo()" 
+        (selectionChange)="updateGrupo($event.value)">
         <mat-option value="">Todos os Grupos</mat-option>
-        <mat-option *ngFor="let grupo of grupos" [value]="grupo">
-          {{ grupo }}
-        </mat-option>
+        
+        @for (grupo of grupos(); track $index) {
+          <mat-option [value]="grupo">{{ grupo }}</mat-option>
+        }
       </mat-select>
     </mat-form-field>
   </div>
 </div>
 
 <div class="content-wrapper">
-  <div *ngIf="isLoading" class="loading-message">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p style="margin-top: 20px;">Carregando dados da fauna...</p>
-  </div>
-
-  <div *ngIf="!isLoading">
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
+  
+  @if (isLoading()) {
+    <div class="feedback-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Carregando dados da fauna...</p>
     </div>
-
-    <div *ngIf="!errorMessage && data.length === 0" class="no-results-message">
-      <p>Nenhum animal encontrado com os filtros selecionados.</p>
-    </div>
-
-    <div *ngIf="data.length > 0" class="card-list">
-      <div *ngFor="let animal of data" class="item-card">
-        <div class="card-image-container">
-          <img [src]="animal.imagem || 'assets/placeholder-image.png'" [alt]="'Foto de ' + animal.nomePopular" class="card-image">
-        </div>
-        <div class="card-content">
-          <h3 class="item-name">{{ animal.nomePopular }}</h3>
-          <p class="scientific-name"><em>{{ animal.nomeCientifico }}</em></p>
-          <p class="item-family"><strong>Grupo:</strong> {{ animal.grupo }}</p>
-          <p class="item-habitat"><strong>Habitat:</strong> {{ animal.habitat }}</p>
-        </div>
-        <div class="card-actions">
-          <a [routerLink]="['/fauna', animal.id]" class="details-button">Saiba Mais</a>
-        </div>
+  } 
+  @else {
+    @if (errorMessage()) {
+      <div class="feedback-container error-message">
+        <mat-icon>error_outline</mat-icon>
+        <p>{{ errorMessage() }}</p>
       </div>
-    </div>
-  </div>
-</div>
+    }
 
+    @if (!errorMessage() && filteredData().length === 0) {
+      <div class="feedback-container no-results-message">
+        <mat-icon>search_off</mat-icon>
+        <p>Nenhum animal encontrado com os filtros selecionados.</p>
+      </div>
+    }
+
+    @if (filteredData().length > 0) {
+      <div class="card-list">
+        @for (animal of filteredData(); track animal.id) {
+          <mat-card class="item-card">
+            <div class="card-image-container">
+              <img 
+                mat-card-image
+                [src]="animal.imagem || 'assets/placeholder-image.png'" 
+                [alt]="'Foto de ' + animal.nomePopular" 
+                class="card-image"
+                loading="lazy" 
+                (error)="updateImageOnError($event)">
+            </div>
+            
+            <mat-card-header>
+              <mat-card-title class="item-name">{{ animal.nomePopular }}</mat-card-title>
+              <mat-card-subtitle class="scientific-name"><em>{{ animal.nomeCientifico }}</em></mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="info-item">
+                <mat-icon>pets</mat-icon>
+                <span class="item-family">{{ animal.grupo }}</span>
+              </div>
+              <div class="info-item">
+                <mat-icon>home</mat-icon>
+                <span class="item-habitat">{{ animal.habitat }}</span>
+              </div>
+            </mat-card-content>
+            
+            <mat-card-actions>
+              <a mat-flat-button [routerLink]="['/fauna', animal.id]" class="details-button">
+                Saiba Mais
+              </a>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    }
+  }
+</div>
