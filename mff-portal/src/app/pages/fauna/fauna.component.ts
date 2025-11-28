@@ -49,6 +49,15 @@ export class FaunaComponent implements OnInit {
 
   public grupos: string[] = [];
 
+  // Lista das 3 câmeras disponíveis
+  public cameras = [
+    { nome: 'Câmera 1', id: '03120889' },
+    { nome: 'Câmera 2', id: '61847ce2' },
+    { nome: 'Câmera 3', id: 'fc8044e7' }
+  ];
+
+  public selectedCameraId = '61847ce2';
+
   //Variável para controle do Projeto Click
   public streamUrl: SafeResourceUrl | null = null;
 
@@ -57,6 +66,7 @@ export class FaunaComponent implements OnInit {
 
   private sanitizer = inject(DomSanitizer);
 
+  
   constructor(private faunaService: FaunaService) { }
 
   // Carregar dados da fauna ao iniciar o componente
@@ -65,12 +75,18 @@ export class FaunaComponent implements OnInit {
     this.carregarAnimais();
   }
 
+  // Função chamada no HTML para trocar a câmera
+  trocarCamera(novoId: string): void {
+    this.selectedCameraId = novoId;
+    this.configurarStream();
+  }
+
   configurarStream(): void {
-    // Usamos o caminho do proxy (/camera-feed) + o ID da câmera
-    const rawUrl = '/camera-feed/61847ce2';
-    
-    // Sanitizamos a URL para o Angular confiar nela
-    this.streamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
+    // Aponta para a rota relativa /camera-feed/
+    // O nosso servidor Node.js vai interceptar isso
+    const urlRelativa = `/camera-feed/${this.selectedCameraId}`;
+    this.streamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlRelativa);
+    this.isStreamOnline = true;
   }
 
   // Método para lidar com erro de carregamento da imagem

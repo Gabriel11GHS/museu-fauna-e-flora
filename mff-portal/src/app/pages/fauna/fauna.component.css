@@ -247,3 +247,41 @@
   color: #777;
   font-size: 1.1rem;
 }
+
+/* Posiciona os controles SOBRE o vídeo */
+.camera-controls {
+  position: absolute;
+  bottom: 15px;       /* Distância do fundo */
+  left: 50%;          /* Centralizar horizontalmente */
+  transform: translateX(-50%);
+  z-index: 10;        /* Garante que fique acima do vídeo */
+  display: flex;
+  gap: 10px;          /* Espaço entre botões */
+  width: 90%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Estilo visual dos botões */
+.cam-btn {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.cam-btn:hover {
+  background-color: rgba(39, 99, 42, 0.9); /* Verde do tema */
+  transform: scale(1.05);
+}
+
+/* Destaque para a câmera ativa */
+.cam-btn.active {
+  background-color: #27632a; /* Verde principal */
+  border-color: #fff;
+  font-weight: bold;
+}
