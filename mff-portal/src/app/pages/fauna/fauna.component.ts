@@ -56,7 +56,7 @@ export class FaunaComponent implements OnInit {
     { nome: 'Câmera 3', id: 'a118e87a' },
     { nome: 'Câmera 4', id: '6738e98d' },
     { nome: 'Câmera 5', id: 'cf585b1c' }
-    { nome: 'Câmera 6', id: 'f9f24118' }
+    { nome: 'Câmera 6', id: '2b5e6023' }
   ];
 
   public selectedCameraId = '61847ce2';
