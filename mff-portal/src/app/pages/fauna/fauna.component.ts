@@ -51,7 +51,7 @@ export class FaunaComponent implements OnInit {
 
   // Lista das 3 câmeras disponíveis
   public cameras = [
-    { nome: 'Câmera 1', id: '03120889' },
+    { nome: 'Câmera 1', id: 'ddef5e10' },
     { nome: 'Câmera 2', id: '61847ce2' },
     { nome: 'Câmera 3', id: 'fc8044e7' }
   ];
