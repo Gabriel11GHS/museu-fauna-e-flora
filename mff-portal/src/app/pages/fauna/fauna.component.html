@@ -45,7 +45,9 @@
     </mat-card>
   </section>
 </div>
+
 <mat-divider class="section-divider"></mat-divider>
+
 <div class="header-filtros">
   <div class="header-conteudo">
     <h2>Explore a Fauna do Instituto</h2>
@@ -60,7 +62,7 @@
         type="text"
         placeholder="Ex: Tucano-toco"
         [ngModel]="searchTerm()" 
-        (ngModelChange)="filteredData($event)">
+        (ngModelChange)="searchTerm.set($event)">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
@@ -140,6 +142,6 @@
           </mat-card>
         }
       </div>
-      }
     }
+  }
 </div>
