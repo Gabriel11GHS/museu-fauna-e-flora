@@ -1,8 +1,10 @@
-/* --- Estilos da Seção de Filtros (reutilizados) --- */
 :host {
-  --cor-principal: #27632a;
-  --cor-secundaria: #3a8c3a;
-  --cor-destaque: #a5038a;
+  /* --- Paleta de Cores Específica da FAUNA --- */
+  --cor-principal: #27632a;       /* Verde (mantido para títulos, padrão do museu) */
+  --cor-secundaria: #3a8c3a;      /* Verde secundário */
+  --cor-destaque: #FDB100;        /* Amarelo Ouro (Identidade da Fauna) */
+  --cor-destaque-hover: #FE7D09;  /* Laranja para hover */
+  
   --cor-fundo-header: #f0f4f0;
   --cor-fundo-pagina: #f8faf9;
   --cor-texto-claro: #ffffff;
@@ -10,78 +12,93 @@
   --borda-radius: 16px;
   --shadow-suave: 0 4px 15px rgba(0, 0, 0, 0.06);
   --shadow-elevado: 0 8px 25px rgba(0, 0, 0, 0.12);
+  
+  display: block;
 }
 
-.header-conteudo h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: var(--cor-principal); 
-  margin: 0 0 0.5rem 0;
+/* Sobrescrita do Tema Global para a Fauna 
+   Como o global (styles.css) define roxo, aqui forçamos amarelo/laranja
+   usando ::ng-deep escopado ao :host para não vazar.
+*/
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__border {
+  border-color: var(--cor-destaque) !important;
 }
 
-.header-conteudo p {
-  font-size: 1.2rem;
-  color: #333; /* Cor padrão para o subtítulo */
-  margin: 0.5rem 0 2.5rem 0;
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: var(--cor-destaque-hover) !important;
 }
 
-/* --- Estilo da Imagem de Cabeçalho --- */
-.header-imagem-container {
-  text-align: center;
-  margin-bottom: 2rem;
+:host ::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+  color: var(--cor-destaque-hover) !important;
 }
 
-.header-imagem {
-  height: 300px;
-
-}
-
+/* --- Header e Filtros --- */
 .header-filtros {
   background-color: var(--cor-fundo-header);
   padding: 3rem 2rem;
   text-align: center;
 }
 
-.filtros-titulo {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: #27632a;
-  margin-top: 0;
-  margin-bottom: 20px;
+.header-conteudo h1 {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  color: var(--cor-principal);
+  margin: 0 0 0.5rem 0;
 }
+
+.header-conteudo p {
+  font-size: 1.2rem;
+  color: var(--cor-texto-escuro);
+  margin: 0.5rem 0 2.5rem 0;
+}
+
 .filtros-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-}
-.filtro-item {
-  min-width: 250px;
-  flex-grow: 1;
-  max-width: 350px;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-/* --- Container do Conteúdo --- */
+.filtro-item {
+  min-width: 240px;
+  max-width: 320px;
+  flex-grow: 1;
+}
+
+/* --- Conteúdo Principal --- */
 .content-wrapper {
   background-color: var(--cor-fundo-pagina);
   padding: 3rem 1.5rem;
+  min-height: 60vh;
 }
 
-.loading-message, .no-results-message, .error-message {
+/* --- Feedbacks (Loading, Erro, Vazio) --- */
+.feedback-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 60px 24px;
+  gap: 1rem;
+  padding: 4rem 0;
   text-align: center;
   font-size: 1.2rem;
   color: #666;
 }
-.error-message { color: #b71c1c; }
 
-/* --- Estilos dos Cards (adaptados para 'item') --- */
+.feedback-container mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #bdbdbd;
+}
+
+.error-message, .error-message mat-icon {
+  color: #c62828;
+}
+
+/* --- Grid de Cards --- */
 .card-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -91,67 +108,117 @@
 }
 
 .item-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: var(--borda-radius) !important;
+  box-shadow: var(--shadow-suave) !important;
+  border: 1px solid #eef0ef;
+  background-color: #fff;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
+
 .item-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-elevado) !important;
 }
+
 .card-image-container {
-  width: 100%;
-  height: 200px;
+  height: 240px;
+  overflow: hidden;
   background-color: #f0f0f0;
+  position: relative;
 }
+
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
 }
-.card-content {
-  padding: 16px;
-  flex-grow: 1;
+
+.item-card:hover .card-image {
+  transform: scale(1.05);
 }
+
+/* --- Detalhes do Card --- */
+mat-card-header {
+  padding: 16px 16px 0 16px;
+}
+
 .item-name {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #27632a;
-  margin: 0 0 4px 0;
+  color: var(--cor-principal);
+  margin-bottom: 4px;
+  line-height: 1.2;
 }
+
 .scientific-name {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #555;
-  margin: 0 0 12px 0;
   font-style: italic;
+  margin-bottom: 0;
 }
+
+mat-card-content {
+  padding: 12px 16px;
+  flex-grow: 1; /* Garante que o conteúdo ocupe o espaço e empurre as ações para baixo */
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start; /* Alinha o ícone ao topo do texto, melhor para descrições longas */
+  gap: 8px;
+  color: var(--cor-texto-escuro);
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4; /* Melhora a leitura do texto */
+}
+
+.info-item mat-icon {
+  color: var(--cor-destaque-hover);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  
+  /* CORREÇÃO CRÍTICA: */
+  font-weight: normal; /* Ícones Material DEVEM ser normal, negrito quebra o desenho */
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  
+  /* Ajuste fino para alinhar com a primeira linha de texto */
+  margin-top: 2px; 
+  
+  /* Garante que o ícone não encolha se o texto for grande */
+  flex-shrink: 0; 
+}
+
+/* Tags de Grupo/Habitat */
 .item-family, .item-habitat {
-  font-size: 0.9rem;
-  color: #333;
-  margin: 4px 0;
+  font-weight: 500;
 }
-.card-actions {
-  padding: 0 16px 16px 16px;
-  margin-top: auto;
+
+mat-card-actions {
+  padding: 8px 16px 16px 16px;
 }
+
+/* Botão Personalizado da Fauna */
 .details-button {
-  display: block;
+  width: 100%;
   text-align: center;
-  padding: 10px;
-  background-color: #FDB100;
-  color: white;
-  text-decoration: none;
-  border: none;
+  padding: 10px 0;
+  background-color: var(--cor-destaque) !important;
+  color: white !important;
   border-radius: 8px;
   font-weight: bold;
-  cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.2s;
 }
 
 .details-button:hover {
-  background-color: #FE7D09;
+  background-color: var(--cor-destaque-hover) !important;
 }

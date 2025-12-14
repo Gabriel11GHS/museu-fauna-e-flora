@@ -4,33 +4,51 @@
     <p>Veja as aparições do museu na mídia</p>
   </header>
 
-    <ng-container *ngIf="noticias$ | async as noticias; else loading">
-    <div *ngIf="noticias.length > 0; else noResults" class="timeline">
-      
-      <div *ngFor="let noticia of noticias; let i = index" class="timeline-container" [ngClass]="{ 'direita': i % 2 !== 0, 'esquerda': i % 2 === 0 }">
-        
-        <a [href]="noticia.url" target="_blank" rel="noopener noreferrer" class="timeline-content-link">
-          <div class="timeline-content">
-            <h2>{{ noticia.titulo }}</h2>
-            <small class="data">{{ noticia.veiculo }} - {{ noticia.data }}</small>
-            <img *ngIf="noticia.imagem" [src]="noticia.imagem" [alt]="noticia.titulo" class="evento-imagem">
-          </div>
-        </a>
-      </div>
-    </div>
-  </ng-container>
+  @if (isLoading()) {
+  <div class="feedback-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando notícias...</p>
+  </div>
+  }
+  @else {
 
-  <ng-template #loading>
-    <div class="feedback-container">
-      <mat-spinner diameter="50"></mat-spinner>
-      <p>Carregando notícias...</p>
-    </div>
-  </ng-template>
+  @if (errorMessage()) {
+  <div class="feedback-container error-message">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ errorMessage() }}</p>
+  </div>
+  }
 
-  <ng-template #noResults>
-    <div class="feedback-container">
-      <p>Nenhuma notícia encontrada no momento.</p>
-    </div>
-  </ng-template>
+  @if (!errorMessage() && noticias().length === 0) {
+  <div class="feedback-container">
+    <p>Nenhuma notícia encontrada no momento.</p>
+  </div>
+  }
 
+  @if (noticias().length > 0) {
+  <div class="timeline">
+    @for (noticia of noticias(); track $index; let i = $index) {
+    <div class="timeline-container"
+      [ngClass]="{ 'direita': i % 2 !== 0, 'esquerda': i % 2 === 0 }">
+
+      <a [href]="noticia.url" target="_blank" rel="noopener noreferrer"
+        class="timeline-content-link">
+        <div class="timeline-content">
+          <h2>{{ noticia.titulo }}</h2>
+          <small class="data">{{ noticia.veiculo }} - {{ noticia.data }}</small>
+
+          @if (noticia.imagem) {
+          <img
+            [src]="noticia.imagem"
+            [alt]="noticia.titulo"
+            class="evento-imagem"
+            loading="lazy"> }
+        </div>
+      </a>
+
+    </div>
+    }
+  </div>
+  }
+  }
 </div>

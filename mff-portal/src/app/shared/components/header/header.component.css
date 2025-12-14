@@ -98,7 +98,9 @@
   }
 
   .mobile-menu-button {
-    display: block; /* Mostra o botão hambúrguer */
+    display: block;
+    position: relative; 
+    z-index: 1100;
   }
 
  .mobile-nav {
@@ -129,6 +131,23 @@
   .mobile-nav a.active-link {
     background-color: rgba(255, 255, 255, 0.1);
     font-weight: bold;
+  }
+
+  .close-menu-button {
+    width: 100%;           /* Ocupa toda a largura */
+    border-radius: 0;      /* Remove o formato redondo/oval */
+    margin: 0;             /* Remove margens externas */
+    padding: 20px 0;       /* Aplica o mesmo espaçamento interno dos links */
+    height: auto;          /* Reseta a altura fixa do Material */
+    
+    /* Alinhamento */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Cores e Visual */
+    color: var(--cor-texto);
+    background-color: transparent; 
   }
 }
 
