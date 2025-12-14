@@ -6,5 +6,13 @@
     "pathRewrite": {
       "^/api": ""
     }
+  },
+  "/camera-feed": {
+    "target": "http://andromeda.lasdpc.icmc.usp.br:60119",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/camera-feed": "/api/stream"
+    }
   }
 }
