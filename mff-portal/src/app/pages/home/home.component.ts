@@ -3,24 +3,30 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ChangeDetectorRef,
+  AfterViewInit,
   ViewChild,
-  ViewEncapsulation
+  inject,
+  signal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { trigger, transition, style, animate } from '@angular/animations';
+
+// Serviços e Modelos
+import { ApiService } from '../../services/api.service';
+import { FaunaService } from '../../services/fauna.service';
+import { HeaderStateService } from '../../services/header-state.service';
+
+// Bibliotecas Externas
+import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
-import { forkJoin, Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ApiService } from '../../services/api.service';
-import { Planta } from '../../models/planta.model';
-import { FaunaService } from '../../services/fauna.service';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { HeaderStateService } from '../../services/header-state.service';
-import { AfterViewInit } from '@angular/core';
+
+// Declaração do Leaflet (global)
 declare var L: any;
 
 export interface Destaque {
@@ -43,11 +49,7 @@ export interface Destaque {
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    'class': 'app-home-wrapper'
-  },
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
@@ -58,14 +60,22 @@ export interface Destaque {
   ]
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
+  // --- INJEÇÃO DE DEPENDÊNCIAS ---
+  private headerStateService = inject(HeaderStateService);
+  private apiService = inject(ApiService);
+  private faunaService = inject(FaunaService);
+  private router = inject(Router);
+
+  // --- VIEW CHILDREN ---
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
 
-  public destaques$!: Observable<Destaque[]>;
-  public showCarousel: boolean = false;
-  public isCarouselPlaying: boolean = true;
-  public liveRegionMessage: string = '';
+  // --- ESTADO REATIVO (SIGNALS) ---
+  public showCarousel = signal<boolean>(false);
+  public isCarouselPlaying = signal<boolean>(false);
+  public liveRegionMessage = signal<string>('');
 
-  destaquesPrincipais = [
+  // --- DADOS ESTÁTICOS ---
+  public destaquesPrincipais = [
     {
       imagemIcone: 'assets/icons/fauna.png',
       titulo: 'Fauna',
@@ -76,7 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       imagemIcone: 'assets/icons/flora.png',
       titulo: 'Flora',
       descricao: 'Explore as espécies de plantas catalogadas.',
-      link: '/Ficha'
+      link: '/Ficha' // Atenção: Verifique se a rota correta é '/flora' ou '/Ficha'
     },
     {
       icone: 'map',
@@ -86,60 +96,16 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   ];
 
-  constructor(
-    private headerStateService: HeaderStateService,
-    private apiService: ApiService,
-    private faunaService: FaunaService,
-    private cdr: ChangeDetectorRef,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
-    // Informa ao serviço que a HomeComponent está ativa
-    this.headerStateService.setIsHomePage(true);
-
-    this.destaques$ = forkJoin({
-      plantas: this.apiService.getPlantasAtivas().pipe(catchError(() => of([]))),
-      animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))
-    }).pipe(
-      map(({ plantas, animais }) => {
-        const destaquesFlora: Destaque[] = plantas
-          .filter(p => !!(p.fotoIndividuo || p.fotoTaxonomia))
-          .map(planta => ({
-            nome: planta.nomePopular || 'Planta não identificada',
-            imagem: (planta.fotoIndividuo || planta.fotoTaxonomia) ?? 'assets/placeholder.jpg',
-            tipo: 'Flora',
-            link: `/Ficha`
-          }));
-
-        const destaquesFauna: Destaque[] = animais.map(animal => ({
-          nome: animal.nomePopular,
-          imagem: animal.imagem ?? 'assets/placeholder.jpg',
-          tipo: 'Fauna',
-          link: `/fauna`
-        }));
-
-        const combinados = [...destaquesFlora, ...destaquesFauna];
-        return this.embaralharArray(combinados).slice(0, 8);
-      })
-    );
-  }
-
-  ngOnDestroy(): void {
-    // Informa ao serviço que a HomeComponent foi destruída (limpando o estado)
-    this.headerStateService.setIsHomePage(false);
-  }
-
-  mediaItems = [
-    { image: 'assets/home/carrossel-1.jpg', alt: '' },
-    { image: 'assets/home/carrossel-2.jpg', alt: '' },
-    { image: 'assets/home/carrossel-3.jpg', alt: '' },
-    { image: 'assets/home/carrossel-4.jpg', alt: '' },
-    { image: 'assets/home/carrossel-5.jpg', alt: '' },
-    { image: 'assets/home/carrossel-6.jpg', alt: '' }
+  public mediaItems = [
+    { image: 'assets/home/carrossel-1.jpg', alt: 'Imagem 1 do Carrossel' },
+    { image: 'assets/home/carrossel-2.jpg', alt: 'Imagem 2 do Carrossel' },
+    { image: 'assets/home/carrossel-3.jpg', alt: 'Imagem 3 do Carrossel' },
+    { image: 'assets/home/carrossel-4.jpg', alt: 'Imagem 4 do Carrossel' },
+    { image: 'assets/home/carrossel-5.jpg', alt: 'Imagem 5 do Carrossel' },
+    { image: 'assets/home/carrossel-6.jpg', alt: 'Imagem 6 do Carrossel' }
   ];
 
-  slideConfig = {
+  public slideConfig = {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
@@ -150,39 +116,88 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     arrows: true
   };
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.showCarousel = true;
-      this.cdr.detectChanges();
-      this.onCarouselAfterChange({ currentSlide: 0 });
-    }, 0);
+  // --- DADOS DINÂMICOS (OBSERVABLE -> SIGNAL) ---
+  
+  // Observable fonte que busca e combina dados
+  private destaquesSource$ = forkJoin({
+    plantas: this.apiService.getPlantasAtivas().pipe(catchError(() => of([]))),
+    animais: this.faunaService.getAnimais().pipe(catchError(() => of([])))
+  }).pipe(
+    map(({ plantas, animais }) => {
+      const destaquesFlora: Destaque[] = plantas
+        .filter(p => !!(p.fotoIndividuo || p.fotoTaxonomia))
+        .map(planta => ({
+          nome: planta.nomePopular || 'Planta não identificada',
+          imagem: (planta.fotoIndividuo || planta.fotoTaxonomia) ?? 'assets/placeholder.jpg',
+          tipo: 'Flora',
+          link: `/Ficha` // Ajuste conforme rota real
+        }));
 
-    // Cria o mapa centralizado no ICMC
+      const destaquesFauna: Destaque[] = animais.map(animal => ({
+        nome: animal.nomePopular,
+        imagem: animal.imagem ?? 'assets/placeholder.jpg',
+        tipo: 'Fauna',
+        link: `/fauna`
+      }));
+
+      // Combina e embaralha
+      const combinados = [...destaquesFlora, ...destaquesFauna];
+      return this.embaralharArray(combinados).slice(0, 8);
+    })
+  );
+
+  // Signal pronto para uso no template
+  public destaques = toSignal(this.destaquesSource$, { initialValue: [] });
+
+  // --- LIFECYCLE HOOKS ---
+
+  ngOnInit(): void {
+    this.headerStateService.setIsHomePage(true);
+  }
+
+  ngAfterViewInit(): void {
+    // Inicializa o carrossel sem setTimeout, apenas atualizando o sinal
+    this.showCarousel.set(true);
+    
+    // Inicializa o mapa separadamente para organização
+    this.initLeafletMap();
+  }
+
+  ngOnDestroy(): void {
+    this.headerStateService.setIsHomePage(false);
+  }
+
+  // --- MÉTODOS DE LÓGICA ---
+
+  private initLeafletMap(): void {
+    // Verifica se L (Leaflet) está disponível
+    if (typeof L === 'undefined') return;
+
+    // Cria o mapa
     const map = L.map('map').setView([-22.0029, -47.8913], 16);
 
-    // Camada base gratuita (OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // Carrega o arquivo KML (precisa converter seu .kmz para .kml antes)
+    // Carrega KML
     fetch('assets/mapa/Local7.kml')
       .then(res => res.text())
       .then(kmltext => {
         const parser = new DOMParser();
         const kml = parser.parseFromString(kmltext, 'text/xml');
-        const track = new (L as any).KML(kml);
+        // @ts-ignore (KML plugin typing workaround)
+        const track = new L.KML(kml);
         map.addLayer(track);
         map.fitBounds(track.getBounds());
-      });
+      })
+      .catch(err => console.error('Erro ao carregar mapa KML:', err));
   }
 
   navigateTo(link: string): void {
-    // Se o link começar com '/', é uma rota externa
     if (link.startsWith('/')) {
       this.router.navigate([link]);
     } else {
-      // Caso contrário, é um ID de âncora para rolagem
       const element = document.getElementById(link);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -191,23 +206,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   togglePlayPause(): void {
-    if (this.isCarouselPlaying) {
+    if (this.isCarouselPlaying()) {
       this.heroCarousel.slickPause();
     } else {
       this.heroCarousel.slickPlay();
     }
-    this.isCarouselPlaying = !this.isCarouselPlaying;
+    this.isCarouselPlaying.update(v => !v);
   }
 
   onCarouselAfterChange(event: { currentSlide: number }): void {
-    // You can add logic here if needed, for now it's a stub to fix the error.
-    // Example: Update live region message for accessibility
-    this.liveRegionMessage = `Slide ${event.currentSlide + 1} ativo`;
-    this.cdr.detectChanges();
+    // Atualiza apenas o sinal, sem chamar detectChanges manualmente
+    this.liveRegionMessage.set(`Slide ${event.currentSlide + 1} ativo`);
   }
 
-  embaralharArray<T>(array: T[]): T[] {
-    // Algoritmo de Fisher-Yates para embaralhar o array
+  private embaralharArray<T>(array: T[]): T[] {
     const arr = array.slice();
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -215,5 +227,4 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return arr;
   }
-
 }

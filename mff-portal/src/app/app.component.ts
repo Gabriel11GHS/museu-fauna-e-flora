@@ -10,6 +10,8 @@ import { FiltroService } from './services/filtro.service';
 import { filter } from 'rxjs';
 import { HeaderComponent } from './shared/components/header/header.component';
 
+declare var gtag: Function;
+
 @Component({
   selector: 'app-root',
   standalone: true,

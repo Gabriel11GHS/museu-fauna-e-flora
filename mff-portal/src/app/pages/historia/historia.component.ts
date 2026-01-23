@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-interface EventoHistoria {
+export interface EventoHistoria {
   ano: string;
   titulo: string;
   descricao: string;
@@ -14,11 +14,12 @@ interface EventoHistoria {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './historia.component.html',
-  styleUrls: ['./historia.component.css']
+  styleUrls: ['./historia.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HistoriaComponent {
   
-  eventos: EventoHistoria[] = [
+  public eventos = signal<EventoHistoria[]>([
     {
       ano: '1971',
       titulo: 'Fundação do ICMC',
@@ -65,5 +66,5 @@ export class HistoriaComponent {
       descricao: 'O portal do Museu de Fauna e Flora é lançado, unindo tecnologia e natureza para oferecer ao público interação com o acervo vivo que há no instituto.',
       imagem: 'assets/logos/mff-novo.png'
     }
-  ];
+  ]);
 }

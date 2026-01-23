@@ -1,3 +1,5 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 *,
@@ -6,11 +8,32 @@
   box-sizing: border-box;
 }
 
-html, body { height: 100%; }
-body { 
-      margin: 0; 
-      font-family: Roboto, "Helvetica Neue", sans-serif;
-      background-color: #fff; 
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: #f8faf9; 
 }
 
+/* --- Customizações do Angular Material (Tema Flora) --- */
 
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__border {
+  border-color: #a5038a !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: #a5038a !important;
+}
+
+.mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mdc-switch__handle {
+  background-color: #a5038a !important;
+}
+
+.mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mdc-switch__track::after {
+  background-color: #a5038a !important; 
+  opacity: 0.5; /* Suaviza a cor do trilho */
+}
+
+.mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mat-mdc-slide-toggle-ripple .mat-ripple-element {
+  background-color: #a5038a !important;
+}
