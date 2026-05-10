@@ -1,6 +1,4 @@
 script/venv
 script/.venv
-<<<<<<< HEAD
 script/especies_sem_audio.csv
-=======
->>>>>>> tar4829-projeto-click
+docs/

@@ -17,29 +17,36 @@
       </mat-card-header>
 
       <mat-card-content>
-        <div class="stream-aspect-ratio-container">
+        <div class="stream-frame-stage">
+          <div class="stream-window">
+            <img
+              *ngIf="isStreamOnline && streamUrl"
+              class="stream-video"
+              [src]="streamUrl"
+              (error)="handleStreamError()"
+              alt="Transmissão ao vivo do Jardim Secreto">
+
+            <div *ngIf="!isStreamOnline" class="stream-offline">
+              <p>A transmissão está offline no momento.</p>
+              <p class="hint-text">Verifique sua conexão ou tente novamente mais
+                tarde.</p>
+            </div>
+          </div>
 
           <img
-            *ngIf="isStreamOnline && streamUrl"
-            class="stream-video"
-            [src]="streamUrl"
-            (error)="handleStreamError()"
-            alt="Transmissão ao vivo do Jardim Secreto">
+            class="stream-frame"
+            src="assets/fauna/Projeto-Click/moldura-sem-fundo.png"
+            alt=""
+            aria-hidden="true">
+        </div>
 
-          <div *ngIf="!isStreamOnline" class="stream-offline">
-            <p>A transmissão está offline no momento.</p>
-            <p class="hint-text">Verifique sua conexão ou tente novamente mais
-              tarde.</p>
-          </div>
-
-          <div class="camera-controls">
-            <button *ngFor="let cam of cameras"
-              (click)="trocarCamera(cam.id)"
-              class="cam-btn"
-              [class.active]="selectedCameraId === cam.id">
-              {{ cam.nome }}
-            </button>
-          </div>
+        <div class="camera-controls">
+          <button *ngFor="let cam of cameras"
+            (click)="trocarCamera(cam.id)"
+            class="cam-btn"
+            [class.active]="selectedCameraId === cam.id">
+            {{ cam.nome }}
+          </button>
         </div>
       </mat-card-content>
     </mat-card>
