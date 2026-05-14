@@ -1,21 +1,33 @@
 <div class="pagina-container">
-
-  <header class="pagina-header">
-    <h1>Projeto Click: O Jardim Secreto Ao Vivo</h1>
-    <p>
-      Acompanhe em tempo real a vida selvagem no Local 2 (Jardim Secreto) do
-      ICMC.
-      Esta câmera monitora os visitantes do nosso museu.
-    </p>
-  </header>
-
   <section class="stream-section">
-    <mat-card class="stream-card">
-      <mat-card-header>
-        <mat-card-title>Câmera Ao Vivo</mat-card-title>
-        <mat-card-subtitle>Local 2 - Jardim Secreto</mat-card-subtitle>
-      </mat-card-header>
+    <mat-card class="project-click-card project-info-card">
+      <mat-card-content>
+        <span class="project-eyebrow">Transmissão ao vivo</span>
+        <h1>Projeto Click</h1>
+        <p>
+          Uma janela para observar, em tempo real, a fauna que visita o Jardim
+          Secreto do ICMC. A câmera registra a presença de aves, insetos e outros
+          animais que circulam pelo espaço do museu.
+        </p>
 
+        <div class="project-highlights">
+          <div>
+            <strong>Local</strong>
+            <span>Local 2 - Jardim Secreto</span>
+          </div>
+          <div>
+            <strong>Objetivo</strong>
+            <span>Aproximar visitantes da biodiversidade do campus</span>
+          </div>
+          <div>
+            <strong>Como participar</strong>
+            <span>Escolha uma câmera e acompanhe os visitantes do jardim</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stream-card">
       <mat-card-content>
         <div class="stream-frame-stage">
           <div class="stream-window">
@@ -48,6 +60,21 @@
             {{ cam.nome }}
           </button>
         </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="project-click-card camera-location-card">
+      <mat-card-content>
+        <span class="project-eyebrow">Onde estão as câmeras</span>
+        <h2>Jardim Secreto</h2>
+        <img
+          class="camera-location-image"
+          src="assets/home/mapa-instituto.png"
+          alt="Mapa do instituto com indicação da região do museu">
+        <p>
+          As câmeras acompanham o movimento no Local 2, uma área de passagem e
+          visitação da fauna dentro do espaço do museu.
+        </p>
       </mat-card-content>
     </mat-card>
   </section>
