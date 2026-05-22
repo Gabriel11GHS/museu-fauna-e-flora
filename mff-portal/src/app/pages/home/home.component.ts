@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   OnInit,
   OnDestroy,
   AfterViewInit,
@@ -26,14 +27,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 
-// Declaração do Leaflet (global)
-declare var L: any;
 
 export interface Destaque {
   nome: string;
   imagem: string;
   tipo: 'Fauna' | 'Flora';
   link: string;
+}
+
+interface LocalMapaHome {
+  id: string;
+  nome: string;
+  x: number;
+  y: number;
+}
+
+interface MapaSvgListener {
+  elemento: Element;
+  tipo: string;
+  listener: EventListener;
 }
 
 @Component({
@@ -68,11 +80,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // --- VIEW CHILDREN ---
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
+  @ViewChild('svgObject') svgObject?: ElementRef<HTMLObjectElement>;
 
   // --- ESTADO REATIVO (SIGNALS) ---
   public showCarousel = signal<boolean>(false);
   public isCarouselPlaying = signal<boolean>(false);
   public liveRegionMessage = signal<string>('');
+  public localAtivo = signal<string | null>(null);
 
   // --- DADOS ESTÁTICOS ---
   public destaquesPrincipais = [
@@ -116,6 +130,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     arrows: true
   };
 
+
+  public locaisMapa: LocalMapaHome[] = [
+    { id: 'local-1', nome: 'Local 1', x: 75.69, y: 90.96 },
+    { id: 'local-2', nome: 'Local 2', x: 77.66, y: 71.37 },
+    { id: 'local-3', nome: 'Local 3', x: 51.37, y: 27.76 },
+    { id: 'local-4', nome: 'Local 4', x: 37, y: 37.77 },
+    { id: 'local-5', nome: 'Local 5', x: 44.01, y: 70.26 },
+    { id: 'local-6', nome: 'Local 6', x: 33.56, y: 90.89 },
+    { id: 'local-7', nome: 'Local 7', x: 19.14, y: 77.41 },
+    { id: 'local-8', nome: 'Local 8', x: 15.02, y: 33.2 }
+  ];
+
+  private mapaSvgListeners: MapaSvgListener[] = [];
+  private mapaSvgStyle?: SVGStyleElement;
+  private readonly onMapaSvgLoad = (): void => this.configurarMapaLocais();
+
   // --- DADOS DINÂMICOS (OBSERVABLE -> SIGNAL) ---
   
   // Observable fonte que busca e combina dados
@@ -136,7 +166,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const destaquesFauna: Destaque[] = animais.map(animal => ({
         nome: animal.nomePopular,
         imagem: animal.imagem ?? 'assets/placeholder.jpg',
-        tipo: 'Fauna',
+        tipo: 'Fauna' as const,
         link: `/fauna`
       }));
 
@@ -159,40 +189,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     // Inicializa o carrossel sem setTimeout, apenas atualizando o sinal
     this.showCarousel.set(true);
     
-    // Inicializa o mapa separadamente para organização
-    this.initLeafletMap();
+    const objectElement = this.svgObject?.nativeElement;
+
+    if (objectElement) {
+      objectElement.addEventListener('load', this.onMapaSvgLoad);
+
+      if (objectElement.contentDocument) {
+        this.configurarMapaLocais();
+      }
+    }
   }
 
   ngOnDestroy(): void {
     this.headerStateService.setIsHomePage(false);
+    this.svgObject?.nativeElement.removeEventListener('load', this.onMapaSvgLoad);
+    this.limparListenersMapaLocais();
   }
 
   // --- MÉTODOS DE LÓGICA ---
-
-  private initLeafletMap(): void {
-    // Verifica se L (Leaflet) está disponível
-    if (typeof L === 'undefined') return;
-
-    // Cria o mapa
-    const map = L.map('map').setView([-22.0029, -47.8913], 16);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Carrega KML
-    fetch('assets/mapa/Local7.kml')
-      .then(res => res.text())
-      .then(kmltext => {
-        const parser = new DOMParser();
-        const kml = parser.parseFromString(kmltext, 'text/xml');
-        // @ts-ignore (KML plugin typing workaround)
-        const track = new L.KML(kml);
-        map.addLayer(track);
-        map.fitBounds(track.getBounds());
-      })
-      .catch(err => console.error('Erro ao carregar mapa KML:', err));
-  }
 
   navigateTo(link: string): void {
     if (link.startsWith('/')) {
@@ -217,6 +231,153 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   onCarouselAfterChange(event: { currentSlide: number }): void {
     // Atualiza apenas o sinal, sem chamar detectChanges manualmente
     this.liveRegionMessage.set(`Slide ${event.currentSlide + 1} ativo`);
+  }
+
+
+  definirLocalAtivo(id: string): void {
+    this.localAtivo.set(id);
+    this.atualizarAreaAtivaMapa(id);
+  }
+
+  limparLocalAtivo(): void {
+    this.localAtivo.set(null);
+    this.atualizarAreaAtivaMapa(null);
+  }
+
+  isLocalAtivo(id: string): boolean {
+    return this.localAtivo() === id;
+  }
+
+  private configurarMapaLocais(): void {
+    const svgDocument = this.svgObject?.nativeElement.contentDocument;
+
+    if (!svgDocument) {
+      return;
+    }
+
+    this.limparListenersMapaLocais();
+
+    const elementos = svgDocument.querySelectorAll('[data-local-id]');
+
+    elementos.forEach(elemento => {
+      const id = elemento.getAttribute('data-local-id');
+
+      if (!id) {
+        return;
+      }
+
+      const local = this.locaisMapa.find(item => item.id === id);
+
+      elemento.setAttribute('tabindex', '0');
+      elemento.setAttribute('role', 'button');
+      elemento.setAttribute('aria-label', local?.nome ?? id);
+
+      this.adicionarListenerMapa(elemento, 'mouseenter', () => this.definirLocalAtivo(id));
+      this.adicionarListenerMapa(elemento, 'mouseleave', () => this.limparLocalAtivo());
+      this.adicionarListenerMapa(elemento, 'focus', () => this.definirLocalAtivo(id));
+      this.adicionarListenerMapa(elemento, 'blur', () => this.limparLocalAtivo());
+      this.adicionarListenerMapa(elemento, 'click', () => this.definirLocalAtivo(id));
+      this.adicionarListenerMapa(elemento, 'keydown', (event: Event) => {
+        const keyboardEvent = event as KeyboardEvent;
+
+        if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+          keyboardEvent.preventDefault();
+          this.definirLocalAtivo(id);
+        }
+      });
+    });
+
+    const style = svgDocument.createElementNS('http://www.w3.org/2000/svg', 'style') as SVGStyleElement;
+
+    style.textContent = `
+      [data-local-id] {
+        cursor: pointer;
+        outline: none;
+        transition: opacity 0.2s ease, filter 0.2s ease;
+      }
+
+      [data-local-id],
+      [data-local-id] * {
+        transition: fill 0.2s ease, filter 0.2s ease, opacity 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+      }
+
+      [data-local-id] > [id$=" - linha"] {
+        fill: #000000;
+        fill-opacity: 0.001;
+        pointer-events: visibleFill;
+      }
+
+      [data-local-id] [fill="#286D2C"] {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      [data-local-id]:hover [fill="#286D2C"],
+      [data-local-id]:focus [fill="#286D2C"],
+      [data-local-id].mapa-local--ativo [fill="#286D2C"] {
+        fill: #5b1f4d !important;
+        stroke: #3f1235 !important;
+        filter: drop-shadow(0 10px 12px rgba(63, 18, 53, 0.5));
+        opacity: 0.98;
+        transform: scale(1.035);
+      }
+    `;
+
+    svgDocument.querySelector('svg')?.appendChild(style);
+    this.mapaSvgStyle = style;
+  }
+
+  private adicionarListenerMapa(elemento: Element, tipo: string, listener: EventListener): void {
+    elemento.addEventListener(tipo, listener);
+    this.mapaSvgListeners.push({ elemento, tipo, listener });
+  }
+
+  private limparListenersMapaLocais(): void {
+    this.mapaSvgListeners.forEach(({ elemento, tipo, listener }) => {
+      elemento.removeEventListener(tipo, listener);
+    });
+    this.mapaSvgListeners = [];
+    this.mapaSvgStyle?.remove();
+    this.mapaSvgStyle = undefined;
+  }
+
+  private atualizarAreaAtivaMapa(id: string | null): void {
+    const svgDocument = this.svgObject?.nativeElement.contentDocument;
+
+    if (!svgDocument) {
+      return;
+    }
+
+    svgDocument.querySelectorAll('[data-local-id]').forEach(elemento => {
+      const ativo = elemento.getAttribute('data-local-id') === id;
+      elemento.classList.toggle('mapa-local--ativo', ativo);
+      this.atualizarOrdemVisualDoLocal(elemento, ativo);
+    });
+
+    const elementoAtivo = id ? svgDocument.querySelector(`[data-local-id="${id}"]`) : null;
+
+    if (elementoAtivo?.parentNode) {
+      elementoAtivo.parentNode.appendChild(elementoAtivo);
+    }
+  }
+
+  private atualizarOrdemVisualDoLocal(elemento: Element, ativo: boolean): void {
+    const linha = Array.from(elemento.children).find(filho => {
+      const idFilho = filho.getAttribute('id') ?? '';
+      return idFilho.includes(' - linha');
+    });
+
+    if (linha) {
+      elemento.appendChild(linha);
+    }
+
+    if (!ativo) {
+      return;
+    }
+
+    Array.from(elemento.children)
+      .filter(filho => filho.querySelector('[fill="#286D2C"]'))
+      .forEach(grupoVerde => elemento.appendChild(grupoVerde));
   }
 
   private embaralharArray<T>(array: T[]): T[] {

@@ -90,9 +90,38 @@
   </div>
 </section>
 
-<section class="locais-section" id="mapa-section">
-  <h2>Conheça os locais do Instituto</h2>
-  <div class="mapa-container">
-    <div id="map" style="height:500px; width:100%;"></div>
+<section class="destaques-section" id="mapa-section" aria-labelledby="mapa-locais-titulo">
+  <div class="texto-vozes">
+
+    <h2>Entenda as regiões do Museu da Fauna e Flora</h2>
+    <p>
+      Conheça as áreas do campus usadas como referência para catalogar os indivíduos do acervo.
+      O mapa interativo destaca as regiões onde as espécies foram coletadas, permitindo uma
+      exploração visual do acervo e facilitando a compreensão da distribuição geográfica das espécies.
+    </p>
+  </div>
+
+  <div class="home-mapa-locais__card">
+    <div class="home-mapa-locais__svg-container">
+      <object
+        #svgObject
+        class="home-mapa-locais__svg"
+        type="image/svg+xml"
+        data="assets/mapa/locais-individuais.svg"
+        aria-label="Mapa dos locais do Museu da Fauna e Flora">
+      </object>
+
+      <div class="home-mapa-locais__labels" aria-hidden="true">
+        @for (local of locaisMapa; track local.id) {
+          <span
+            class="home-mapa-locais__label"
+            [class.home-mapa-locais__label--ativo]="isLocalAtivo(local.id)"
+            [style.left.%]="local.x"
+            [style.top.%]="local.y">
+            {{ local.nome }}
+          </span>
+        }
+      </div>
+    </div>
   </div>
 </section>

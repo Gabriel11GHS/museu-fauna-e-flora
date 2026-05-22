@@ -278,26 +278,107 @@
   color: #333;
 }
 
-/* --- Seção Mapa --- */
-.locais-section {
+#mapa-section .texto-vozes {
+  max-width: 860px;
+  margin: 0 auto 2rem;
   text-align: center;
-  padding: 60px 20px;
-  background-color: #f8faf9;
 }
 
-.locais-section h2 {
-  font-size: 2.2rem;
-  margin-bottom: 30px;
-  color: #333;
+#mapa-section .texto-vozes p {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.mapa-container {
-  max-width: 900px;
+/* --- Seção Mapa de locais --- */
+.home-mapa-locais {
+  padding: 4rem 1.5rem;
+  background:
+    radial-gradient(circle at top left, rgba(122, 155, 87, 0.14), transparent 30rem),
+    #f7f4ec;
+}
+
+.home-mapa-locais__texto {
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.home-mapa-locais__texto .eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: #2f6b3f;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-mapa-locais__texto h2 {
+  margin: 0;
+  color: #1f3d2b;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.15;
+}
+
+.home-mapa-locais__texto p {
+  max-width: 720px;
+  margin: 1rem auto 0;
+  color: #5c665c;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.home-mapa-locais__card {
+  width: min(100%, 900px);
   margin: 0 auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
+}
+
+.home-mapa-locais__svg-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1092 / 993;
+  line-height: 0;
+  overflow: visible;
+}
+
+.home-mapa-locais__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+.home-mapa-locais__labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.home-mapa-locais__label {
+  position: absolute;
+  z-index: 2;
+  padding: clamp(0.24rem, 0.55vw, 0.52rem) clamp(0.46rem, 0.9vw, 0.9rem);
+  border: 1px solid rgba(247, 244, 236, 0.8);
+  border-radius: 999px;
+  background: rgba(31, 61, 43, 0.92);
+  color: #f7f4ec;
+  box-shadow: 0 6px 14px rgba(31, 61, 43, 0.22);
+  font-size: clamp(0.68rem, 0.96vw, 0.98rem);
+  font-weight: 800;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.home-mapa-locais__label--ativo {
+  opacity: 1;
+  transform: translate(-50%, -56%);
 }
 
 @media (max-width: 768px) {
@@ -317,5 +398,28 @@
   
   .carousel-play-pause-btn {
     bottom: 50px;
+  }
+
+  .home-mapa-locais {
+    padding: 3rem 1rem;
+  }
+
+  .home-mapa-locais__svg-container {
+    overflow: visible;
+  }
+
+  .home-mapa-locais__svg {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .home-mapa-locais__labels {
+    min-width: 0;
+  }
+
+  .home-mapa-locais__label {
+    padding: 0.22rem 0.42rem;
+    font-size: clamp(0.54rem, 2.55vw, 0.78rem);
+    opacity: 1;
   }
 }
