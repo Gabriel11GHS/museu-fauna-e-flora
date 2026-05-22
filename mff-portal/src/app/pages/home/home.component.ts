@@ -132,14 +132,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   public locaisMapa: LocalMapaHome[] = [
-    { id: 'local-1', nome: 'Local 1', x: 69.73, y: 91.15 },
-    { id: 'local-2', nome: 'Local 2', x: 78.11, y: 65.24 },
-    { id: 'local-3', nome: 'Local 3', x: 51.35, y: 27.76 },
-    { id: 'local-4', nome: 'Local 4', x: 37.04, y: 44.85 },
-    { id: 'local-5', nome: 'Local 5', x: 47.44, y: 73.46 },
-    { id: 'local-6', nome: 'Local 6', x: 41.24, y: 87.95 },
-    { id: 'local-7', nome: 'Local 7', x: 11.68, y: 73.46 },
-    { id: 'local-8', nome: 'Local 8', x: 22.43, y: 48.97 }
+    { id: 'local-1', nome: 'Local 1', x: 75.69, y: 90.96 },
+    { id: 'local-2', nome: 'Local 2', x: 77.66, y: 71.37 },
+    { id: 'local-3', nome: 'Local 3', x: 51.37, y: 27.76 },
+    { id: 'local-4', nome: 'Local 4', x: 37, y: 37.77 },
+    { id: 'local-5', nome: 'Local 5', x: 44.01, y: 70.26 },
+    { id: 'local-6', nome: 'Local 6', x: 33.56, y: 90.89 },
+    { id: 'local-7', nome: 'Local 7', x: 19.14, y: 77.41 },
+    { id: 'local-8', nome: 'Local 8', x: 15.02, y: 33.2 }
   ];
 
   private mapaSvgListeners: MapaSvgListener[] = [];
@@ -298,21 +298,28 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
       [data-local-id],
       [data-local-id] * {
-        transition: fill 0.2s ease, filter 0.2s ease, opacity 0.2s ease, stroke 0.2s ease;
+        transition: fill 0.2s ease, filter 0.2s ease, opacity 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
       }
 
-      [data-local-id]:hover,
-      [data-local-id]:focus,
-      [data-local-id].mapa-local--ativo {
-        filter: drop-shadow(0 8px 10px rgba(63, 18, 53, 0.38));
+      [data-local-id] > [id$=" - linha"] {
+        fill: #000000;
+        fill-opacity: 0.001;
+        pointer-events: visibleFill;
       }
 
-      [data-local-id]:hover :is(path, polygon, rect, circle, ellipse),
-      [data-local-id]:focus :is(path, polygon, rect, circle, ellipse),
-      [data-local-id].mapa-local--ativo :is(path, polygon, rect, circle, ellipse) {
+      [data-local-id] [fill="#286D2C"] {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      [data-local-id]:hover [fill="#286D2C"],
+      [data-local-id]:focus [fill="#286D2C"],
+      [data-local-id].mapa-local--ativo [fill="#286D2C"] {
         fill: #5b1f4d !important;
         stroke: #3f1235 !important;
-        opacity: 0.94;
+        filter: drop-shadow(0 10px 12px rgba(63, 18, 53, 0.5));
+        opacity: 0.98;
+        transform: scale(1.035);
       }
     `;
 
@@ -342,8 +349,35 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     svgDocument.querySelectorAll('[data-local-id]').forEach(elemento => {
-      elemento.classList.toggle('mapa-local--ativo', elemento.getAttribute('data-local-id') === id);
+      const ativo = elemento.getAttribute('data-local-id') === id;
+      elemento.classList.toggle('mapa-local--ativo', ativo);
+      this.atualizarOrdemVisualDoLocal(elemento, ativo);
     });
+
+    const elementoAtivo = id ? svgDocument.querySelector(`[data-local-id="${id}"]`) : null;
+
+    if (elementoAtivo?.parentNode) {
+      elementoAtivo.parentNode.appendChild(elementoAtivo);
+    }
+  }
+
+  private atualizarOrdemVisualDoLocal(elemento: Element, ativo: boolean): void {
+    const linha = Array.from(elemento.children).find(filho => {
+      const idFilho = filho.getAttribute('id') ?? '';
+      return idFilho.includes(' - linha');
+    });
+
+    if (linha) {
+      elemento.appendChild(linha);
+    }
+
+    if (!ativo) {
+      return;
+    }
+
+    Array.from(elemento.children)
+      .filter(filho => filho.querySelector('[fill="#286D2C"]'))
+      .forEach(grupoVerde => elemento.appendChild(grupoVerde));
   }
 
   private embaralharArray<T>(array: T[]): T[] {

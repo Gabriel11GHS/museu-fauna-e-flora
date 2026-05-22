@@ -278,6 +278,17 @@
   color: #333;
 }
 
+#mapa-section .texto-vozes {
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+#mapa-section .texto-vozes p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* --- Seção Mapa de locais --- */
 .home-mapa-locais {
   padding: 4rem 1.5rem;
@@ -318,7 +329,7 @@
 }
 
 .home-mapa-locais__card {
-  width: min(100%, 1180px);
+  width: min(100%, 900px);
   margin: 0 auto;
 }
 
@@ -349,13 +360,13 @@
 .home-mapa-locais__label {
   position: absolute;
   z-index: 2;
-  padding: 0.42rem 0.75rem;
-  border: 1px solid rgba(47, 107, 63, 0.2);
+  padding: clamp(0.24rem, 0.55vw, 0.52rem) clamp(0.46rem, 0.9vw, 0.9rem);
+  border: 1px solid rgba(247, 244, 236, 0.8);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.94);
-  color: #1f3d2b;
-  box-shadow: 0 8px 18px rgba(31, 61, 43, 0.16);
-  font-size: 0.82rem;
+  background: rgba(31, 61, 43, 0.92);
+  color: #f7f4ec;
+  box-shadow: 0 6px 14px rgba(31, 61, 43, 0.22);
+  font-size: clamp(0.68rem, 0.96vw, 0.98rem);
   font-weight: 800;
   opacity: 0;
   transform: translate(-50%, -50%);
@@ -407,8 +418,8 @@
   }
 
   .home-mapa-locais__label {
-    padding: 0.32rem 0.55rem;
-    font-size: 0.72rem;
+    padding: 0.22rem 0.42rem;
+    font-size: clamp(0.54rem, 2.55vw, 0.78rem);
     opacity: 1;
   }
 }
