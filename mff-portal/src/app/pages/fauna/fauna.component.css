@@ -53,10 +53,17 @@
   margin: 0 0 0.5rem 0;
 }
 
+.header-conteudo h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--cor-principal);
+  margin: 0 0 0.5rem 0;
+}
+
 .header-conteudo p {
-  font-size: 1.2rem;
-  color: #333; /* Cor padrão para o subtítulo */
-  margin: 0.5rem 0 2.5rem 0;
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0.5rem 0 2rem 0;
 }
 
 .filtros-container {
@@ -228,6 +235,129 @@ mat-card-actions {
 
 .details-button:hover {
   background-color: var(--cor-destaque-hover) !important;
+}
+
+/* ============================================= */
+/* == INÍCIO: Estilos Adicionais (Projeto Click) == */
+/* ============================================= */
+
+/* Container geral da página */
+.pagina-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Cabeçalho da página (para o H1) */
+.pagina-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.pagina-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--cor-principal); 
+  margin: 0 0 0.5rem 0;
+}
+
+.pagina-header p {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0.5rem auto 0;
+}
+
+/* Divisor entre seções */
+.section-divider {
+  margin: 4rem auto;
+  width: 80%;
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* --- Estilos do Stream (Moldura) --- */
+
+.stream-section {
+  display: flex;
+  justify-content: center;
+}
+
+.stream-card {
+  width: 100%;
+  max-width: 800px; 
+  box-shadow: var(--shadow-elevado);
+  border-radius: var(--borda-radius);
+}
+
+/* Container para proporção 4:3 */
+.stream-aspect-ratio-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 75%;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stream-video,
+.stream-offline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stream-video {
+  object-fit: cover;
+  background-color: #333;
+}
+
+.stream-offline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  font-size: 1.1rem;
+}
+
+/* Posiciona os controles SOBRE o vídeo */
+.camera-controls {
+  position: absolute;
+  bottom: 15px;       /* Distância do fundo */
+  left: 50%;          /* Centralizar horizontalmente */
+  transform: translateX(-50%);
+  z-index: 10;        /* Garante que fique acima do vídeo */
+  display: flex;
+  gap: 10px;          /* Espaço entre botões */
+  width: 90%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Estilo visual dos botões */
+.cam-btn {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.cam-btn:hover {
+  background-color: rgba(39, 99, 42, 0.9); /* Verde do tema */
+  transform: scale(1.05);
+}
+
+/* Destaque para a câmera ativa */
+.cam-btn.active {
+  background-color: #27632a; /* Verde principal */
+  border-color: #fff;
+  font-weight: bold;
 }
 
 /* ============================================= */
