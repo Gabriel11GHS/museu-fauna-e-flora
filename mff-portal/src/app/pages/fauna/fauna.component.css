@@ -243,29 +243,9 @@ mat-card-actions {
 
 /* Container geral da página */
 .pagina-container {
-  max-width: 1200px;
+  max-width: 1680px;
   margin: 0 auto;
-  padding: 2rem;
-}
-
-/* Cabeçalho da página (para o H1) */
-.pagina-header {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.pagina-header h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: var(--cor-principal); 
-  margin: 0 0 0.5rem 0;
-}
-
-.pagina-header p {
-  font-size: 1.1rem;
-  color: #666;
-  max-width: 700px;
-  margin: 0.5rem auto 0;
+  padding: 2rem 1.5rem 0;
 }
 
 /* Divisor entre seções */
@@ -278,192 +258,191 @@ mat-card-actions {
 /* --- Estilos do Stream (Moldura) --- */
 
 .stream-section {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) minmax(400px, 775px) minmax(250px, 1fr);
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .stream-card {
+  grid-column: 2;
+  justify-self: center;
   width: 100%;
-  max-width: 800px; 
-  box-shadow: var(--shadow-elevado);
+  max-width: 720px;
+  background: transparent;
+  --mdc-elevated-card-container-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: 0;
+}
+
+.stream-card mat-card-content {
+  padding: 0;
+  background: transparent;
+}
+
+.project-click-card {
+  width: 100%;
+  max-width: 380px;
   border-radius: var(--borda-radius);
+  box-shadow: var(--shadow-suave);
+  border: 1px solid rgba(39, 99, 42, 0.12);
+  background: #fff;
 }
 
-/* Container para proporção 4:3 */
-.stream-aspect-ratio-container {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-top: 75%;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  overflow: hidden;
+.project-info-card {
+  grid-column: 1;
+  justify-self: end;
 }
 
-.stream-video,
-.stream-offline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.camera-location-card {
+  grid-column: 3;
+  justify-self: start;
 }
 
-.stream-video {
-  object-fit: cover;
-  background-color: #333;
-}
-
-.stream-offline {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #777;
-  font-size: 1.1rem;
-}
-
-/* Posiciona os controles SOBRE o vídeo */
-.camera-controls {
-  position: absolute;
-  bottom: 15px;       /* Distância do fundo */
-  left: 50%;          /* Centralizar horizontalmente */
-  transform: translateX(-50%);
-  z-index: 10;        /* Garante que fique acima do vídeo */
-  display: flex;
-  gap: 10px;          /* Espaço entre botões */
-  width: 90%;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* Estilo visual dos botões */
-.cam-btn {
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
-}
-
-.cam-btn:hover {
-  background-color: rgba(39, 99, 42, 0.9); /* Verde do tema */
-  transform: scale(1.05);
-}
-
-/* Destaque para a câmera ativa */
-.cam-btn.active {
-  background-color: #27632a; /* Verde principal */
-  border-color: #fff;
-  font-weight: bold;
-}
-
-/* ============================================= */
-/* == INÍCIO: Estilos Adicionais (Projeto Click) == */
-/* ============================================= */
-
-/* Container geral da página */
-.pagina-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.project-click-card mat-card-content {
   padding: 2rem;
 }
 
-/* Cabeçalho da página (para o H1) */
-.pagina-header {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.pagina-header h1 {
-  font-size: 2.8rem;
+.project-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: var(--cor-destaque-hover);
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--cor-principal); 
-  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
 }
 
-.pagina-header p {
-  font-size: 1.1rem;
+.project-click-card h1 {
+  margin: 0 0 1rem;
+  color: var(--cor-principal);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.05;
+}
+
+.project-click-card h2 {
+  margin: 0 0 1rem;
+  color: var(--cor-principal);
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  line-height: 1.1;
+}
+
+.project-click-card p {
+  margin: 0;
+  color: #555;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.project-highlights {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.project-highlights div {
+  padding-left: 1rem;
+  border-left: 4px solid var(--cor-destaque);
+}
+
+.project-highlights strong,
+.project-highlights span {
+  display: block;
+}
+
+.project-highlights strong {
+  color: var(--cor-principal);
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.project-highlights span {
   color: #666;
-  max-width: 700px;
-  margin: 0.5rem auto 0;
+  line-height: 1.4;
 }
 
-/* Divisor entre seções */
-.section-divider {
-  margin: 4rem auto;
-  width: 80%;
-  border-top-color: rgba(0, 0, 0, 0.1);
-}
-
-/* --- Estilos do Stream (Moldura) --- */
-
-.stream-section {
-  display: flex;
-  justify-content: center;
-}
-
-.stream-card {
+.camera-location-image {
+  display: block;
   width: 100%;
-  max-width: 800px; 
-  box-shadow: var(--shadow-elevado);
-  border-radius: var(--borda-radius);
+  aspect-ratio: 16 / 21;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(39, 99, 42, 0.12);
 }
 
-/* Container para proporção 4:3 */
-.stream-aspect-ratio-container {
+.stream-frame-stage {
   position: relative;
   width: 100%;
-  height: 0;
-  padding-top: 75%;
-  background-color: #f0f0f0;
-  border-radius: 4px;
+  aspect-ratio: 710 / 778;
+  background-color: transparent;
   overflow: hidden;
+}
+
+.stream-window {
+  position: absolute;
+  left: 3.15%;
+  right: 3.15%;
+  top: 48.15%;
+  bottom: 2.5%;
+  z-index: 1;
+  overflow: hidden;
+  background-color: #101010;
+  border-radius: 14px;
+}
+
+.stream-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
 }
 
 .stream-video,
 .stream-offline {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
 }
 
 .stream-video {
+  display: block;
   object-fit: cover;
   background-color: #333;
 }
 
 .stream-offline {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   color: #777;
   font-size: 1.1rem;
+  text-align: center;
+  padding: 1rem;
 }
 
-/* Posiciona os controles SOBRE o vídeo */
+.stream-offline p {
+  margin: 0;
+}
+
 .camera-controls {
-  position: absolute;
-  bottom: 15px;       /* Distância do fundo */
-  left: 50%;          /* Centralizar horizontalmente */
-  transform: translateX(-50%);
-  z-index: 10;        /* Garante que fique acima do vídeo */
   display: flex;
-  gap: 10px;          /* Espaço entre botões */
-  width: 90%;
+  gap: 10px;
+  width: 100%;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 /* Estilo visual dos botões */
 .cam-btn {
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: #f5f5f5;
+  color: #27632a;
+  border: 1px solid rgba(39, 99, 42, 0.25);
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
@@ -472,13 +451,49 @@ mat-card-actions {
 }
 
 .cam-btn:hover {
-  background-color: rgba(39, 99, 42, 0.9); /* Verde do tema */
+  background-color: rgba(39, 99, 42, 0.1); /* Verde do tema */
   transform: scale(1.05);
 }
 
 /* Destaque para a câmera ativa */
 .cam-btn.active {
   background-color: #27632a; /* Verde principal */
-  border-color: #fff;
+  border-color: #27632a;
+  color: #fff;
   font-weight: bold;
+}
+
+@media (max-width: 1100px) {
+  .stream-section {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .stream-card {
+    grid-column: auto;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .project-click-card {
+    grid-column: auto;
+    justify-self: center;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .pagina-container {
+    padding: 1rem 1rem 0;
+  }
+
+  .stream-card mat-card-content,
+  .project-click-card mat-card-content {
+    padding: 1rem;
+  }
+
+  .section-divider {
+    margin: 2.5rem auto;
+  }
 }

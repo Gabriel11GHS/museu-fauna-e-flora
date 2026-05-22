@@ -113,12 +113,7 @@ export class FaunaComponent implements OnInit {
 
   // --- CÂMERAS E STREAM ---
   public cameras = [
-    { nome: 'Câmera 1', id: 'ddef5e10' },
-    { nome: 'Câmera 2', id: 'f9f24118' },
-    { nome: 'Câmera 3', id: 'a118e87a' },
-    { nome: 'Câmera 4', id: '6738e98d' },
-    { nome: 'Câmera 5', id: 'cf585b1c' },
-    { nome: 'Câmera 6', id: '2b5e6023' }
+    { nome: 'Câmera 1', id: '6738e98d' }
   ];
 
   public selectedCameraId = '61847ce2';
