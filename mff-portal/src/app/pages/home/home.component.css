@@ -1,23 +1,18 @@
-@import "slick-carousel/slick/slick.css";
-@import "slick-carousel/slick/slick-theme.css";
-
-/* --- Estilos Globais --- */
-.app-home-wrapper {
+/* --- Estilos Globais do Componente --- */
+:host {
   --cor-primaria: #27632a;
   --cor-primaria-escura: #1e4a20;
   --cor-texto: #ffffff;
-  --cor-ativo: #a5038a; /* A cor rosa/magenta voltará a funcionar */
+  --cor-ativo: #a5038a;
   --cor-foco-acessivel: #fbc02d;
-}
-
-/* Garante que a classe ocupe o espaço necessário */
-.app-home-wrapper {
+  
   display: block;
   width: 100%;
+  overflow-x: hidden;
 }
 
-/* --- Classe de acessibilidade (mantida) --- */
-.app-home-wrapper .visually-hidden {
+/* --- Classe de acessibilidade --- */
+.visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -30,19 +25,21 @@
 }
 
 /* --- Seção Hero --- */
-.app-home-wrapper .hero-section {
+.hero-section {
   position: relative;
   height: 70vh;
   min-height: 450px;
   color: white;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  background-color: #333;
 }
 
-.app-home-wrapper .hero-background {
+.hero-background {
   position: absolute;
   top: 0;
   left: 0;
@@ -51,156 +48,128 @@
   z-index: 1;
 }
 
-.app-home-wrapper .hero-carousel {
+.hero-carousel {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
-.app-home-wrapper .hero-carousel .slick-list,
-.app-home-wrapper .hero-carousel .slick-track,
-.app-home-wrapper .hero-carousel .slide {
-  height: 100%;
+/* Customização Profunda para o Slick Carousel */
+:host ::ng-deep .hero-carousel .slick-list,
+:host ::ng-deep .hero-carousel .slick-track {
+  height: 100% !important;
 }
 
-.app-home-wrapper .hero-carousel .slide img {
+:host ::ng-deep .hero-carousel .slide {
+  height: 100% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .hero-carousel .slide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Essencial para cobrir o espaço sem distorcer */
+  object-fit: cover;
+  display: block;
 }
 
-.app-home-wrapper .hero-overlay {
+.hero-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.3));
-  z-index: 2; /* Fica acima do carrossel mas abaixo do conteúdo */
+  z-index: 2;
+  pointer-events: none;
 }
 
-.app-home-wrapper .hero-content {
+.hero-content {
   position: relative;
-  z-index: 3; /* Conteúdo textual fica acima de tudo */
+  z-index: 3;
   padding: 1rem;
   max-width: 800px;
+  margin-top: 10rem;
 }
 
-.app-home-wrapper .hero-titulo {
+.hero-titulo {
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   margin: 0;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-.app-home-wrapper .hero-subtitulo {
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+.hero-subtitulo {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
   font-weight: 300;
-  margin-top: 15rem;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  line-height: 1.4;
 }
 
-.app-home-wrapper .hero-cta {
-  background: var(--cor-ativo);
-  padding: 20px 40px;
-  font-size: 1rem;
+.hero-cta {
+  background-color: var(--cor-ativo) !important;
+  color: var(--cor-texto) !important;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
   border-radius: 50px;
-  margin-top: 0rem;
-  color: var(--cor-texto);
 }
 
-/* --- Responsividade para a Seção Hero --- */
-@media (max-width: 768px) {
-  .app-home-wrapper .hero-section {
-    height: 80vh; /* Aumenta a altura em vh para melhor preenchimento em telas altas */
-    min-height: 0; /* Remove a altura mínima fixa que causa o espaço extra */
-  }
-
-  .app-home-wrapper .hero-subtitulo {
-    margin-top: 10rem; /* Ajusta a margem para o subtítulo não ficar tão baixo */
-  }
-
-  .app-home-wrapper .hero-carousel .slick-prev {
-    left: 15px;
-  }
-
-  .app-home-wrapper .hero-carousel .slick-next {
-    right: 15px;
-  }
-}
-
-/* --- Estilos Acessíveis para Controles do Carrossel --- */
-
-/* As setas já tinham um bom tamanho (45x45px), atendendo à recomendação de 44x44px. [cite: 115] */
-.app-home-wrapper .hero-carousel .slick-arrow {
-  z-index: 10;
-  width: 45px;
-  height: 45px;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-
-.app-home-wrapper .hero-carousel .slick-arrow:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.app-home-wrapper .hero-carousel .slick-arrow:focus-visible {
-  outline: 3px solid var(--cor-foco-acessivel);
-  outline-offset: 2px;
-}
-
-.app-home-wrapper .hero-carousel .slick-prev {
-  left: 25px;
-}
-
-.app-home-wrapper .hero-carousel .slick-next {
-  right: 25px;
-}
-
-.app-home-wrapper .hero-carousel .slick-dots {
-  bottom: 25px;
-  z-index: 10;
-}
-
-.hero-carousel .slick-dots li button::before {
-  font-size: 12px;
-  color: white;
-  opacity: 0.5;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.hero-carousel .slick-dots li.slick-active button::before {
-  opacity: 1;
-  color: var(--cor-ativo);
-  transform: scale(1.3);
-}
-
+/* --- Botão Play/Pause --- */
 .carousel-play-pause-btn {
   position: absolute;
-  bottom: 60px;
-  transform: translateX(0px); /* Ajuste este valor se precisar de mais ou menos espaço */
-  z-index: 10;
-
-  background-color: rgba(0, 0, 0, 0.4);
+  bottom: 50px; /* Ajustado para ficar acima dos dots (que estão a 20px) */
+  left: 50%;    /* Move para o centro horizontal */
+  transform: translateX(-50%); /* Corrige o ponto de ancoragem para o centro exato */
+  z-index: 25;  /* Garante que fique acima dos dots e da imagem */
+  
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid rgba(255,255,255,0.3);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, bottom 0.3s ease;
 }
 
 .carousel-play-pause-btn:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
-.carousel-play-pause-btn:focus-visible {
-  outline: 3px solid var(--cor-foco-acessivel);
-  outline-offset: 2px;
+/* --- Ajustes das Setas e Dots do Slick --- */
+:host ::ng-deep .hero-carousel .slick-arrow {
+  z-index: 20;
+  width: 50px;
+  height: 50px;
+}
+
+:host ::ng-deep .hero-carousel .slick-prev {
+  left: 20px;
+}
+
+:host ::ng-deep .hero-carousel .slick-next {
+  right: 20px;
+}
+
+:host ::ng-deep .hero-carousel .slick-dots {
+  bottom: 20px;
+  z-index: 20;
+}
+
+:host ::ng-deep .hero-carousel .slick-dots li button::before {
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.5;
+}
+
+:host ::ng-deep .hero-carousel .slick-dots li.slick-active button::before {
+  opacity: 1;
+  color: var(--cor-ativo);
 }
 
 /* --- Seção de Destaques --- */
@@ -226,47 +195,47 @@
   text-align: center;
   width: 300px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .destaque-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.destaque-icone {
-  font-size: 50px;
-  width: 50px;
-  height: 50px;
+.destaque-icone, .destaque-icone-imagem {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
   color: #27632a;
   margin-bottom: 20px;
-}
-
-.destaque-icone-imagem {
-  width: 50px; 
-  height: 50px; 
-  margin-bottom: 20px; 
-  object-fit: contain; 
+  object-fit: contain;
 }
 
 .destaque-titulo {
   font-size: 1.5rem;
   font-weight: 500;
   margin: 0 0 10px;
+  color: #27632a;
 }
 
 .destaque-descricao {
   font-size: 1rem;
   color: #666;
-  line-height: 1.6;
+  line-height: 1.5;
   margin-bottom: 20px;
+  flex-grow: 1;
 }
 
 .destaque-link {
-  --mdc-outlined-button-label-text-color: var(--cor-ativo); /* Cor do texto */
-  
+  color: var(--cor-ativo) !important;
+  border-color: var(--cor-ativo) !important;
+  width: 100%;
 }
 
-/* --- Seção Vozes da Natureza --- */
+/* --- Seção Vozes --- */
 .vozes-section {
   background-color: #e8f5e9;
   padding: 80px 20px;
@@ -276,71 +245,276 @@
   display: flex;
   align-items: center; 
   justify-content: center;
-  gap: 20px; 
-  max-width: 1200px;
+  gap: 50px; 
+  max-width: 1100px;
   margin: 0 auto;
-  flex-direction: column; 
+  flex-wrap: wrap;
 }
 
-/* Coluna da Imagem */
 .nature-sounds-image img {
   display: block;
   width: 100%; 
-  max-width: 10 00px; 
+  max-width: 350px; 
   height: auto; 
-  margin: 0 auto;
-  position: left;
+  border-radius: 12px;
 }
 
-/* Coluna do Texto */
 .texto-vozes {
-  flex: 1.5;
+  flex: 1;
   min-width: 300px;
-  text-align: center; 
-  width: 100%; 
 }
 
 .texto-vozes h2 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: var(--cor-primaria);
   margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 .texto-vozes p {
   font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: 30px;
-}
-
-/* --- Seção do Mapa --- */
-.locais-section {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.locais-section h2 {
-  font-size: 2.5rem;
+  line-height: 1.6;
   margin-bottom: 30px;
   color: #333;
 }
 
-.mapa-container {
-  max-width: 800px;
-  margin: 0 auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+#mapa-section .texto-vozes {
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  text-align: center;
 }
 
-.mapa-imagem {
+#mapa-section .texto-vozes p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Seção Mapa de locais --- */
+.home-mapa-locais {
+  padding: 4rem 1.5rem;
+  background:
+    radial-gradient(circle at top left, rgba(122, 155, 87, 0.14), transparent 30rem),
+    #f7f4ec;
+}
+
+.home-mapa-locais__texto {
+  max-width: 860px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.home-mapa-locais__texto .eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: #2f6b3f;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.home-mapa-locais__texto h2 {
+  margin: 0;
+  color: #1f3d2b;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.15;
+}
+
+.home-mapa-locais__texto p {
+  max-width: 720px;
+  margin: 1rem auto 0;
+  color: #5c665c;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.home-mapa-locais__layout {
+  display: flex;
+  justify-content: center;
   width: 100%;
-  display: block;
+  max-width: 1320px;
+  margin: 0 auto;
 }
 
-.nature-sounds-image img {
-  width: 30%;
-  height: auto;
+.home-mapa-locais__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.home-mapa-locais__svg-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1092 / 993;
+  line-height: 0;
+  overflow: visible;
+}
+
+.home-mapa-locais__svg {
   display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+.home-mapa-locais__labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.home-mapa-locais__label {
+  position: absolute;
+  z-index: 2;
+  padding: clamp(0.24rem, 0.55vw, 0.52rem) clamp(0.46rem, 0.9vw, 0.9rem);
+  border: 1px solid rgba(247, 244, 236, 0.8);
+  border-radius: 999px;
+  background: rgba(31, 61, 43, 0.92);
+  color: #f7f4ec;
+  box-shadow: 0 6px 14px rgba(31, 61, 43, 0.22);
+  font-size: clamp(0.68rem, 0.96vw, 0.98rem);
+  font-weight: 800;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.home-mapa-locais__label--ativo {
+  opacity: 1;
+  transform: translate(-50%, -56%);
+}
+
+.home-mapa-locais__info {
+  position: static;
+  width: min(100%, 420px);
+  padding: 1.5rem;
+  border: 1px solid rgba(47, 107, 63, 0.14);
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(31, 61, 43, 0.1);
+}
+
+.home-mapa-locais__info--vazio {
+  border-style: dashed;
+}
+
+.home-mapa-locais__info-label {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: #7a9b57;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-mapa-locais__info h3 {
+  margin: 0 0 0.75rem;
+  color: #1f3d2b;
+  font-size: 1.45rem;
+}
+
+.home-mapa-locais__info p {
+  margin: 0 0 1.25rem;
+  color: #5c665c;
+  line-height: 1.7;
+}
+
+.home-mapa-locais__botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--cor-ativo);
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.home-mapa-locais__botao:hover,
+.home-mapa-locais__botao:focus-visible {
+  background: #7f026b;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(165, 3, 138, 0.24);
+  outline: none;
+}
+
+@media (min-width: 1320px) {
+  .home-mapa-locais__info {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + clamp(1.5rem, 3vw, 3rem));
+    width: 320px;
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 960px) {
+  .home-mapa-locais__layout {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    padding: 100px 0;
+  }
+
+  .hero-content {
+  margin-top: 12rem;
+  }
+  
+  .vozes-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .carousel-play-pause-btn {
+    bottom: 50px;
+  }
+
+  .home-mapa-locais {
+    padding: 3rem 1rem;
+  }
+
+  .home-mapa-locais__svg-container {
+    overflow: visible;
+  }
+
+  .home-mapa-locais__svg {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .home-mapa-locais__labels {
+    min-width: 0;
+  }
+
+  .home-mapa-locais__label {
+    padding: 0.22rem 0.42rem;
+    font-size: clamp(0.54rem, 2.55vw, 0.78rem);
+    opacity: 1;
+  }
 }
 
 :host ::ng-deep .carousel-vozes .slick-arrow {

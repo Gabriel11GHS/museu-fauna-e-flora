@@ -1,2 +1,29 @@
-script/.venv
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs/editor
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Dependências e caches
+node_modules/
+.angular/cache/
+
+# Ambientes Python locais
 script/venv
+script/.venv
+
+# Arquivos gerados por scripts locais
+script/especies_sem_audio.csv
+
+# Build gerado do Angular (mff-portal/angular.json -> outputPath ../docs)
+docs/
+
+# Documentação/contexto local de apoio ao desenvolvimento
+context/

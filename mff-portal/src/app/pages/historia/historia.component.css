@@ -1,8 +1,27 @@
-/* --- Estilos Gerais da Página --- */
+:host {
+  /* Paleta de Cores Específica da História (Roxo/Vinho) */
+  --cor-principal: #27632a;       /* Verde (padrão do museu) */
+  --cor-destaque: #a5038a;        /* Roxo (Identidade da História) */
+  --cor-destaque-claro: #f3e5f5;  /* Fundo suave */
+  
+  --cor-fundo-pagina: #f8faf9;
+  --cor-texto-escuro: #333;
+  --cor-texto-claro: #666;
+  
+  --borda-radius: 12px;
+  --shadow-suave: 0 4px 15px rgba(0,0,0,0.08);
+  --shadow-elevado: 0 8px 25px rgba(0,0,0,0.15);
+  
+  display: block;
+  background-color: var(--cor-fundo-pagina);
+  min-height: 100vh;
+}
+
+/* --- Estilos Gerais --- */
 .pagina-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem 2rem;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   box-sizing: border-box; 
 }
@@ -10,180 +29,195 @@
 .pagina-header {
   text-align: center;
   margin-bottom: 4rem;
-  color: #333;
 }
 
 .pagina-header h1 {
-  font-size: 2.8rem;
+  font-size: clamp(2rem, 5vw, 2.8rem);
   font-weight: 700;
-  color: #27632a;
+  color: var(--cor-principal);
+  margin-bottom: 0.5rem;
 }
 
 .pagina-header p {
-  font-size: 1.1rem;
-  color: #666;
+  font-size: 1.2rem;
+  color: var(--cor-texto-claro);
   max-width: 600px;
-  margin: 0.5rem auto 0;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
-/* --- Estrutura Principal da Timeline --- */
+/* --- Estrutura da Timeline --- */
 .timeline {
   position: relative;
   max-width: 1000px;
   margin: 0 auto;
+  padding-bottom: 2rem;
 }
 
-/* A linha central da timeline */
+/* Linha Central */
 .timeline::after {
   content: '';
   position: absolute;
-  width: 6px;
-  background-color: #a5038a;
+  width: 4px;
+  background-color: var(--cor-destaque);
+  opacity: 0.3; /* Linha mais sutil */
   top: 0;
   bottom: 0;
   left: 50%;
+  margin-left: -2px;
   border-radius: 3px;
 }
 
-/* Container de cada evento */
+/* Container do Evento */
 .timeline-container {
   padding: 10px 40px;
   position: relative;
-  background-color: inherit;
   width: 50%;
   box-sizing: border-box; 
 }
 
-/* O círculo em cada evento na linha do tempo */
+/* Bolinha (Dot) na Linha Central */
 .timeline-container::after {
   content: '';
   position: absolute;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   background-color: white;
-  border: 4px solid #85016f;
-  top: 15px;
+  border: 4px solid var(--cor-destaque);
+  top: 20px;
   border-radius: 50%;
   z-index: 1;
+  box-shadow: 0 0 0 3px rgba(165, 3, 138, 0.2); /* Efeito de brilho suave */
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-/* --- Posicionamento Esquerda --- */
-.esquerda {
-  left: 0;
+.timeline-container:hover::after {
+  background-color: var(--cor-destaque);
+  transform: scale(1.2);
 }
 
-.esquerda::after {
-  right: -16px; 
-}
+/* --- Posicionamento (Esquerda/Direita) --- */
+.esquerda { left: 0; }
+.direita { left: 50%; }
 
+/* Ajuste da posição da bolinha */
+.esquerda::after { right: -14px; } /* Ajustado para centralizar na linha de 4px */
+.direita::after { left: -14px; }
+
+/* Setas (Triângulos) apontando para a linha */
 .esquerda::before {
   content: " ";
-  height: 0;
   position: absolute;
   top: 22px;
-  width: 0;
-  z-index: 1;
   right: 30px;
   border: medium solid white;
   border-width: 10px 0 10px 10px;
   border-color: transparent transparent transparent white;
-}
-
-/* --- Posicionamento Direita  --- */
-.direita {
-  left: 50%;
-}
-
-.direita::after {
-  left: -16px; 
+  z-index: 1;
 }
 
 .direita::before {
   content: " ";
-  height: 0;
   position: absolute;
   top: 22px;
-  width: 0;
-  z-index: 1;
   left: 30px;
   border: medium solid white;
   border-width: 10px 10px 10px 0;
   border-color: transparent white transparent transparent;
+  z-index: 1;
 }
 
+/* --- Card de Conteúdo --- */
+.timeline-content-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 
-/* --- Conteúdo dos Cards --- */
 .timeline-content {
-  padding: 20px 30px;
+  padding: 25px;
   background-color: white;
   position: relative;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: var(--borda-radius);
+  box-shadow: var(--shadow-suave);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid transparent;
+}
+
+/* Hover no card (aplica efeito se for link ou div normal) */
+.timeline-content-link:hover .timeline-content,
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-elevado);
+  border-color: rgba(165, 3, 138, 0.1);
 }
 
 .timeline-content h2 {
   margin-top: 0;
-  color: #27632a;
+  color: var(--cor-principal);
+  font-size: 1.4rem;
   font-weight: 600;
+}
+
+.timeline-content .data {
+  display: inline-block;
+  background-color: var(--cor-destaque-claro);
+  color: var(--cor-destaque);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
 
 .timeline-content p {
   margin: 10px 0;
   line-height: 1.6;
-}
-
-.timeline-content .data {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #3a8c3a;
-  display: block;
-  margin-bottom: 10px;
+  color: var(--cor-texto-escuro);
 }
 
 .evento-imagem {
   width: 100%;
-  max-height: 200px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
   margin-top: 15px;
+  background-color: #e0e0e0; /* Placeholder */
 }
 
-.timeline-content-link {
-  display: block;
-  text-decoration: none; 
-  color: inherit; 
-}
-
-.timeline-content-link:hover .timeline-content {
-  transform: scale(1.02); 
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
-}
-
-/* --- Responsividade para Telas Pequenas --- */
+/* --- Responsividade (Mobile) --- */
 @media screen and (max-width: 768px) {
+  /* Move a linha para a esquerda */
   .timeline::after {
     left: 31px;
   }
   
+  /* Todos os containers ficam na direita (mas visualmente ocupam a tela) */
   .timeline-container {
     width: 100%;
     padding-left: 70px;
-    padding-right: 25px;
+    padding-right: 20px;
   }
   
-  .timeline-container::before {
+  /* Ajuste das setas para apontarem sempre para a esquerda */
+  .timeline-container.esquerda::before, 
+  .timeline-container.direita::before {
     left: 60px;
+    right: auto; /* Reseta o right da classe .esquerda */
     border: medium solid white;
     border-width: 10px 10px 10px 0;
     border-color: transparent white transparent transparent;
   }
 
-  .esquerda::after, .direita::after {
-    left: 15px; 
+  /* Ajuste das bolinhas para ficarem todas na linha esquerda */
+  .timeline-container.esquerda::after, 
+  .timeline-container.direita::after {
+    left: 17px; 
+    right: auto;
   }
   
+  /* Remove o deslocamento de 50% da classe direita */
   .direita {
     left: 0%;
   }
 }
-

@@ -1,169 +1,238 @@
-// src/app/pages/flora/flora.component.ts
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, computed, signal, inject, effect, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; // Corrigido para RouterModule que inclui RouterLink
+import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed, toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { of, forkJoin } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+
 import { ApiService } from '../../services/api.service';
 import { Planta } from '../../models/planta.model';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MapaFloraComponent } from '../../shared/components/mapa-flora/mapa-flora.component';
+
+// Módulos do Angular Material
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MapaFloraComponent } from '../../shared/components/mapa-flora/mapa-flora.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-flora',
   standalone: true,
   imports: [
-    CommonModule, FormsModule, RouterLink, MatFormFieldModule, MatInputModule,
-    MatIconModule, MatSelectModule, MatProgressSpinnerModule, MatCardModule,
-    MatButtonModule, MatSlideToggleModule, MapaFloraComponent, MatCheckboxModule
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
+    MapaFloraComponent
   ],
   templateUrl: './flora.component.html',
-  styleUrls: ['./flora.component.css']
+  styleUrls: ['./flora.component.css'],
+  // MELHORIA 1: ChangeDetection OnPush para performance
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FloraComponent implements OnInit {
-  public isLoading = true;
-  public isMapLoading = false;
-  public showMap = false;
-  public allPlantas: Planta[] = [];
-  public data: Planta[] = [];
-  public plantasParaMapa: Planta[] = [];
-  public searchTerm = '';
-  public selectedLocal = '';
-  public selectedFamilia = '';
-  public filtroAudio = false;
-  public errorMessage: string | null = null;
+  // Injeção de dependência moderna (Angular 14+)
+  private apiService = inject(ApiService);
+  private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
-  public locais: string[] = [];
-  public familias: string[] = [];
+  // --- ESTADO REATIVO (Signals) ---
 
-  constructor(
-    private apiService: ApiService,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ) {}
+  // Filtros como Signals (Fonte da verdade)
+  public searchTerm = signal<string>('');
+  public selectedLocal = signal<string>('');
+  public selectedFamilia = signal<string>('');
+  public filtroAudio = signal<boolean>(false);
+  public showMap = signal<boolean>(false);
 
-  ngOnInit(): void {
-    const localFromQuery = this.route.snapshot.queryParamMap.get('local');
-    if (localFromQuery) {
-      this.selectedLocal = localFromQuery;
-    }
-    this.carregarPlantas();
+  // Debounce para o termo de busca (melhoria de UX/Performance)
+  private searchTermDebounced$ = toObservable(this.searchTerm).pipe(
+    debounceTime(300),
+    distinctUntilChanged()
+  );
+  // Signal derivado do Observable debounced
+  public searchTermDebounced = toSignal(this.searchTermDebounced$, { initialValue: '' });
 
-    const comAudioParam = this.route.snapshot.queryParamMap.get('comAudio');
-    if (comAudioParam === 'true') {
-      this.filtroAudio = true;
-    }
-  }
+  // Loading States
+  public isLoading = signal<boolean>(true);
+  public isMapLoading = signal<boolean>(false);
+  public errorMessage = signal<string | null>(null);
 
-  
-  carregarPlantas(): void {
-    this.isLoading = true;
-    this.errorMessage = null;
-    this.apiService.getPlantasAtivas().subscribe({
-      next: (plantas) => {
-        plantas.sort((a, b) => {
-          const aHasPhoto = !!a.fotoIndividuo || !!a.fotoTaxonomia;
-          const bHasPhoto = !!b.fotoIndividuo || !!b.fotoTaxonomia;
-          return aHasPhoto === bHasPhoto ? 0 : aHasPhoto ? -1 : 1;
-        });
-        this.allPlantas = plantas;
-        this.extractFilterOptions();
-        this.filtrarPlantas();
-        this.isLoading = false;
-        this.cdr.markForCheck();
-      },
-      error: (error) => {
-        console.error('Erro ao carregar dados:', error);
-        this.errorMessage = 'Não foi possível carregar os dados. Tente mais tarde.';
-        this.isLoading = false;
-        this.cdr.markForCheck();
-      }
-    });
-  }
+  // --- DADOS ---
 
-  extractFilterOptions(): void {
-    const locais = this.allPlantas.map(p => p.nomeLocal).filter((l): l is string => !!l);
-    this.locais = [...new Set(locais)].sort();
-    const familias = this.allPlantas.map(p => p.familia).filter((f): f is string => !!f && f !== 'Não identificada');
-    this.familias = [...new Set(familias)].sort();
-  }
+  // Observable principal de carregamento de dados
+  private plantasSource$ = this.apiService.getPlantasAtivas().pipe(
+    tap(() => this.isLoading.set(false)),
+    catchError(err => {
+      console.error('Erro ao carregar flora:', err);
+      this.errorMessage.set('Não foi possível carregar os dados. Tente mais tarde.');
+      this.isLoading.set(false);
+      return of([] as Planta[]);
+    })
+  );
 
-  filtrarPlantas(): void {
-    let filteredData = [...this.allPlantas];
-    if (this.searchTerm) {
-      const term = this.searchTerm.toLowerCase();
-      filteredData = filteredData.filter(p =>
+  // Signal contendo todos os dados brutos (Read-only)
+  public allPlantas = toSignal(this.plantasSource$, { initialValue: [] });
+
+  // --- DADOS COMPUTADOS (Derivados) ---
+
+  // Opções de filtro calculadas automaticamente quando allPlantas muda
+  public locais = computed(() => {
+    const list = this.allPlantas().map(p => p.nomeLocal).filter((l): l is string => !!l);
+    return Array.from(new Set(list)).sort();
+  });
+
+  public familias = computed(() => {
+    const list = this.allPlantas().map(p => p.familia).filter((f): f is string => !!f && f !== 'Não identificada');
+    return Array.from(new Set(list)).sort();
+  });
+
+  // Lista Filtrada Principal (O coração da lógica)
+  // Atualiza automaticamente se qualquer signal dependente mudar
+  public filteredData = computed(() => {
+    let data = this.allPlantas();
+    const term = this.searchTermDebounced()?.toLowerCase() || '';
+    const local = this.selectedLocal();
+    const familia = this.selectedFamilia();
+    const audioOnly = this.filtroAudio();
+
+    if (term) {
+      data = data.filter(p =>
         p.nomePopular?.toLowerCase().includes(term) ||
         p.nomeCientifico?.toLowerCase().includes(term)
       );
     }
-    if (this.selectedFamilia) {
-      filteredData = filteredData.filter(p => p.familia === this.selectedFamilia);
+
+    if (local) {
+      data = data.filter(p => p.nomeLocal === local);
     }
-    if (this.selectedLocal) {
-      filteredData = filteredData.filter(p => p.nomeLocal === this.selectedLocal);
+
+    if (familia) {
+      data = data.filter(p => p.familia === familia);
     }
-    if (this.filtroAudio) {
-      filteredData = filteredData.filter(p => !!p.trilhaAudio);
+
+    if (audioOnly) {
+      data = data.filter(p => !!p.trilhaAudio);
     }
-    this.data = filteredData;
-    this.showMap = false; 
+
+    // Ordenação padrão: Com foto primeiro
+    return [...data].sort((a, b) => {
+      const aHasPhoto = !!a.fotoIndividuo || !!a.fotoTaxonomia;
+      const bHasPhoto = !!b.fotoIndividuo || !!b.fotoTaxonomia;
+      return aHasPhoto === bHasPhoto ? 0 : aHasPhoto ? -1 : 1;
+    });
+  });
+
+  // --- LÓGICA DO MAPA ---
+  
+  // Signal para armazenar dados do mapa
+  public plantasParaMapa = signal<Planta[]>([]);
+  private mapaRequestId = 0;
+
+  constructor() {
+    // Effect para reagir à ativação do mapa
+    effect(() => {
+      if (this.showMap()) {
+        this.carregarDadosMapa(this.filteredData());
+      }
+    }, { allowSignalWrites: true });
   }
 
-  onMapToggleChange(event: MatSlideToggleChange): void {
+  ngOnInit(): void {
+    this.route.queryParamMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        const local = params.get('local') ?? '';
+        this.selectedLocal.set(local);
 
-    console.log('%c1. Toggle do mapa acionado. Novo estado:', 'color: blue; font-weight: bold;', event.checked);
+        this.filtroAudio.set(params.get('comAudio') === 'true');
+      });
+  }
 
-    this.showMap = event.checked;
-    
+  // --- ACTIONS ---
 
-    if (!event.checked) {
+  // Atualizadores de Signals (ligados ao template via event binding ou ngModel)
+  updateSearchTerm(term: string) { this.searchTerm.set(term); }
+  updateLocal(local: string) { this.selectedLocal.set(local); }
+  updateFamilia(familia: string) { this.selectedFamilia.set(familia); }
+  toggleAudio(checked: boolean) { this.filtroAudio.set(checked); }
+  
+  toggleMap(checked: boolean) {
+    this.showMap.set(checked);
+    // Se desligar o mapa, não precisamos fazer nada, o ngIf do template resolve
+  }
+
+  // Lógica refatorada de carregamento do mapa
+  private carregarDadosMapa(plantasAtuais: Planta[]): void {
+    const requestId = ++this.mapaRequestId;
+
+    if (plantasAtuais.length === 0) {
+      this.plantasParaMapa.set([]);
       return;
     }
 
-    if (this.data.length > 0) {
-      this.isMapLoading = true;
-      
-      console.log(`%c2. Buscando coordenadas para ${this.data.length} indivíduos.`, 'color: blue; font-weight: bold;');
+    this.isMapLoading.set(true);
+    console.log(`Buscando coordenadas para ${plantasAtuais.length} indivíduos.`);
 
-      const requests = this.data.map(planta => 
-        this.apiService.getIndividuo(planta.idIndividuo).pipe(
-          catchError((err) => {
-            console.warn(`Falha ao buscar detalhes para o indivíduo ID: ${planta.idIndividuo}`, err);
-            return of(planta);
-          })
-        )
+    // Otimização: Evitar requisições desnecessárias se já temos latitude/longitude
+    // Assumindo que getIndividuo traz detalhes extras como lat/lng
+    const requests = plantasAtuais.map(planta => {
+      // Se o objeto planta já tivesse lat/lng, poderíamos pular a request aqui
+      return this.apiService.getIndividuo(planta.idIndividuo).pipe(
+        catchError(err => {
+          console.warn(`Erro ao buscar indivíduo ${planta.idIndividuo}`, err);
+          return of(planta); // Retorna a planta original em caso de erro
+        })
       );
+    });
 
-      forkJoin(requests).subscribe(plantasComCoordenadas => {
-       
-        console.log('%c4. Resposta da API (forkJoin) recebida:', 'color: blue; font-weight: bold;', plantasComCoordenadas);
+    forkJoin(requests)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (detalhes) => {
+          if (requestId !== this.mapaRequestId) {
+            return;
+          }
 
-        this.plantasParaMapa = plantasComCoordenadas.filter((p): p is Planta => p !== undefined && p.latitude !== undefined && p.longitude !== undefined);
-        
-     
-        console.log(`%c5. Plantas com coordenadas válidas encontradas: ${this.plantasParaMapa.length}`, 'color: blue; font-weight: bold;');
-
-        this.isMapLoading = false;
-        this.cdr.markForCheck();
+          const validas = detalhes.filter((p): p is Planta =>
+            !!p && p.latitude !== undefined && p.longitude !== undefined
+          );
+          this.plantasParaMapa.set(validas);
+          this.isMapLoading.set(false);
+        },
+        error: () => {
+          if (requestId === this.mapaRequestId) {
+            this.isMapLoading.set(false);
+          }
+        }
       });
-    }
   }
 
-  trackByPlantId(index: number, planta: Planta): string {
+  // Otimização para *ngFor
+  trackByPlantId(index: number, planta: Planta): string | number {
     return planta.idIndividuo;
   }
 
   updateImageOnError(event: Event): void {
-    (event.target as HTMLImageElement).src = 'assets/error/placeholder-image.png';
+    const img = event.target as HTMLImageElement;
+    // Previne loop infinito se a imagem de erro também falhar
+    if (img.src.indexOf('assets/placeholder-image.png') === -1) {
+      img.src = 'assets/placeholder-image.png';
+    }
   }
 }
