@@ -94,12 +94,12 @@ export class FloraComponent implements OnInit {
   // Opções de filtro calculadas automaticamente quando allPlantas muda
   public locais = computed(() => {
     const list = this.allPlantas().map(p => p.nomeLocal).filter((l): l is string => !!l);
-    return [...new Set(list)].sort();
+    return Array.from(new Set(list)).sort();
   });
 
   public familias = computed(() => {
     const list = this.allPlantas().map(p => p.familia).filter((f): f is string => !!f && f !== 'Não identificada');
-    return [...new Set(list)].sort();
+    return Array.from(new Set(list)).sort();
   });
 
   // Lista Filtrada Principal (O coração da lógica)
