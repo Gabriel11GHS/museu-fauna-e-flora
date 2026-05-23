@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, computed, signal, inject, effect } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, computed, signal, inject, effect, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router'; // Corrigido para RouterModule que inclui RouterLink
 import { ActivatedRoute } from '@angular/router';
-import { toSignal, toObservable } from '@angular/core/rxjs-interop';
-import { of, forkJoin, Observable, Subject } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap, startWith } from 'rxjs/operators';
+import { takeUntilDestroyed, toSignal, toObservable } from '@angular/core/rxjs-interop';
+import { of, forkJoin } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { ApiService } from '../../services/api.service';
 import { Planta } from '../../models/planta.model';
@@ -49,6 +49,7 @@ export class FloraComponent implements OnInit {
   // Injeção de dependência moderna (Angular 14+)
   private apiService = inject(ApiService);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   // --- ESTADO REATIVO (Signals) ---
 
@@ -130,7 +131,7 @@ export class FloraComponent implements OnInit {
     }
 
     // Ordenação padrão: Com foto primeiro
-    return data.sort((a, b) => {
+    return [...data].sort((a, b) => {
       const aHasPhoto = !!a.fotoIndividuo || !!a.fotoTaxonomia;
       const bHasPhoto = !!b.fotoIndividuo || !!b.fotoTaxonomia;
       return aHasPhoto === bHasPhoto ? 0 : aHasPhoto ? -1 : 1;
@@ -141,6 +142,7 @@ export class FloraComponent implements OnInit {
   
   // Signal para armazenar dados do mapa
   public plantasParaMapa = signal<Planta[]>([]);
+  private mapaRequestId = 0;
 
   constructor() {
     // Effect para reagir à ativação do mapa
@@ -152,10 +154,14 @@ export class FloraComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Leitura de Query Params inicial
-    const params = this.route.snapshot.queryParams;
-    if (params['local']) this.selectedLocal.set(params['local']);
-    if (params['comAudio'] === 'true') this.filtroAudio.set(true);
+    this.route.queryParamMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+        const local = params.get('local') ?? '';
+        this.selectedLocal.set(local);
+
+        this.filtroAudio.set(params.get('comAudio') === 'true');
+      });
   }
 
   // --- ACTIONS ---
@@ -173,6 +179,8 @@ export class FloraComponent implements OnInit {
 
   // Lógica refatorada de carregamento do mapa
   private carregarDadosMapa(plantasAtuais: Planta[]): void {
+    const requestId = ++this.mapaRequestId;
+
     if (plantasAtuais.length === 0) {
       this.plantasParaMapa.set([]);
       return;
@@ -193,16 +201,26 @@ export class FloraComponent implements OnInit {
       );
     });
 
-    forkJoin(requests).subscribe({
-      next: (detalhes) => {
-        const validas = detalhes.filter((p): p is Planta => 
-          !!p && p.latitude !== undefined && p.longitude !== undefined
-        );
-        this.plantasParaMapa.set(validas);
-        this.isMapLoading.set(false);
-      },
-      error: () => this.isMapLoading.set(false)
-    });
+    forkJoin(requests)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (detalhes) => {
+          if (requestId !== this.mapaRequestId) {
+            return;
+          }
+
+          const validas = detalhes.filter((p): p is Planta =>
+            !!p && p.latitude !== undefined && p.longitude !== undefined
+          );
+          this.plantasParaMapa.set(validas);
+          this.isMapLoading.set(false);
+        },
+        error: () => {
+          if (requestId === this.mapaRequestId) {
+            this.isMapLoading.set(false);
+          }
+        }
+      });
   }
 
   // Otimização para *ngFor

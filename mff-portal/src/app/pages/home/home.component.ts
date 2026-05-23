@@ -1,11 +1,13 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
   OnDestroy,
   AfterViewInit,
   ViewChild,
+  NgZone,
   inject,
   signal
 } from '@angular/core';
@@ -38,6 +40,8 @@ export interface Destaque {
 interface LocalMapaHome {
   id: string;
   nome: string;
+  filtroFlora: string;
+  descricao?: string;
   x: number;
   y: number;
 }
@@ -77,6 +81,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private apiService = inject(ApiService);
   private faunaService = inject(FaunaService);
   private router = inject(Router);
+  private ngZone = inject(NgZone);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   // --- VIEW CHILDREN ---
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
@@ -87,6 +93,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   public isCarouselPlaying = signal<boolean>(false);
   public liveRegionMessage = signal<string>('');
   public localAtivo = signal<string | null>(null);
+  public localSelecionado = signal<string | null>(null);
 
   // --- DADOS ESTÁTICOS ---
   public destaquesPrincipais = [
@@ -100,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       imagemIcone: 'assets/icons/flora.png',
       titulo: 'Flora',
       descricao: 'Explore as espécies de plantas catalogadas.',
-      link: '/Ficha' // Atenção: Verifique se a rota correta é '/flora' ou '/Ficha'
+      link: '/Ficha'
     },
     {
       icone: 'map',
@@ -132,14 +139,70 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   public locaisMapa: LocalMapaHome[] = [
-    { id: 'local-1', nome: 'Local 1', x: 75.69, y: 90.96 },
-    { id: 'local-2', nome: 'Local 2', x: 77.66, y: 71.37 },
-    { id: 'local-3', nome: 'Local 3', x: 51.37, y: 27.76 },
-    { id: 'local-4', nome: 'Local 4', x: 37, y: 37.77 },
-    { id: 'local-5', nome: 'Local 5', x: 44.01, y: 70.26 },
-    { id: 'local-6', nome: 'Local 6', x: 33.56, y: 90.89 },
-    { id: 'local-7', nome: 'Local 7', x: 19.14, y: 77.41 },
-    { id: 'local-8', nome: 'Local 8', x: 15.02, y: 33.2 }
+    {
+      id: 'local-1',
+      nome: 'Local 1',
+      filtroFlora: 'Local 1',
+      descricao: 'Região 1 do mapa do campus usada no cadastro da flora.',
+      x: 75.69,
+      y: 90.96
+    },
+    {
+      id: 'local-2',
+      nome: 'Local 2',
+      filtroFlora: 'Local 2',
+      descricao: 'Região 2 do mapa do campus usada no cadastro da flora.',
+      x: 77.66,
+      y: 71.37
+    },
+    {
+      id: 'local-3',
+      nome: 'Local 3',
+      filtroFlora: 'Local 3',
+      descricao: 'Região 3 do mapa do campus usada no cadastro da flora.',
+      x: 51.37,
+      y: 27.76
+    },
+    {
+      id: 'local-4',
+      nome: 'Local 4',
+      filtroFlora: 'Local 4',
+      descricao: 'Região 4 do mapa do campus usada no cadastro da flora.',
+      x: 37,
+      y: 37.77
+    },
+    {
+      id: 'local-5',
+      nome: 'Local 5',
+      filtroFlora: 'Local 5',
+      descricao: 'Região 5 do mapa do campus usada no cadastro da flora.',
+      x: 44.01,
+      y: 70.26
+    },
+    {
+      id: 'local-6',
+      nome: 'Local 6',
+      filtroFlora: 'Local 6',
+      descricao: 'Região 6 do mapa do campus usada no cadastro da flora.',
+      x: 33.56,
+      y: 90.89
+    },
+    {
+      id: 'local-7',
+      nome: 'Local 7',
+      filtroFlora: 'Local 7',
+      descricao: 'Região 7 do mapa do campus usada no cadastro da flora.',
+      x: 19.14,
+      y: 77.41
+    },
+    {
+      id: 'local-8',
+      nome: 'Local 8',
+      filtroFlora: 'Local 8',
+      descricao: 'Região 8 do mapa do campus usada no cadastro da flora.',
+      x: 15.02,
+      y: 33.2
+    }
   ];
 
   private mapaSvgListeners: MapaSvgListener[] = [];
@@ -236,16 +299,35 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   definirLocalAtivo(id: string): void {
     this.localAtivo.set(id);
-    this.atualizarAreaAtivaMapa(id);
+    this.atualizarAreaAtivaMapa();
   }
 
   limparLocalAtivo(): void {
     this.localAtivo.set(null);
-    this.atualizarAreaAtivaMapa(null);
+    this.atualizarAreaAtivaMapa();
+  }
+
+  selecionarLocal(id: string): void {
+    this.localSelecionado.set(id);
+    this.localAtivo.set(id);
+    this.atualizarAreaAtivaMapa();
   }
 
   isLocalAtivo(id: string): boolean {
-    return this.localAtivo() === id;
+    return id === (this.localAtivo() ?? this.localSelecionado());
+  }
+
+  obterLocalSelecionado(): LocalMapaHome | undefined {
+    const id = this.localSelecionado();
+    return this.locaisMapa.find(local => local.id === id);
+  }
+
+  irParaFlora(local: LocalMapaHome): void {
+    this.router.navigate(['/Ficha'], {
+      queryParams: {
+        local: local.filtroFlora
+      }
+    });
   }
 
   private configurarMapaLocais(): void {
@@ -258,6 +340,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.limparListenersMapaLocais();
 
     const elementos = svgDocument.querySelectorAll('[data-local-id]');
+    const svg = svgDocument.querySelector('svg');
 
     elementos.forEach(elemento => {
       const id = elemento.getAttribute('data-local-id');
@@ -272,20 +355,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       elemento.setAttribute('role', 'button');
       elemento.setAttribute('aria-label', local?.nome ?? id);
 
-      this.adicionarListenerMapa(elemento, 'mouseenter', () => this.definirLocalAtivo(id));
-      this.adicionarListenerMapa(elemento, 'mouseleave', () => this.limparLocalAtivo());
-      this.adicionarListenerMapa(elemento, 'focus', () => this.definirLocalAtivo(id));
-      this.adicionarListenerMapa(elemento, 'blur', () => this.limparLocalAtivo());
-      this.adicionarListenerMapa(elemento, 'click', () => this.definirLocalAtivo(id));
+      this.adicionarListenerMapa(elemento, 'mouseenter', () => this.executarAcaoMapa(() => this.definirLocalAtivo(id)));
+      this.adicionarListenerMapa(elemento, 'mouseleave', () => this.executarAcaoMapa(() => this.limparLocalAtivo()));
+      this.adicionarListenerMapa(elemento, 'focus', () => this.executarAcaoMapa(() => this.definirLocalAtivo(id)));
+      this.adicionarListenerMapa(elemento, 'blur', () => this.executarAcaoMapa(() => this.limparLocalAtivo()));
+      this.adicionarListenerMapa(elemento, 'click', () => this.executarAcaoMapa(() => this.selecionarLocal(id)));
       this.adicionarListenerMapa(elemento, 'keydown', (event: Event) => {
         const keyboardEvent = event as KeyboardEvent;
 
         if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
           keyboardEvent.preventDefault();
-          this.definirLocalAtivo(id);
+          this.executarAcaoMapa(() => this.selecionarLocal(id));
         }
       });
     });
+
+    svg && this.adicionarListenerMapa(svg, 'mouseleave', () => this.executarAcaoMapa(() => this.limparLocalAtivo()));
 
     const style = svgDocument.createElementNS('http://www.w3.org/2000/svg', 'style') as SVGStyleElement;
 
@@ -307,6 +392,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         pointer-events: visibleFill;
       }
 
+      #rua,
+      #predios,
+      #caminhaveis {
+        pointer-events: none;
+      }
+
       [data-local-id] [fill="#286D2C"] {
         transform-box: fill-box;
         transform-origin: center;
@@ -323,13 +414,20 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     `;
 
-    svgDocument.querySelector('svg')?.appendChild(style);
+    svg?.appendChild(style);
     this.mapaSvgStyle = style;
   }
 
   private adicionarListenerMapa(elemento: Element, tipo: string, listener: EventListener): void {
     elemento.addEventListener(tipo, listener);
     this.mapaSvgListeners.push({ elemento, tipo, listener });
+  }
+
+  private executarAcaoMapa(acao: () => void): void {
+    this.ngZone.run(() => {
+      acao();
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
   private limparListenersMapaLocais(): void {
@@ -341,24 +439,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mapaSvgStyle = undefined;
   }
 
-  private atualizarAreaAtivaMapa(id: string | null): void {
+  private atualizarAreaAtivaMapa(): void {
     const svgDocument = this.svgObject?.nativeElement.contentDocument;
 
     if (!svgDocument) {
       return;
     }
 
+    const idAtivo = this.localAtivo() ?? this.localSelecionado();
+
     svgDocument.querySelectorAll('[data-local-id]').forEach(elemento => {
-      const ativo = elemento.getAttribute('data-local-id') === id;
+      const idElemento = elemento.getAttribute('data-local-id');
+      const ativo = !!idElemento && idElemento === idAtivo;
       elemento.classList.toggle('mapa-local--ativo', ativo);
       this.atualizarOrdemVisualDoLocal(elemento, ativo);
     });
 
-    const elementoAtivo = id ? svgDocument.querySelector(`[data-local-id="${id}"]`) : null;
-
-    if (elementoAtivo?.parentNode) {
-      elementoAtivo.parentNode.appendChild(elementoAtivo);
-    }
   }
 
   private atualizarOrdemVisualDoLocal(elemento: Element, ativo: boolean): void {
