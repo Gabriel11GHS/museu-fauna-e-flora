@@ -1,14 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { Animal } from '../../models/animal.model';
 import { FaunaService } from '../../services/fauna.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 // Angular Material Imports
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +18,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+
+interface CameraProjetoClick {
+  nome: string;
+  id: string;
+}
+
+const PROJETO_CLICK_CAMERA_IDS = [
+  '6738e98d'
+];
 
 @Component({
   selector: 'app-fauna',
@@ -44,8 +52,7 @@ import { MatDividerModule } from '@angular/material/divider';
 export class FaunaComponent implements OnInit {
   // Injeção de dependências
   private faunaService = inject(FaunaService);
-  private route = inject(ActivatedRoute);
-  private sanitizer = inject(DomSanitizer);
+  private readonly streamBasePath = '/camera-feed';
 
   // --- ESTADO REATIVO (Signals) ---
 
@@ -85,7 +92,7 @@ export class FaunaComponent implements OnInit {
   // Lista de grupos dinâmicos
   public grupos = computed(() => {
     const lista = this.allAnimais().map(a => a.grupo).filter(g => !!g);
-    return [...new Set(lista)].sort();
+    return Array.from(new Set(lista)).sort();
   });
 
   // Lista filtrada principal
@@ -112,12 +119,13 @@ export class FaunaComponent implements OnInit {
   });
 
   // --- CÂMERAS E STREAM ---
-  public cameras = [
-    { nome: 'Câmera 1', id: '6738e98d' }
-  ];
+  public cameras: CameraProjetoClick[] = PROJETO_CLICK_CAMERA_IDS.map((id, index) => ({
+    nome: `Câmera ${index + 1}`,
+    id
+  }));
 
-  public selectedCameraId = '61847ce2';
-  public streamUrl: SafeResourceUrl | null = null;
+  public selectedCameraId = this.cameras[0]?.id ?? '';
+  public streamUrl: string | null = null;
   public isStreamOnline = true;
 
   constructor() {
@@ -131,13 +139,23 @@ export class FaunaComponent implements OnInit {
   }
 
   trocarCamera(novoId: string): void {
+    if (!this.cameras.some(camera => camera.id === novoId)) {
+      this.isStreamOnline = false;
+      return;
+    }
+
     this.selectedCameraId = novoId;
     this.configurarStream();
   }
 
   configurarStream(): void {
-    const urlRelativa = `/camera-feed/${this.selectedCameraId}`;
-    this.streamUrl = this.sanitizer.bypassSecurityTrustResourceUrl(urlRelativa);
+    if (!this.selectedCameraId) {
+      this.streamUrl = null;
+      this.isStreamOnline = false;
+      return;
+    }
+
+    this.streamUrl = `${this.streamBasePath}/${this.selectedCameraId}`;
     this.isStreamOnline = true;
   }
 
