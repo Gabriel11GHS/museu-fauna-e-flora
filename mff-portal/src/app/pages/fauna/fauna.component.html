@@ -1,51 +1,86 @@
 <div class="pagina-container">
-
-  <header class="pagina-header">
-    <h1>Projeto Click: O Jardim Secreto Ao Vivo</h1>
-    <p>
-      Acompanhe em tempo real a vida selvagem no Local 2 (Jardim Secreto) do
-      ICMC.
-      Esta câmera monitora os visitantes do nosso museu.
-    </p>
-  </header>
-
   <section class="stream-section">
-    <mat-card class="stream-card">
-      <mat-card-header>
-        <mat-card-title>Câmera Ao Vivo</mat-card-title>
-        <mat-card-subtitle>Local 2 - Jardim Secreto</mat-card-subtitle>
-      </mat-card-header>
-
+    <mat-card class="project-click-card project-info-card">
       <mat-card-content>
-        <div class="stream-aspect-ratio-container">
+        <span class="project-eyebrow">Transmissão ao vivo</span>
+        <p>
+          Uma janela para observar, em tempo real, a fauna que visita o Jardim
+          Secreto do ICMC. A câmera registra a presença de aves, insetos e outros
+          animais que circulam pelo espaço do museu.
+        </p>
 
-          <img
-            *ngIf="isStreamOnline && streamUrl"
-            class="stream-video"
-            [src]="streamUrl"
-            (error)="handleStreamError()"
-            alt="Transmissão ao vivo do Jardim Secreto">
-
-          <div *ngIf="!isStreamOnline" class="stream-offline">
-            <p>A transmissão está offline no momento.</p>
-            <p class="hint-text">Verifique sua conexão ou tente novamente mais
-              tarde.</p>
+        <div class="project-highlights">
+          <div>
+            <strong>Local</strong>
+            <span>Local 2 - Jardim Secreto</span>
           </div>
-
-          <div class="camera-controls">
-            <button *ngFor="let cam of cameras"
-              (click)="trocarCamera(cam.id)"
-              class="cam-btn"
-              [class.active]="selectedCameraId === cam.id">
-              {{ cam.nome }}
-            </button>
+          <div>
+            <strong>Objetivo</strong>
+            <span>Aproximar visitantes da biodiversidade do campus</span>
+          </div>
+          <div>
+            <strong>Como participar</strong>
+            <span>Escolha uma câmera e acompanhe os visitantes do jardim</span>
           </div>
         </div>
       </mat-card-content>
     </mat-card>
+
+    <mat-card class="stream-card">
+      <mat-card-content>
+        <div class="stream-frame-stage">
+          <div class="stream-window">
+            <img
+              *ngIf="isStreamOnline && streamUrl"
+              class="stream-video"
+              [src]="streamUrl"
+              (error)="handleStreamError()"
+              alt="Transmissão ao vivo do Jardim Secreto">
+
+            <div *ngIf="!isStreamOnline" class="stream-offline">
+              <p>A transmissão está offline no momento.</p>
+              <p class="hint-text">Verifique sua conexão ou tente novamente mais
+                tarde.</p>
+            </div>
+          </div>
+
+          <img
+            class="stream-frame"
+            src="assets/fauna/Projeto-Click/moldura-nova.png"
+            alt=""
+            aria-hidden="true">
+        </div>
+
+        <div class="camera-controls">
+          <button *ngFor="let cam of cameras"
+            (click)="trocarCamera(cam.id)"
+            class="cam-btn"
+            [class.active]="selectedCameraId === cam.id">
+            {{ cam.nome }}
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="project-click-card camera-location-card">
+      <mat-card-content>
+        <span class="project-eyebrow">Onde estão as câmeras</span>
+        <h2>Jardim Secreto</h2>
+        <img
+          class="camera-location-image"
+          src="assets/fauna/Projeto-Click/projeto-click.png"
+          alt="Mapa do instituto com indicação da região do museu">
+        <p>
+          As câmeras acompanham o movimento no poleiro do Jardim Secreto,
+          um espaço arborizado e tranquilo, que chama a atenção de diversas espécies de aves.
+        </p>
+      </mat-card-content>
+    </mat-card>
   </section>
 </div>
-<mat-divider class="section-divider"></mat-divider>
+
+<mat-divider></mat-divider>
+
 <div class="header-filtros">
   <div class="header-conteudo">
     <h2>Explore a Fauna do Instituto</h2>
@@ -60,7 +95,7 @@
         type="text"
         placeholder="Ex: Tucano-toco"
         [ngModel]="searchTerm()" 
-        (ngModelChange)="filteredData($event)">
+        (ngModelChange)="searchTerm.set($event)">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
@@ -140,6 +175,6 @@
           </mat-card>
         }
       </div>
-      }
     }
+  }
 </div>

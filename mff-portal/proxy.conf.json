@@ -12,7 +12,7 @@
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
-      "^/camera-feed": "/api/stream"
+      "^/camera-feed": "/stream"
     }
   }
 }
