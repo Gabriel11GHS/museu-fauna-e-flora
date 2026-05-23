@@ -23,7 +23,7 @@ export interface SecaoEquipe {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EquipeComponent {
-  
+
   // MELHORIA: Unificação dos dados em um único Signal estruturado.
   // Isso elimina a necessidade de criar variáveis separadas para cada ano
   // e permite um template dinâmico.

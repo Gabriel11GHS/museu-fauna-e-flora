@@ -94,18 +94,18 @@
         matInput
         type="text"
         placeholder="Ex: Tucano-toco"
-        [ngModel]="searchTerm()" 
+        [ngModel]="searchTerm()"
         (ngModelChange)="searchTerm.set($event)">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Grupo</mat-label>
-      <mat-select 
-        [value]="selectedGrupo()" 
+      <mat-select
+        [value]="selectedGrupo()"
         (selectionChange)="updateGrupo($event.value)">
         <mat-option value="">Todos os Grupos</mat-option>
-        
+
         @for (grupo of grupos(); track $index) {
           <mat-option [value]="grupo">{{ grupo }}</mat-option>
         }
@@ -115,13 +115,13 @@
 </div>
 
 <div class="content-wrapper">
-  
+
   @if (isLoading()) {
     <div class="feedback-container">
       <mat-spinner diameter="50"></mat-spinner>
       <p>Carregando dados da fauna...</p>
     </div>
-  } 
+  }
   @else {
     @if (errorMessage()) {
       <div class="feedback-container error-message">
@@ -142,20 +142,20 @@
         @for (animal of filteredData(); track animal.id) {
           <mat-card class="item-card">
             <div class="card-image-container">
-              <img 
+              <img
                 mat-card-image
-                [src]="animal.imagem || 'assets/placeholder-image.png'" 
-                [alt]="'Foto de ' + animal.nomePopular" 
+                [src]="animal.imagem || 'assets/placeholder-image.png'"
+                [alt]="'Foto de ' + animal.nomePopular"
                 class="card-image"
-                loading="lazy" 
+                loading="lazy"
                 (error)="updateImageOnError($event)">
             </div>
-            
+
             <mat-card-header>
               <mat-card-title class="item-name">{{ animal.nomePopular }}</mat-card-title>
               <mat-card-subtitle class="scientific-name"><em>{{ animal.nomeCientifico }}</em></mat-card-subtitle>
             </mat-card-header>
-            
+
             <mat-card-content>
               <div class="info-item">
                 <mat-icon>pets</mat-icon>
@@ -166,7 +166,7 @@
                 <span class="item-habitat">{{ animal.habitat }}</span>
               </div>
             </mat-card-content>
-            
+
             <mat-card-actions>
               <a mat-flat-button [routerLink]="['/fauna', animal.id]" class="details-button">
                 Saiba Mais

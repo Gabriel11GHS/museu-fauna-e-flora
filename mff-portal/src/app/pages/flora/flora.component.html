@@ -7,22 +7,22 @@
   <div class="filtros-container">
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Buscar por nome...</mat-label>
-      <input 
-        matInput 
-        type="text" 
-        placeholder="Ex: Ipê Amarelo" 
-        [ngModel]="searchTerm()" 
+      <input
+        matInput
+        type="text"
+        placeholder="Ex: Ipê Amarelo"
+        [ngModel]="searchTerm()"
         (ngModelChange)="updateSearchTerm($event)">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Família</mat-label>
-      <mat-select 
-        [value]="selectedFamilia()" 
+      <mat-select
+        [value]="selectedFamilia()"
         (selectionChange)="updateFamilia($event.value)">
         <mat-option value="">Todas as Famílias</mat-option>
-        
+
         @for (familia of familias(); track familia) {
           <mat-option [value]="familia">{{ familia }}</mat-option>
         }
@@ -31,30 +31,30 @@
 
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Local</mat-label>
-      <mat-select 
-        [value]="selectedLocal()" 
+      <mat-select
+        [value]="selectedLocal()"
         (selectionChange)="updateLocal($event.value)">
         <mat-option value="">Todos os Locais</mat-option>
-        
+
         @for (local of locais(); track local) {
           <mat-option [value]="local">{{ local }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <mat-slide-toggle 
-      class="audio-toggle" 
-      [checked]="filtroAudio()" 
-      (change)="toggleAudio($event.checked)" 
+    <mat-slide-toggle
+      class="audio-toggle"
+      [checked]="filtroAudio()"
+      (change)="toggleAudio($event.checked)"
       color="primary">
       Apenas com áudio
     </mat-slide-toggle>
 
-    <mat-slide-toggle 
-      class="audio-toggle" 
-      [checked]="showMap()" 
-      (change)="toggleMap($event.checked)" 
-      color="primary" 
+    <mat-slide-toggle
+      class="audio-toggle"
+      [checked]="showMap()"
+      (change)="toggleMap($event.checked)"
+      color="primary"
       [disabled]="filteredData().length === 0">
       Exibir Mapa
     </mat-slide-toggle>
@@ -62,13 +62,13 @@
 </div>
 
 <div class="content-wrapper">
-  
+
   @if (isLoading()) {
     <div class="feedback-container">
       <mat-spinner diameter="50"></mat-spinner>
       <p>Carregando dados das plantas...</p>
     </div>
-  } 
+  }
   @else {
     @if (errorMessage()) {
       <div class="feedback-container error-message">
@@ -107,10 +107,10 @@
         @for (item of filteredData(); track item.idIndividuo) {
           <mat-card class="plant-card">
             <div class="card-image-wrapper">
-              <img 
-                mat-card-image 
-                [src]="item.fotoIndividuo || item.fotoTaxonomia || 'assets/placeholder-image.png'" 
-                [alt]="'Foto de ' + item.nomePopular" 
+              <img
+                mat-card-image
+                [src]="item.fotoIndividuo || item.fotoTaxonomia || 'assets/placeholder-image.png'"
+                [alt]="'Foto de ' + item.nomePopular"
                 (error)="updateImageOnError($event)"
                 loading="lazy"> @if (item.trilhaAudio) {
                 <span class="audio-badge">
@@ -118,12 +118,12 @@
                 </span>
               }
             </div>
-            
+
             <mat-card-header>
               <mat-card-title>{{ item.nomePopular }}</mat-card-title>
               <mat-card-subtitle><em>{{ item.nomeCientifico }}</em></mat-card-subtitle>
             </mat-card-header>
-            
+
             <mat-card-content>
               <div class="info-item">
                 <mat-icon>eco</mat-icon>
@@ -134,7 +134,7 @@
                 <span>{{ item.nomeLocal }}</span>
               </div>
             </mat-card-content>
-            
+
             <mat-card-actions>
               <a mat-flat-button [routerLink]="['/Ficha', item.idIndividuo]" class="details-button">
                 Saiba Mais

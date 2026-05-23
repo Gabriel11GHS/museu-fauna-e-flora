@@ -7,17 +7,17 @@
   <div class="timeline">
     @for (evento of eventos(); track $index; let i = $index) {
       <div class="timeline-container" [ngClass]="{ 'direita': i % 2 !== 0, 'esquerda': i % 2 === 0 }">
-        
+
         <ng-template #cardContent>
           <h2>{{ evento.titulo }}</h2>
           <small class="data">{{ evento.ano }}</small>
           <p>{{ evento.descricao }}</p>
-          
+
           @if (evento.imagem) {
-            <img 
-              [src]="evento.imagem" 
-              [alt]="evento.titulo" 
-              class="evento-imagem" 
+            <img
+              [src]="evento.imagem"
+              [alt]="evento.titulo"
+              class="evento-imagem"
               loading="lazy"> }
         </ng-template>
 
@@ -32,7 +32,7 @@
             <ng-container *ngTemplateOutlet="cardContent"></ng-container>
           </div>
         }
-        
+
       </div>
     }
   </div>

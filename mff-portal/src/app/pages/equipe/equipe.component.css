@@ -2,17 +2,17 @@
   /* --- Paleta de Cores da Equipe (Verde Institucional) --- */
   --cor-principal: #27632a;       /* Verde ICMC */
   --cor-secundaria: #3a8c3a;      /* Verde mais claro para detalhes */
-  
+
   --cor-fundo-pagina: #f8faf9;
   --cor-card-bg: #ffffff;
   --cor-texto-escuro: #333;
   --cor-texto-claro: #666;
   --cor-borda-imagem: #f0f0f0;
-  
+
   --borda-radius: 12px;
   --shadow-suave: 0 4px 15px rgba(0,0,0,0.08);
   --shadow-elevado: 0 8px 25px rgba(0,0,0,0.15);
-  
+
   display: block;
   background-color: var(--cor-fundo-pagina);
   min-height: 100vh;

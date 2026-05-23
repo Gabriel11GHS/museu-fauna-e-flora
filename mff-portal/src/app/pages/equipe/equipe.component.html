@@ -7,19 +7,19 @@
   @for (secao of secoesEquipe(); track secao.titulo) {
     <section class="equipe-section">
       <h2 class="section-titulo">{{ secao.titulo }}</h2>
-      
+
       <div class="cards-container">
         @for (membro of secao.membros; track membro.nome) {
           <div class="membro-card">
-            <!--<img 
-              [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'" 
-              [alt]="'Foto de ' + membro.nome" 
+            <!--<img
+              [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'"
+              [alt]="'Foto de ' + membro.nome"
               class="membro-imagem"
               loading="lazy"> -->
 
             <div class="membro-info">
               <h3 class="membro-nome">{{ membro.nome }}</h3>
-              
+
               @if (membro.funcao) {
                 <p class="membro-funcao">{{ membro.funcao }}</p>
               }

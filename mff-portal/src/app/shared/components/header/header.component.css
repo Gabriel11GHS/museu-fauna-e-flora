@@ -53,7 +53,7 @@
   font-size: 0.9rem;
   font-weight: 500;
   padding: 0 16px;
-  line-height: 64px; 
+  line-height: 64px;
   text-decoration: none;
   color: var(--cor-texto);
   position: relative;
@@ -99,7 +99,7 @@
 
   .mobile-menu-button {
     display: block;
-    position: relative; 
+    position: relative;
     z-index: 1100;
   }
 
@@ -112,7 +112,7 @@
     right: 0;
     background-color: var(--cor-primaria-escura);
     z-index: 999;
-    transform: translateY(-150%); 
+    transform: translateY(-150%);
     transition: transform 0.3s ease-in-out;
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   }
@@ -139,7 +139,7 @@
     margin: 0;             /* Remove margens externas */
     padding: 20px 0;       /* Aplica o mesmo espaçamento interno dos links */
     height: auto;          /* Reseta a altura fixa do Material */
-    
+
     /* Alinhamento */
     display: flex;
     justify-content: center;
@@ -147,13 +147,13 @@
 
     /* Cores e Visual */
     color: var(--cor-texto);
-    background-color: transparent; 
+    background-color: transparent;
   }
 }
 
 @media (max-width: 720px) {
   .logo-title {
-    display: none; 
+    display: none;
   }
 }
 
@@ -162,7 +162,7 @@
   transition: transform 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out;
 }
 
-/* * Estado 1: Logo grande e centralizado (apenas na home, no topo) 
+/* * Estado 1: Logo grande e centralizado (apenas na home, no topo)
  * A classe `at-home-top` é aplicada.
  */
 .logo-container.at-home-top {
@@ -189,7 +189,7 @@
 }
 
 .logo-container.scrolled-or-static .logo-title {
-  font-size: 1.2rem; 
+  font-size: 1.2rem;
 }
 
 /* Oculta os links de navegação quando o logo está grande e centralizado */
@@ -211,15 +211,15 @@
 /* --- Media Query para Telas Menores (Mobile) --- */
 @media (max-width: 960px) {
   .desktop-links {
-    display: none; 
+    display: none;
   }
 
   .logo-title {
-    display: block; 
+    display: block;
   }
 
   .mobile-menu-button {
-    display: block; 
+    display: block;
   }
 
   .mobile-nav {
@@ -238,7 +238,7 @@
 
   .mobile-nav.open {
     transform: translateY(0);
-    z-index: 1002; 
+    z-index: 1002;
   }
 
   .mobile-nav a {
@@ -250,16 +250,16 @@
 
   .mobile-nav a.active-link {
     background-color: rgba(255, 255, 255, 0.1);
-    font-weight: bold; 
+    font-weight: bold;
   }
 
   .logo-container.at-home-top {
-    transform: translate(-50%, -50%) scale(2.5); 
+    transform: translate(-50%, -50%) scale(2.5);
   }
 }
 
 @media (max-width: 720px) {
   .logo-title {
-    display: none; 
+    display: none;
   }
 }

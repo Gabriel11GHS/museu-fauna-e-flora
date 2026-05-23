@@ -8,11 +8,11 @@
   box-sizing: border-box;
 }
 
-html, body { 
-  height: 100%; 
-  margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif; 
-  background-color: #f8faf9; 
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f8faf9;
 }
 
 /* --- Customizações do Angular Material (Tema Flora) --- */
@@ -30,7 +30,7 @@ html, body {
 }
 
 .mat-mdc-slide-toggle.mat-primary.mat-mdc-slide-toggle-checked .mdc-switch__track::after {
-  background-color: #a5038a !important; 
+  background-color: #a5038a !important;
   opacity: 0.5; /* Suaviza a cor do trilho */
 }
 

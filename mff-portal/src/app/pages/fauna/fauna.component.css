@@ -4,7 +4,7 @@
   --cor-secundaria: #3a8c3a;      /* Verde secundário */
   --cor-destaque: #FDB100;        /* Amarelo Ouro (Identidade da Fauna) */
   --cor-destaque-hover: #FE7D09;  /* Laranja para hover */
-  
+
   --cor-fundo-header: #f0f4f0;
   --cor-fundo-pagina: #f8faf9;
   --cor-texto-claro: #ffffff;
@@ -12,11 +12,11 @@
   --borda-radius: 16px;
   --shadow-suave: 0 4px 15px rgba(0, 0, 0, 0.06);
   --shadow-elevado: 0 8px 25px rgba(0, 0, 0, 0.12);
-  
+
   display: block;
 }
 
-/* Sobrescrita do Tema Global para a Fauna 
+/* Sobrescrita do Tema Global para a Fauna
    Como o global (styles.css) define roxo, aqui forçamos amarelo/laranja
    usando ::ng-deep escopado ao :host para não vazar.
 */
@@ -195,7 +195,7 @@ mat-card-content {
   font-size: 20px;
   width: 20px;
   height: 20px;
-  
+
   /* CORREÇÃO CRÍTICA: */
   font-weight: normal; /* Ícones Material DEVEM ser normal, negrito quebra o desenho */
   letter-spacing: normal;
@@ -203,12 +203,12 @@ mat-card-content {
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
-  
+
   /* Ajuste fino para alinhar com a primeira linha de texto */
-  margin-top: 2px; 
-  
+  margin-top: 2px;
+
   /* Garante que o ícone não encolha se o texto for grande */
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 /* Tags de Grupo/Habitat */

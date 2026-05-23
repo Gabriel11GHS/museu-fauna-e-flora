@@ -5,7 +5,7 @@
   --cor-texto: #ffffff;
   --cor-ativo: #a5038a;
   --cor-foco-acessivel: #fbc02d;
-  
+
   display: block;
   width: 100%;
   overflow-x: hidden;
@@ -123,7 +123,7 @@
   left: 50%;    /* Move para o centro horizontal */
   transform: translateX(-50%); /* Corrige o ponto de ancoragem para o centro exato */
   z-index: 25;  /* Garante que fique acima dos dots e da imagem */
-  
+
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   width: 40px;
@@ -243,9 +243,9 @@
 
 .vozes-container {
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
-  gap: 50px; 
+  gap: 50px;
   max-width: 1100px;
   margin: 0 auto;
   flex-wrap: wrap;
@@ -253,9 +253,9 @@
 
 .nature-sounds-image img {
   display: block;
-  width: 100%; 
-  max-width: 350px; 
-  height: auto; 
+  width: 100%;
+  max-width: 350px;
+  height: auto;
   border-radius: 12px;
 }
 
@@ -483,12 +483,12 @@
   .hero-content {
   margin-top: 12rem;
   }
-  
+
   .vozes-container {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .carousel-play-pause-btn {
     bottom: 50px;
   }
@@ -524,10 +524,10 @@
 
 /* Ajusta a posição para não ficar colado na borda */
 :host ::ng-deep .carousel-vozes .slick-prev {
-  left: 15px; 
+  left: 15px;
 }
 :host ::ng-deep .carousel-vozes .slick-next {
-  right: 15px; 
+  right: 15px;
 }
 
 /* Melhora a visibilidade das setas contra imagens escuras ou claras */
@@ -537,7 +537,7 @@
   opacity: 0.75; /* Um pouco transparente para não poluir */
   font-size: 25px; /* Tamanho do ícone da seta */
   /* Sombra leve para criar contraste com o fundo */
-  text-shadow: 0 0 8px rgba(0,0,0,0.6); 
+  text-shadow: 0 0 8px rgba(0,0,0,0.6);
 }
 
 :host ::ng-deep .carousel-vozes .slick-arrow:hover::before {

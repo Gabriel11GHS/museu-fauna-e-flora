@@ -210,7 +210,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly onMapaSvgLoad = (): void => this.configurarMapaLocais();
 
   // --- DADOS DINÂMICOS (OBSERVABLE -> SIGNAL) ---
-  
+
   // Observable fonte que busca e combina dados
   private destaquesSource$ = forkJoin({
     plantas: this.apiService.getPlantasAtivas().pipe(catchError(() => of([]))),
@@ -251,7 +251,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     // Inicializa o carrossel sem setTimeout, apenas atualizando o sinal
     this.showCarousel.set(true);
-    
+
     const objectElement = this.svgObject?.nativeElement;
 
     if (objectElement) {

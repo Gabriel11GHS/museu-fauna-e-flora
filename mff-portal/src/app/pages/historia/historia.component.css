@@ -3,15 +3,15 @@
   --cor-principal: #27632a;       /* Verde (padrão do museu) */
   --cor-destaque: #a5038a;        /* Roxo (Identidade da História) */
   --cor-destaque-claro: #f3e5f5;  /* Fundo suave */
-  
+
   --cor-fundo-pagina: #f8faf9;
   --cor-texto-escuro: #333;
   --cor-texto-claro: #666;
-  
+
   --borda-radius: 12px;
   --shadow-suave: 0 4px 15px rgba(0,0,0,0.08);
   --shadow-elevado: 0 8px 25px rgba(0,0,0,0.15);
-  
+
   display: block;
   background-color: var(--cor-fundo-pagina);
   min-height: 100vh;
@@ -23,7 +23,7 @@
   margin: 0 auto;
   padding: 3rem 2rem;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .pagina-header {
@@ -73,7 +73,7 @@
   padding: 10px 40px;
   position: relative;
   width: 50%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 /* Bolinha (Dot) na Linha Central */
@@ -191,16 +191,16 @@
   .timeline::after {
     left: 31px;
   }
-  
+
   /* Todos os containers ficam na direita (mas visualmente ocupam a tela) */
   .timeline-container {
     width: 100%;
     padding-left: 70px;
     padding-right: 20px;
   }
-  
+
   /* Ajuste das setas para apontarem sempre para a esquerda */
-  .timeline-container.esquerda::before, 
+  .timeline-container.esquerda::before,
   .timeline-container.direita::before {
     left: 60px;
     right: auto; /* Reseta o right da classe .esquerda */
@@ -210,12 +210,12 @@
   }
 
   /* Ajuste das bolinhas para ficarem todas na linha esquerda */
-  .timeline-container.esquerda::after, 
+  .timeline-container.esquerda::after,
   .timeline-container.direita::after {
-    left: 17px; 
+    left: 17px;
     right: auto;
   }
-  
+
   /* Remove o deslocamento de 50% da classe direita */
   .direita {
     left: 0%;

@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider'; 
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-fauna',
@@ -39,7 +39,7 @@ import { MatDividerModule } from '@angular/material/divider';
   ],
   templateUrl: './fauna.component.html',
   styleUrls: ['./fauna.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush 
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FaunaComponent implements OnInit {
   // Injeção de dependências
@@ -48,11 +48,11 @@ export class FaunaComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
 
   // --- ESTADO REATIVO (Signals) ---
-  
+
   // Filtros (Fonte da Verdade de Escrita)
   public searchTerm = signal<string>('');
   public selectedGrupo = signal<string>('');
-  
+
   // Estados de UI
   public isLoading = signal<boolean>(true);
   public errorMessage = signal<string | null>(null);
@@ -65,7 +65,7 @@ export class FaunaComponent implements OnInit {
   public searchTermDebounced = toSignal(this.searchTermDebounced$, { initialValue: '' });
 
   // --- DADOS ---
-  
+
   // Observable fonte
   private animaisSource$ = this.faunaService.getAnimais().pipe(
     tap(() => this.isLoading.set(false)), // Atualiza o signal isLoading corretamente
@@ -118,15 +118,15 @@ export class FaunaComponent implements OnInit {
 
   public selectedCameraId = '61847ce2';
   public streamUrl: SafeResourceUrl | null = null;
-  public isStreamOnline = true; 
+  public isStreamOnline = true;
 
-  constructor() { 
+  constructor() {
     // O construtor fica vazio pois usamos inject() nas propriedades
   }
 
   ngOnInit(): void {
     this.configurarStream();
-    // Não chamamos carregarAnimais() aqui, pois o toSignal(animaisSource$) 
+    // Não chamamos carregarAnimais() aqui, pois o toSignal(animaisSource$)
     // já inicia o carregamento automaticamente.
   }
 

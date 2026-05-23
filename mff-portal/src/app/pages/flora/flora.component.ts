@@ -139,7 +139,7 @@ export class FloraComponent implements OnInit {
   });
 
   // --- LÓGICA DO MAPA ---
-  
+
   // Signal para armazenar dados do mapa
   public plantasParaMapa = signal<Planta[]>([]);
   private mapaRequestId = 0;
@@ -171,7 +171,7 @@ export class FloraComponent implements OnInit {
   updateLocal(local: string) { this.selectedLocal.set(local); }
   updateFamilia(familia: string) { this.selectedFamilia.set(familia); }
   toggleAudio(checked: boolean) { this.filtroAudio.set(checked); }
-  
+
   toggleMap(checked: boolean) {
     this.showMap.set(checked);
     // Se desligar o mapa, não precisamos fazer nada, o ngIf do template resolve
