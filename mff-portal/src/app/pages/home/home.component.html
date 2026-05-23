@@ -79,9 +79,9 @@
       <p>O projeto "Vozes da Natureza" convida a comunidade da USP para dar voz
         às árvores, transformando dados científicos em histórias cativantes.
         Ouça os áudios e enriqueça sua experiência.</p>
-      <a mat-raised-button 
-        color="accent" 
-        routerLink="/flora" 
+      <a mat-raised-button
+        color="accent"
+        routerLink="/Ficha"
         [queryParams]="{ comAudio: 'true' }">
         <mat-icon>graphic_eq</mat-icon>
         Ouvir agora
@@ -101,27 +101,52 @@
     </p>
   </div>
 
-  <div class="home-mapa-locais__card">
-    <div class="home-mapa-locais__svg-container">
-      <object
-        #svgObject
-        class="home-mapa-locais__svg"
-        type="image/svg+xml"
-        data="assets/mapa/locais-individuais.svg"
-        aria-label="Mapa dos locais do Museu da Fauna e Flora">
-      </object>
+  <div class="home-mapa-locais__layout">
+    <div class="home-mapa-locais__card">
+      <div class="home-mapa-locais__svg-container">
+        <object
+          #svgObject
+          class="home-mapa-locais__svg"
+          type="image/svg+xml"
+          data="assets/mapa/locais-individuais.svg"
+          aria-label="Mapa dos locais do Museu da Fauna e Flora">
+        </object>
 
-      <div class="home-mapa-locais__labels" aria-hidden="true">
-        @for (local of locaisMapa; track local.id) {
-          <span
-            class="home-mapa-locais__label"
-            [class.home-mapa-locais__label--ativo]="isLocalAtivo(local.id)"
-            [style.left.%]="local.x"
-            [style.top.%]="local.y">
-            {{ local.nome }}
-          </span>
-        }
+        <div class="home-mapa-locais__labels" aria-hidden="true">
+          @for (local of locaisMapa; track local.id) {
+            <span
+              class="home-mapa-locais__label"
+              [class.home-mapa-locais__label--ativo]="isLocalAtivo(local.id)"
+              [style.left.%]="local.x"
+              [style.top.%]="local.y">
+              {{ local.nome }}
+            </span>
+          }
+        </div>
       </div>
+
+      @if (obterLocalSelecionado(); as local) {
+        <aside class="home-mapa-locais__info">
+          <span class="home-mapa-locais__info-label">Local selecionado</span>
+          <h3>{{ local.nome }}</h3>
+          <p>{{ local.descricao || 'Veja as espécies de flora catalogadas nesta região do campus.' }}</p>
+          <button
+            type="button"
+            class="home-mapa-locais__botao"
+            (click)="irParaFlora(local)">
+            Ir para o catálogo de flora
+          </button>
+        </aside>
+      } @else {
+        <aside class="home-mapa-locais__info home-mapa-locais__info--vazio">
+          <span class="home-mapa-locais__info-label">Explore o mapa</span>
+          <h3>Selecione uma região</h3>
+          <p>
+            Clique 2 vezes em uma área do mapa para ver o local correspondente e acessar
+            as espécies da flora cadastradas naquela região.
+          </p>
+        </aside>
+      }
     </div>
   </div>
 </section>
