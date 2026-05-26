@@ -5,7 +5,8 @@
         <span class="project-eyebrow">Transmissão ao vivo</span>
         <p>
           Uma janela para observar, em tempo real, a fauna que visita o Jardim
-          Secreto do ICMC. A câmera registra a presença de aves, insetos e outros
+          Secreto do ICMC. A câmera registra a presença de aves, insetos e
+          outros
           animais que circulam pelo espaço do museu.
         </p>
 
@@ -30,35 +31,65 @@
       <mat-card-content>
         <div class="stream-frame-stage">
           <div class="stream-window">
+            @if (!liveStatus().available) {
+            <div class="stream-night-placeholder">
+              <img
+                src="assets/fauna/Projeto-Click/live-indisponivel.png"
+                alt="Aviso de transmissão indisponível por baixa luminosidade"
+                loading="lazy">
+
+              <div class="stream-night-text">
+                <strong>Observação indisponível no momento</strong>
+                <span>
+                  Por conta do horário e da baixa luminosidade, não é possível
+                  assistir à
+                  live agora. A visualização costuma ser melhor durante o dia.
+                </span>
+              </div>
+            </div>
+            } @else if (!selectedCameraId) {
+            <div class="stream-select-placeholder">
+              <mat-icon>videocam</mat-icon>
+              <strong>Escolha uma câmera para iniciar a transmissão</strong>
+              <span>
+                A live será carregada somente após a seleção de uma câmera.
+              </span>
+            </div>
+            } @else if (isStreamOnline && streamUrl) {
             <img
-              *ngIf="isStreamOnline && streamUrl"
               class="stream-video"
               [src]="streamUrl"
               (error)="handleStreamError()"
               alt="Transmissão ao vivo do Jardim Secreto">
-
-            <div *ngIf="!isStreamOnline" class="stream-offline">
+            } @else {
+            <div class="stream-offline">
               <p>A transmissão está offline no momento.</p>
-              <p class="hint-text">Verifique sua conexão ou tente novamente mais
-                tarde.</p>
+              <p class="hint-text">
+                Verifique sua conexão ou tente novamente mais tarde.
+              </p>
             </div>
+            }
           </div>
 
           <img
             class="stream-frame"
             src="assets/fauna/Projeto-Click/moldura-nova.png"
-            alt=""
+            alt
             aria-hidden="true">
         </div>
 
+        @if (liveStatus().available) {
         <div class="camera-controls">
-          <button *ngFor="let cam of cameras"
+          <button
+            *ngFor="let cam of cameras"
+            type="button"
             (click)="trocarCamera(cam.id)"
             class="cam-btn"
             [class.active]="selectedCameraId === cam.id">
             {{ cam.nome }}
           </button>
         </div>
+        }
       </mat-card-content>
     </mat-card>
 
@@ -72,14 +103,15 @@
           alt="Mapa do instituto com indicação da região do museu">
         <p>
           As câmeras acompanham o movimento no poleiro do Jardim Secreto,
-          um espaço arborizado e tranquilo, que chama a atenção de diversas espécies de aves.
+          um espaço arborizado e tranquilo, que chama a atenção de diversas
+          espécies de aves.
         </p>
       </mat-card-content>
     </mat-card>
   </section>
 </div>
 
-<mat-divider></mat-divider>
+<div class="section-spacer" aria-hidden="true"></div>
 
 <div class="header-filtros">
   <div class="header-conteudo">
@@ -104,10 +136,10 @@
       <mat-select
         [value]="selectedGrupo()"
         (selectionChange)="updateGrupo($event.value)">
-        <mat-option value="">Todos os Grupos</mat-option>
+        <mat-option value>Todos os Grupos</mat-option>
 
         @for (grupo of grupos(); track $index) {
-          <mat-option [value]="grupo">{{ grupo }}</mat-option>
+        <mat-option [value]="grupo">{{ grupo }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -117,64 +149,67 @@
 <div class="content-wrapper">
 
   @if (isLoading()) {
-    <div class="feedback-container">
-      <mat-spinner diameter="50"></mat-spinner>
-      <p>Carregando dados da fauna...</p>
-    </div>
+  <div class="feedback-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando dados da fauna...</p>
+  </div>
   }
   @else {
-    @if (errorMessage()) {
-      <div class="feedback-container error-message">
-        <mat-icon>error_outline</mat-icon>
-        <p>{{ errorMessage() }}</p>
+  @if (errorMessage()) {
+  <div class="feedback-container error-message">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ errorMessage() }}</p>
+  </div>
+  }
+
+  @if (!errorMessage() && filteredData().length === 0) {
+  <div class="feedback-container no-results-message">
+    <mat-icon>search_off</mat-icon>
+    <p>Nenhum animal encontrado com os filtros selecionados.</p>
+  </div>
+  }
+
+  @if (filteredData().length > 0) {
+  <div class="card-list">
+    @for (animal of filteredData(); track animal.id) {
+    <mat-card class="item-card">
+      <div class="card-image-container">
+        <img
+          mat-card-image
+          [src]="animal.imagem || 'assets/placeholder-image.png'"
+          [alt]="'Foto de ' + animal.nomePopular"
+          class="card-image"
+          loading="lazy"
+          (error)="updateImageOnError($event)">
       </div>
+
+      <mat-card-header>
+        <mat-card-title class="item-name">{{ animal.nomePopular
+          }}</mat-card-title>
+        <mat-card-subtitle class="scientific-name"><em>{{ animal.nomeCientifico
+            }}</em></mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="info-item">
+          <mat-icon>pets</mat-icon>
+          <span class="item-family">{{ animal.grupo }}</span>
+        </div>
+        <div class="info-item">
+          <mat-icon>home</mat-icon>
+          <span class="item-habitat">{{ animal.habitat }}</span>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <a mat-flat-button [routerLink]="['/fauna', animal.id]"
+          class="details-button">
+          Saiba Mais
+        </a>
+      </mat-card-actions>
+    </mat-card>
     }
-
-    @if (!errorMessage() && filteredData().length === 0) {
-      <div class="feedback-container no-results-message">
-        <mat-icon>search_off</mat-icon>
-        <p>Nenhum animal encontrado com os filtros selecionados.</p>
-      </div>
-    }
-
-    @if (filteredData().length > 0) {
-      <div class="card-list">
-        @for (animal of filteredData(); track animal.id) {
-          <mat-card class="item-card">
-            <div class="card-image-container">
-              <img
-                mat-card-image
-                [src]="animal.imagem || 'assets/placeholder-image.png'"
-                [alt]="'Foto de ' + animal.nomePopular"
-                class="card-image"
-                loading="lazy"
-                (error)="updateImageOnError($event)">
-            </div>
-
-            <mat-card-header>
-              <mat-card-title class="item-name">{{ animal.nomePopular }}</mat-card-title>
-              <mat-card-subtitle class="scientific-name"><em>{{ animal.nomeCientifico }}</em></mat-card-subtitle>
-            </mat-card-header>
-
-            <mat-card-content>
-              <div class="info-item">
-                <mat-icon>pets</mat-icon>
-                <span class="item-family">{{ animal.grupo }}</span>
-              </div>
-              <div class="info-item">
-                <mat-icon>home</mat-icon>
-                <span class="item-habitat">{{ animal.habitat }}</span>
-              </div>
-            </mat-card-content>
-
-            <mat-card-actions>
-              <a mat-flat-button [routerLink]="['/fauna', animal.id]" class="details-button">
-                Saiba Mais
-              </a>
-            </mat-card-actions>
-          </mat-card>
-        }
-      </div>
-    }
+  </div>
+  }
   }
 </div>

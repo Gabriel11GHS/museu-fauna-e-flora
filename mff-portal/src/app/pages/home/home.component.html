@@ -6,18 +6,19 @@
 
   <div class="hero-background">
     @if (showCarousel()) {
-      <ngx-slick-carousel
-        #heroCarousel
-        class="hero-carousel"
-        [config]="slideConfig"
-        (afterChange)="onCarouselAfterChange($event)">
+    <ngx-slick-carousel
+      #heroCarousel
+      class="hero-carousel"
+      [config]="slideConfig"
+      (afterChange)="onCarouselAfterChange($event)">
 
-        @for (item of mediaItems; track item.image) {
-          <div ngxSlickItem class="slide">
-            <img [src]="item.image" [alt]="item.alt" [attr.fetchpriority]="$index === 0 ? 'high' : 'auto'" />
-          </div>
-        }
-      </ngx-slick-carousel>
+      @for (item of mediaItems; track item.image) {
+      <div ngxSlickItem class="slide">
+        <img [src]="item.image" [alt]="item.alt"
+          [attr.fetchpriority]="$index === 0 ? 'high' : 'auto'" />
+      </div>
+      }
+    </ngx-slick-carousel>
     }
     <div class="hero-overlay"></div>
   </div>
@@ -43,27 +44,29 @@
   <div class="destaques-container">
 
     @for (destaque of destaquesPrincipais; track destaque.titulo) {
-      <div class="destaque-card">
+    <div class="destaque-card">
 
-        @if (destaque.imagemIcone) {
-          <img [src]="destaque.imagemIcone" alt="" class="destaque-icone-imagem" loading="lazy">
-        } @else {
-          <mat-icon class="destaque-icone">{{ destaque.icone }}</mat-icon>
-        }
+      @if (destaque.imagemIcone) {
+      <img [src]="destaque.imagemIcone" alt class="destaque-icone-imagem"
+        loading="lazy">
+      } @else {
+      <mat-icon class="destaque-icone">{{ destaque.icone }}</mat-icon>
+      }
 
-        <h3 class="destaque-titulo">{{ destaque.titulo }}</h3>
-        <p class="destaque-descricao">{{ destaque.descricao }}</p>
+      <h3 class="destaque-titulo">{{ destaque.titulo }}</h3>
+      <p class="destaque-descricao">{{ destaque.descricao }}</p>
 
-        @if (destaque.link.startsWith('/')) {
-          <a mat-stroked-button [routerLink]="destaque.link" class="destaque-link">
-            Ver mais
-          </a>
-        } @else {
-          <a mat-stroked-button (click)="navigateTo(destaque.link)" class="destaque-link">
-            Ver mais
-          </a>
-        }
-      </div>
+      @if (destaque.link.startsWith('/')) {
+      <a mat-stroked-button [routerLink]="destaque.link" class="destaque-link">
+        Ver mais
+      </a>
+      } @else {
+      <a mat-stroked-button (click)="navigateTo(destaque.link)"
+        class="destaque-link">
+        Ver mais
+      </a>
+      }
+    </div>
     }
 
   </div>
@@ -71,33 +74,83 @@
 
 <section class="vozes-section">
   <div class="vozes-container">
-    <div class="nature-sounds-image">
-      <img src="assets/home/voz-natureza.png" alt="Ícone de som da natureza" loading="lazy">
-    </div>
     <div class="texto-vozes">
-      <h2>Vozes da Natureza</h2>
+      <span class="vozes-eyebrow">Vozes da natureza</span>
+      <h2>A comunidade USP da voz a flora</h2>
       <p>O projeto "Vozes da Natureza" convida a comunidade da USP para dar voz
         às árvores, transformando dados científicos em histórias cativantes.
         Ouça os áudios e enriqueça sua experiência.</p>
-      <a mat-raised-button
-        color="accent"
+      <a
+        mat-raised-button
+        class="vozes-button"
         routerLink="/Ficha"
         [queryParams]="{ comAudio: 'true' }">
         <mat-icon>graphic_eq</mat-icon>
         Ouvir agora
       </a>
     </div>
+    <div class="nature-sounds-image">
+      <img src="assets/home/voz-natureza.png" alt="Ícone de som da natureza"
+        loading="lazy">
+    </div>
   </div>
 </section>
 
-<section class="destaques-section" id="mapa-section" aria-labelledby="mapa-locais-titulo">
+<section class="click-section" aria-labelledby="click-title">
+  <div class="click-container">
+    <div class="click-image">
+      <img
+        src="assets/home/projeto-click.png"
+        alt="Registro visual do Projeto Click no Jardim Secreto do ICMC"
+        loading="lazy">
+    </div>
+
+    <div class="texto-click">
+      <span class="click-eyebrow">Projeto Click</span>
+
+      <h2 id="click-title">Observe as aves do ICMC em tempo real</h2>
+
+      <p>
+        O Projeto Click aproxima visitantes, estudantes e professores de parte
+        da fauna presente no campus por meio de registros visuais e 
+        transmissões ao vivo direto de um pequeno poleiro.
+        A iniciativa transforma a observação da natureza em uma experiência
+        digital, educativa e acessível.
+      </p>
+
+      <div class="click-actions">
+        <a
+          mat-raised-button
+          routerLink="/fauna"
+          class="click-button">
+          <mat-icon>videocam</mat-icon>
+          Acessar transmissão
+        </a>
+
+        @if (liveStatus().available) {
+        <span class="live-indicator"
+          aria-label="Transmissão ao vivo disponível">
+          <span class="live-dot" aria-hidden="true"></span>
+          Ao vivo
+        </span>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="destaques-section" id="mapa-section"
+  aria-labelledby="mapa-locais-titulo">
   <div class="texto-vozes">
 
     <h2>Entenda as regiões do Museu da Fauna e Flora</h2>
     <p>
-      Conheça as áreas do campus usadas como referência para catalogar os indivíduos do acervo.
-      O mapa interativo destaca as regiões onde as espécies foram coletadas, permitindo uma
-      exploração visual do acervo e facilitando a compreensão da distribuição geográfica das espécies.
+      Conheça as áreas do campus usadas como referência para catalogar os
+      indivíduos do acervo.
+      O mapa interativo destaca as regiões onde as espécies foram coletadas,
+      permitindo uma
+      exploração visual do acervo e facilitando a compreensão da distribuição
+      geográfica das espécies.
     </p>
   </div>
 
@@ -114,38 +167,40 @@
 
         <div class="home-mapa-locais__labels" aria-hidden="true">
           @for (local of locaisMapa; track local.id) {
-            <span
-              class="home-mapa-locais__label"
-              [class.home-mapa-locais__label--ativo]="isLocalAtivo(local.id)"
-              [style.left.%]="local.x"
-              [style.top.%]="local.y">
-              {{ local.nome }}
-            </span>
+          <span
+            class="home-mapa-locais__label"
+            [class.home-mapa-locais__label--ativo]="isLocalAtivo(local.id)"
+            [style.left.%]="local.x"
+            [style.top.%]="local.y">
+            {{ local.nome }}
+          </span>
           }
         </div>
       </div>
 
       @if (obterLocalSelecionado(); as local) {
-        <aside class="home-mapa-locais__info">
-          <span class="home-mapa-locais__info-label">Local selecionado</span>
-          <h3>{{ local.nome }}</h3>
-          <p>{{ local.descricao || 'Veja as espécies de flora catalogadas nesta região do campus.' }}</p>
-          <button
-            type="button"
-            class="home-mapa-locais__botao"
-            (click)="irParaFlora(local)">
-            Ir para o catálogo de flora
-          </button>
-        </aside>
+      <aside class="home-mapa-locais__info">
+        <span class="home-mapa-locais__info-label">Local selecionado</span>
+        <h3>{{ local.nome }}</h3>
+        <p>{{ local.descricao ||
+          'Veja as espécies de flora catalogadas nesta região do campus.' }}</p>
+        <button
+          type="button"
+          class="home-mapa-locais__botao"
+          (click)="irParaFlora(local)">
+          Ir para o catálogo de flora
+        </button>
+      </aside>
       } @else {
-        <aside class="home-mapa-locais__info home-mapa-locais__info--vazio">
-          <span class="home-mapa-locais__info-label">Explore o mapa</span>
-          <h3>Selecione uma região</h3>
-          <p>
-            Clique 2 vezes em uma área do mapa para ver o local correspondente e acessar
-            as espécies da flora cadastradas naquela região.
-          </p>
-        </aside>
+      <aside class="home-mapa-locais__info home-mapa-locais__info--vazio">
+        <span class="home-mapa-locais__info-label">Explore o mapa</span>
+        <h3>Selecione uma região</h3>
+        <p>
+          Clique 2 vezes em uma área do mapa para ver o local correspondente e
+          acessar
+          as espécies da flora cadastradas naquela região.
+        </p>
+      </aside>
       }
     </div>
   </div>

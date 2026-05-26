@@ -22,6 +22,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { ApiService } from '../../services/api.service';
 import { FaunaService } from '../../services/fauna.service';
 import { HeaderStateService } from '../../services/header-state.service';
+import { LiveAvailabilityService } from '../../services/live-availability.service';
 
 // Bibliotecas Externas
 import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
@@ -75,6 +76,7 @@ interface MapaSvgListener {
     ])
   ]
 })
+
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // --- INJEÇÃO DE DEPENDÊNCIAS ---
   private headerStateService = inject(HeaderStateService);
@@ -83,6 +85,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private router = inject(Router);
   private ngZone = inject(NgZone);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly liveAvailabilityService = inject(LiveAvailabilityService);
+  readonly liveStatus = this.liveAvailabilityService.status;
 
   // --- VIEW CHILDREN ---
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
