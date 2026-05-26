@@ -5,9 +5,9 @@ import { RouterModule } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-
 import { Animal } from '../../models/animal.model';
 import { FaunaService } from '../../services/fauna.service';
+import { LiveAvailabilityService } from '../../services/live-availability.service';
 
 // Angular Material Imports
 import { MatCardModule } from '@angular/material/card';
@@ -49,10 +49,13 @@ const PROJETO_CLICK_CAMERA_IDS = [
   styleUrls: ['./fauna.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class FaunaComponent implements OnInit {
   // Injeção de dependências
   private faunaService = inject(FaunaService);
   private readonly streamBasePath = '/camera-feed';
+  private readonly liveAvailabilityService = inject(LiveAvailabilityService);
+  readonly liveStatus = this.liveAvailabilityService.status;
 
   // --- ESTADO REATIVO (Signals) ---
 
@@ -124,7 +127,7 @@ export class FaunaComponent implements OnInit {
     id
   }));
 
-  public selectedCameraId = this.cameras[0]?.id ?? '';
+  public selectedCameraId = '';
   public streamUrl: string | null = null;
   public isStreamOnline = true;
 
