@@ -237,7 +237,7 @@
 
 /* --- Seção Vozes --- */
 .vozes-section {
-  background-color: #e8f5e9;
+  background-color: #fae8e0;
   padding: 80px 20px;
 }
 
@@ -259,9 +259,24 @@
   border-radius: 12px;
 }
 
+.vozes-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: var(--cor-ativo);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .texto-vozes {
   flex: 1;
   min-width: 300px;
+  text-align: right;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .texto-vozes h2 {
@@ -274,8 +289,40 @@
 .texto-vozes p {
   font-size: 1.1rem;
   line-height: 1.6;
-  margin-bottom: 30px;
+  margin-bottom: 18px;
   color: #333;
+}
+
+.texto-vozes a {
+  align-self: flex-end;
+}
+
+.vozes-button {
+  background-color: var(--cor-ativo) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  padding: 0.65rem 1.4rem !important;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.vozes-button:hover {
+  background-color: var(--cor-ativo) !important;
+}
+
+.vozes-button mat-icon {
+  margin-right: 0.4rem;
+}
+
+@media (max-width: 760px) {
+  .texto-vozes {
+    text-align: center;
+    align-items: center;
+  }
+
+  .texto-vozes a {
+    align-self: center;
+  }
 }
 
 #mapa-section .texto-vozes {
@@ -287,6 +334,137 @@
 #mapa-section .texto-vozes p {
   margin-left: auto;
   margin-right: auto;
+}
+
+/* --- Seção Projeto Click --- */
+.click-section {
+  background-color: #fff4cf;
+  padding: 80px 20px;
+}
+
+.click-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.click-image img {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
+.texto-click {
+  flex: 1;
+  min-width: 300px;
+}
+
+.click-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: #fe7d09;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.texto-click h2 {
+  font-size: 2.2rem;
+  color: var(--cor-primaria);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.texto-click p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.click-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.click-button {
+  background-color: #fe7d09 !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  padding: 0.65rem 1.4rem !important;
+  font-weight: 700;
+}
+
+.click-button:hover {
+  background-color: #e96f04 !important;
+}
+
+.click-button mat-icon {
+  margin-right: 0.4rem;
+}
+
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #8b1a1a;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.live-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background-color: #e53935;
+  box-shadow: 0 0 0 rgba(229, 57, 53, 0.65);
+  animation: livePulse 1.4s infinite;
+}
+
+@keyframes livePulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.65);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(229, 57, 53, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(229, 57, 53, 0);
+  }
+}
+
+@media (max-width: 760px) {
+  .click-section {
+    padding: 56px 20px;
+  }
+
+  .click-container {
+    gap: 32px;
+  }
+
+  .texto-click h2 {
+    font-size: 1.8rem;
+  }
+
+  .click-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 /* --- Seção Mapa de locais --- */
