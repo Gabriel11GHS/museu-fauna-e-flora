@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FiltroService } from './services/filtro.service';
 import { filter } from 'rxjs';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { AccessibilityMenuComponent } from './shared/components/accessibility-menu/accessibility-menu.component';
 
 declare var gtag: Function;
 
@@ -22,7 +23,8 @@ declare var gtag: Function;
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    HeaderComponent
+    HeaderComponent,
+    AccessibilityMenuComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']

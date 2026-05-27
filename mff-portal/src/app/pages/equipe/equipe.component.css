@@ -123,6 +123,96 @@
   font-style: italic;
 }
 
+:host-context(body.mff-dark-mode) {
+  --cor-principal: #9ee2a0;
+  --cor-secundaria: #74c97b;
+  --cor-fundo-pagina: #111711;
+  --cor-card-bg: #172019;
+  --cor-texto-escuro: #e8f1e7;
+  --cor-texto-claro: #c4d2c1;
+  --cor-borda-imagem: #405b43;
+
+  background-color: #111711;
+}
+
+:host-context(body.mff-dark-mode) .pagina-container {
+  background-color: #111711;
+}
+
+:host-context(body.mff-dark-mode) .pagina-header h1 {
+  color: #dcefd8;
+}
+
+:host-context(body.mff-dark-mode) .pagina-header p,
+:host-context(body.mff-dark-mode) .membro-funcao {
+  color: #c4d2c1;
+}
+
+:host-context(body.mff-dark-mode) .section-titulo {
+  color: #e8f1e7;
+  border-bottom-color: #74c97b;
+}
+
+:host-context(body.mff-dark-mode) .membro-card {
+  color: #e8f1e7;
+  background-color: #172019;
+  border-color: rgba(158, 226, 160, 0.18);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+:host-context(body.mff-dark-mode) .membro-card:hover {
+  border-color: rgba(158, 226, 160, 0.45);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
+}
+
+:host-context(body.mff-dark-mode) .membro-nome {
+  color: #dcefd8;
+}
+
+:host-context(body.mff-dark-mode) .membro-imagem {
+  border-color: #405b43;
+}
+
+:host-context(body.mff-dark-mode) .membro-card:hover .membro-imagem {
+  border-color: #9ee2a0;
+}
+
+:host-context(body.mff-high-contrast) {
+  --cor-principal: #ffff00;
+  --cor-secundaria: #ffff00;
+  --cor-fundo-pagina: #000000;
+  --cor-card-bg: #000000;
+  --cor-texto-escuro: #ffffff;
+  --cor-texto-claro: #ffffff;
+  --cor-borda-imagem: #ffffff;
+
+  background-color: #000000;
+}
+
+:host-context(body.mff-high-contrast) .pagina-container,
+:host-context(body.mff-high-contrast) .membro-card {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+:host-context(body.mff-high-contrast) .pagina-header h1,
+:host-context(body.mff-high-contrast) .section-titulo,
+:host-context(body.mff-high-contrast) .membro-nome {
+  color: #ffff00;
+}
+
+:host-context(body.mff-high-contrast) .pagina-header p,
+:host-context(body.mff-high-contrast) .membro-funcao {
+  color: #ffffff;
+}
+
+:host-context(body.mff-high-contrast) .section-titulo,
+:host-context(body.mff-high-contrast) .membro-card,
+:host-context(body.mff-high-contrast) .membro-imagem {
+  border-color: #ffff00;
+  box-shadow: none;
+}
+
 /* --- Responsividade (Mobile) --- */
 @media screen and (max-width: 600px) {
   .pagina-container {
