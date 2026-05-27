@@ -4,6 +4,7 @@
   --cor-primaria-escura: #1e4a20;
   --cor-texto: #ffffff;
   --cor-ativo: #a5038a;
+  --toolbar-height: 100px;
 }
 
 .main-toolbar {
@@ -16,7 +17,7 @@
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   background: var(--cor-primaria-escura);
-  height: 100px;
+  height: var(--toolbar-height);
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -166,10 +167,13 @@
  * A classe `at-home-top` é aplicada.
  */
 .logo-container.at-home-top {
+  --home-logo-scale: 3.9;
+  --home-logo-center-y: max(300px, 32vh);
+
   position: absolute; /* Permite posicionamento sobre a página */
   left: 50%;
-  top: 32vh; /* Ajuste para centralizar verticalmente no 'hero' */
-  transform: translate(-50%, -50%) scale(3.5); /* Centraliza e aumenta o tamanho */
+  top: var(--home-logo-center-y); /* Mantém a logo abaixo da barra em telas menores */
+  transform: translate(-50%, -50%) scale(var(--home-logo-scale)); /* Centraliza e aumenta o tamanho */
   z-index: 1001; /* Garante que fique sobre outros elementos da home */
 }
 
@@ -254,12 +258,34 @@
   }
 
   .logo-container.at-home-top {
-    transform: translate(-50%, -50%) scale(2.5); 
+    --home-logo-scale: 2.5;
+    --home-logo-center-y: max(225px, 30vh);
   }
 }
 
 @media (max-width: 720px) {
   .logo-title {
     display: none; 
+  }
+}
+
+@media (max-width: 420px) {
+  .logo-container.at-home-top {
+    --home-logo-scale: 2.3;
+    --home-logo-center-y: max(205px, 28vh);
+  }
+}
+
+@media (min-width: 961px) and (max-height: 700px) {
+  .logo-container.at-home-top {
+    --home-logo-scale: 2.9;
+    --home-logo-center-y: 225px;
+  }
+}
+
+@media (max-height: 560px) {
+  .logo-container.at-home-top {
+    --home-logo-scale: 2.2;
+    --home-logo-center-y: 200px;
   }
 }
