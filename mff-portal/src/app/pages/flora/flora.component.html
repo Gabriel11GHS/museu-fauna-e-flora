@@ -1,6 +1,6 @@
 <div class="header-filtros">
   <div class="header-conteudo">
-    <h1>Explore a Flora do Instituto</h1>
+    <h1>Conheça a Flora do Instituto</h1>
     <p>Utilize os filtros para encontrar espécies por nome, família ou local.</p>
   </div>
 
@@ -19,6 +19,7 @@
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Família</mat-label>
       <mat-select 
+        panelClass="flora-select-panel"
         [value]="selectedFamilia()" 
         (selectionChange)="updateFamilia($event.value)">
         <mat-option value="">Todas as Famílias</mat-option>
@@ -32,6 +33,7 @@
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Local</mat-label>
       <mat-select 
+        panelClass="flora-select-panel"
         [value]="selectedLocal()" 
         (selectionChange)="updateLocal($event.value)">
         <mat-option value="">Todos os Locais</mat-option>
@@ -133,6 +135,13 @@
                 <mat-icon>location_on</mat-icon>
                 <span>{{ item.nomeLocal }}</span>
               </div>
+
+              @if (!item.fotoIndividuo) {
+                <div class="catalogacao-aviso">
+                  <mat-icon>photo_camera</mat-icon>
+                  <span>Foto individual em catalogação. Estamos finalizando o catálogo.</span>
+                </div>
+              }
             </mat-card-content>
             
             <mat-card-actions>
