@@ -115,7 +115,7 @@
 
 <div class="header-filtros">
   <div class="header-conteudo">
-    <h2>Explore a Fauna do Instituto</h2>
+    <h2>Conheça a Fauna do Instituto</h2>
     <p>Utilize os filtros para encontrar espécies visitantes por nome ou
       grupo.</p>
   </div>
@@ -134,6 +134,7 @@
     <mat-form-field appearance="outline" class="filtro-item">
       <mat-label>Filtrar por Grupo</mat-label>
       <mat-select
+        panelClass="fauna-select-panel"
         [value]="selectedGrupo()"
         (selectionChange)="updateGrupo($event.value)">
         <mat-option value>Todos os Grupos</mat-option>

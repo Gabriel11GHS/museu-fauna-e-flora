@@ -4,8 +4,8 @@
   --cor-secundaria: #3a8c3a;      /* Verde secundário */
   --cor-destaque: #FDB100;        /* Amarelo Ouro (Identidade da Fauna) */
   --cor-destaque-hover: #FE7D09;  /* Laranja para hover */
-
-  --cor-fundo-header: #f0f4f0;
+  
+  --cor-fundo-header: #fff4cf;
   --cor-fundo-pagina: #f8faf9;
   --cor-texto-claro: #ffffff;
   --cor-texto-escuro: #333;
@@ -16,20 +16,75 @@
   display: block;
 }
 
-/* Sobrescrita do Tema Global para a Fauna
-   Como o global (styles.css) define roxo, aqui forçamos amarelo/laranja
-   usando ::ng-deep escopado ao :host para não vazar.
-*/
-:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__border {
+/* --- Tema dos filtros da Fauna --- */
+:host ::ng-deep .filtros-container .mat-mdc-text-field-wrapper {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 8px 20px rgba(254, 125, 9, 0.1);
+}
+
+:host ::ng-deep .filtros-container .mdc-notched-outline__leading,
+:host ::ng-deep .filtros-container .mdc-notched-outline__notch,
+:host ::ng-deep .filtros-container .mdc-notched-outline__trailing {
+  border-color: rgba(39, 99, 42, 0.42) !important;
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+:host ::ng-deep .filtros-container .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+:host ::ng-deep .filtros-container .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
   border-color: var(--cor-destaque) !important;
 }
 
-:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-floating-label {
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: var(--cor-destaque-hover) !important;
+  border-width: 2px;
+}
+
+:host ::ng-deep .filtros-container .mdc-floating-label {
+  color: var(--cor-principal) !important;
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-floating-label {
   color: var(--cor-destaque-hover) !important;
 }
 
-:host ::ng-deep .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+:host ::ng-deep .filtros-container .mat-mdc-input-element,
+:host ::ng-deep .filtros-container .mat-mdc-select-value {
+  color: var(--cor-texto-escuro);
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-input-element::placeholder {
+  color: rgba(39, 99, 42, 0.58);
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-form-field-icon-suffix,
+:host ::ng-deep .filtros-container .mat-mdc-select-arrow {
   color: var(--cor-destaque-hover) !important;
+}
+
+::ng-deep .fauna-select-panel {
+  --fauna-cor-principal: #27632a;
+  --fauna-cor-destaque: #FDB100;
+  --fauna-cor-destaque-hover: #FE7D09;
+
+  border: 1px solid rgba(254, 125, 9, 0.2);
+  border-radius: 12px !important;
+  box-shadow: 0 16px 36px rgba(254, 125, 9, 0.18);
+}
+
+::ng-deep .fauna-select-panel .mat-mdc-option {
+  color: #333;
+}
+
+::ng-deep .fauna-select-panel .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background: rgba(253, 177, 0, 0.14);
+}
+
+::ng-deep .fauna-select-panel .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+  color: var(--fauna-cor-destaque-hover) !important;
+  font-weight: 700;
 }
 
 /* --- Header e Filtros --- */
@@ -62,7 +117,7 @@
 
 .header-conteudo p {
   font-size: 1.1rem;
-  color: #555;
+  color: var(--cor-destaque-hover);
   margin: 0.5rem 0 2rem 0;
 }
 

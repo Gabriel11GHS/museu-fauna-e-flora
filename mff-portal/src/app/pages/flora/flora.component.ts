@@ -130,12 +130,14 @@ export class FloraComponent implements OnInit {
       data = data.filter(p => !!p.trilhaAudio);
     }
 
-    // Ordenação padrão: Com foto primeiro
-    return [...data].sort((a, b) => {
-      const aHasPhoto = !!a.fotoIndividuo || !!a.fotoTaxonomia;
-      const bHasPhoto = !!b.fotoIndividuo || !!b.fotoTaxonomia;
-      return aHasPhoto === bHasPhoto ? 0 : aHasPhoto ? -1 : 1;
-    });
+    const getPhotoPriority = (planta: Planta) => {
+      if (planta.fotoIndividuo) return 0;
+      if (planta.fotoTaxonomia) return 1;
+      return 2;
+    };
+
+    // Ordenação padrão: foto do indivíduo > foto da espécie > sem foto
+    return [...data].sort((a, b) => getPhotoPriority(a) - getPhotoPriority(b));
   });
 
   // --- LÓGICA DO MAPA ---

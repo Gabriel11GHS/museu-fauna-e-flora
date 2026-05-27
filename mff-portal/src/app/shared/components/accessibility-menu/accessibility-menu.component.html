@@ -1,0 +1,127 @@
+<button
+  type="button"
+  class="accessibility-trigger"
+  [attr.aria-label]="triggerLabel()"
+  [attr.aria-expanded]="isOpen()"
+  aria-controls="mff-accessibility-panel"
+  (click)="toggleMenu()"
+>
+  <mat-icon aria-hidden="true">accessibility_new</mat-icon>
+</button>
+
+@if (isOpen()) {
+  <section
+    id="mff-accessibility-panel"
+    class="accessibility-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="mff-accessibility-title"
+  >
+    <div class="panel-header">
+      <h2 id="mff-accessibility-title">Acessibilidade</h2>
+      <button
+        type="button"
+        class="panel-close"
+        aria-label="Fechar menu de acessibilidade"
+        (click)="closeMenu()"
+      >
+        <mat-icon aria-hidden="true">close</mat-icon>
+      </button>
+    </div>
+
+    <div class="accessibility-actions">
+      <button
+        type="button"
+        class="action-button"
+        [class.is-active]="state().highContrast"
+        [attr.aria-pressed]="state().highContrast"
+        (click)="toggleHighContrast()"
+      >
+        <mat-icon aria-hidden="true">contrast</mat-icon>
+        <span>Alto contraste</span>
+      </button>
+
+      <button
+        type="button"
+        class="action-button"
+        [class.is-active]="state().darkMode"
+        [attr.aria-pressed]="state().darkMode"
+        (click)="toggleDarkMode()"
+      >
+        <mat-icon aria-hidden="true">dark_mode</mat-icon>
+        <span>Modo escuro</span>
+      </button>
+
+      <button
+        type="button"
+        class="action-button"
+        aria-label="Aumentar tamanho da fonte"
+        (click)="increaseFont()"
+      >
+        <mat-icon aria-hidden="true">text_increase</mat-icon>
+        <span>Aumentar fonte</span>
+      </button>
+
+      <button
+        type="button"
+        class="action-button"
+        aria-label="Restaurar fonte original"
+        (click)="resetFont()"
+      >
+        <mat-icon aria-hidden="true">text_fields</mat-icon>
+        <span>Fonte original</span>
+      </button>
+
+      <button
+        type="button"
+        class="action-button"
+        aria-label="Diminuir tamanho da fonte"
+        (click)="decreaseFont()"
+      >
+        <mat-icon aria-hidden="true">text_decrease</mat-icon>
+        <span>Diminuir fonte</span>
+      </button>
+
+      <button
+        type="button"
+        class="action-button"
+        [class.is-active]="state().marker"
+        [attr.aria-pressed]="state().marker"
+        (click)="toggleMarker()"
+      >
+        <mat-icon aria-hidden="true">format_color_text</mat-icon>
+        <span>Marcador</span>
+      </button>
+
+      <button
+        type="button"
+        class="action-button"
+        [class.is-active]="state().guide"
+        [attr.aria-pressed]="state().guide"
+        (click)="toggleGuide()"
+      >
+        <mat-icon aria-hidden="true">horizontal_rule</mat-icon>
+        <span>Linha guia</span>
+      </button>
+
+      <button
+        type="button"
+        class="action-button reset-button"
+        (click)="resetPreferences()"
+      >
+        <mat-icon aria-hidden="true">restart_alt</mat-icon>
+        <span>Redefinir</span>
+      </button>
+    </div>
+
+    <p class="font-scale" aria-live="polite">Fonte: {{ fontScaleLabel() }}</p>
+  </section>
+}
+
+@if (state().guide) {
+  <div
+    class="accessibility-guide"
+    [style.top.px]="guideY()"
+    aria-hidden="true"
+  ></div>
+}

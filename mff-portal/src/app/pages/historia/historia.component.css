@@ -185,6 +185,78 @@
   background-color: #e0e0e0; /* Placeholder */
 }
 
+:host-context(body.mff-dark-mode) {
+  --cor-principal: #9ee2a0;
+  --cor-destaque: #d98cc8;
+  --cor-destaque-claro: rgba(217, 140, 200, 0.16);
+  --cor-fundo-pagina: #111711;
+  --cor-texto-escuro: #e8f1e7;
+  --cor-texto-claro: #c4d2c1;
+
+  background-color: #111711;
+}
+
+:host-context(body.mff-dark-mode) .pagina-container {
+  background-color: #111711;
+}
+
+:host-context(body.mff-dark-mode) .pagina-header h1 {
+  color: #dcefd8;
+}
+
+:host-context(body.mff-dark-mode) .pagina-header p {
+  color: #c4d2c1;
+}
+
+:host-context(body.mff-dark-mode) .timeline::after {
+  background-color: #d98cc8;
+  opacity: 0.55;
+}
+
+:host-context(body.mff-dark-mode) .timeline-container::after {
+  background-color: #172019;
+  border-color: #d98cc8;
+  box-shadow: 0 0 0 3px rgba(217, 140, 200, 0.18);
+}
+
+:host-context(body.mff-dark-mode) .timeline-container:hover::after {
+  background-color: #d98cc8;
+}
+
+:host-context(body.mff-dark-mode) .esquerda::before {
+  border-color: transparent transparent transparent #172019;
+}
+
+:host-context(body.mff-dark-mode) .direita::before {
+  border-color: transparent #172019 transparent transparent;
+}
+
+:host-context(body.mff-dark-mode) .timeline-content {
+  color: #e8f1e7;
+  background-color: #172019;
+  border-color: rgba(158, 226, 160, 0.18);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+:host-context(body.mff-dark-mode) .timeline-content-link:hover .timeline-content,
+:host-context(body.mff-dark-mode) .timeline-content:hover {
+  border-color: rgba(217, 140, 200, 0.45);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
+}
+
+:host-context(body.mff-dark-mode) .timeline-content h2 {
+  color: #dcefd8;
+}
+
+:host-context(body.mff-dark-mode) .timeline-content p {
+  color: #c4d2c1;
+}
+
+:host-context(body.mff-dark-mode) .timeline-content .data {
+  color: #f1b7e4;
+  background-color: rgba(217, 140, 200, 0.16);
+}
+
 /* --- Responsividade (Mobile) --- */
 @media screen and (max-width: 768px) {
   /* Move a linha para a esquerda */
@@ -207,6 +279,11 @@
     border: medium solid white;
     border-width: 10px 10px 10px 0;
     border-color: transparent white transparent transparent;
+  }
+
+  :host-context(body.mff-dark-mode) .timeline-container.esquerda::before,
+  :host-context(body.mff-dark-mode) .timeline-container.direita::before {
+    border-color: transparent #172019 transparent transparent;
   }
 
   /* Ajuste das bolinhas para ficarem todas na linha esquerda */

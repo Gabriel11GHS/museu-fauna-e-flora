@@ -11,7 +11,7 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { forkJoin, of } from 'rxjs';
@@ -85,8 +85,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private router = inject(Router);
   private ngZone = inject(NgZone);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly document = inject(DOCUMENT);
   private readonly liveAvailabilityService = inject(LiveAvailabilityService);
   readonly liveStatus = this.liveAvailabilityService.status;
+  private mapaThemeObserver?: MutationObserver;
 
   // --- VIEW CHILDREN ---
   @ViewChild('heroCarousel') heroCarousel!: SlickCarouselComponent;
@@ -255,7 +257,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     // Inicializa o carrossel sem setTimeout, apenas atualizando o sinal
     this.showCarousel.set(true);
-
+    this.observarTemaDoMapa();
+    
     const objectElement = this.svgObject?.nativeElement;
 
     if (objectElement) {
@@ -270,6 +273,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.headerStateService.setIsHomePage(false);
     this.svgObject?.nativeElement.removeEventListener('load', this.onMapaSvgLoad);
+    this.mapaThemeObserver?.disconnect();
     this.limparListenersMapaLocais();
   }
 
@@ -380,6 +384,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     const style = svgDocument.createElementNS('http://www.w3.org/2000/svg', 'style') as SVGStyleElement;
 
     style.textContent = `
+      svg {
+        background: transparent;
+      }
+
       [data-local-id] {
         cursor: pointer;
         outline: none;
@@ -417,10 +425,61 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         opacity: 0.98;
         transform: scale(1.035);
       }
+
+      svg.mff-map-dark #rua path {
+        fill: #dce6d8 !important;
+        opacity: 0.72;
+      }
+
+      svg.mff-map-dark #caminhaveis path {
+        fill: #49564a !important;
+      }
+
+      svg.mff-map-dark #predios path {
+        fill: #b9651d !important;
+      }
+
+      svg.mff-map-dark [data-local-id] [fill="#286D2C"] {
+        fill: #4f9655 !important;
+      }
+
+      svg.mff-map-dark [id$=" - linha"] {
+        stroke: #d98cc8 !important;
+      }
+
+      svg.mff-map-dark [data-local-id]:hover [fill="#286D2C"],
+      svg.mff-map-dark [data-local-id]:focus [fill="#286D2C"],
+      svg.mff-map-dark [data-local-id].mapa-local--ativo [fill="#286D2C"] {
+        fill: #d98cc8 !important;
+        stroke: #f1b7e4 !important;
+        filter: drop-shadow(0 10px 14px rgba(217, 140, 200, 0.34));
+      }
+
+      svg.mff-map-high-contrast #rua path,
+      svg.mff-map-high-contrast #caminhaveis path,
+      svg.mff-map-high-contrast #predios path {
+        fill: #ffffff !important;
+      }
+
+      svg.mff-map-high-contrast [data-local-id] [fill="#286D2C"] {
+        fill: #00ff66 !important;
+      }
+
+      svg.mff-map-high-contrast [id$=" - linha"] {
+        stroke: #ffff00 !important;
+      }
+
+      svg.mff-map-high-contrast [data-local-id]:hover [fill="#286D2C"],
+      svg.mff-map-high-contrast [data-local-id]:focus [fill="#286D2C"],
+      svg.mff-map-high-contrast [data-local-id].mapa-local--ativo [fill="#286D2C"] {
+        fill: #ffff00 !important;
+        stroke: #ffffff !important;
+      }
     `;
 
     svg?.appendChild(style);
     this.mapaSvgStyle = style;
+    this.atualizarTemaMapaSvg();
   }
 
   private adicionarListenerMapa(elemento: Element, tipo: string, listener: EventListener): void {
@@ -453,6 +512,34 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.mapaSvgListeners = [];
     this.mapaSvgStyle?.remove();
     this.mapaSvgStyle = undefined;
+  }
+
+  private observarTemaDoMapa(): void {
+    const defaultView = this.document.defaultView;
+
+    if (!defaultView || this.mapaThemeObserver) {
+      return;
+    }
+
+    this.mapaThemeObserver = new defaultView.MutationObserver(() => {
+      this.atualizarTemaMapaSvg();
+    });
+
+    this.mapaThemeObserver.observe(this.document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+  }
+
+  private atualizarTemaMapaSvg(): void {
+    const svg = this.svgObject?.nativeElement.contentDocument?.querySelector('svg');
+
+    if (!svg) {
+      return;
+    }
+
+    svg.classList.toggle('mff-map-dark', this.document.body.classList.contains('mff-dark-mode'));
+    svg.classList.toggle('mff-map-high-contrast', this.document.body.classList.contains('mff-high-contrast'));
   }
 
   private atualizarAreaAtivaMapa(): void {

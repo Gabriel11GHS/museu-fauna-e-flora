@@ -3,7 +3,7 @@
   --cor-principal: #27632a;
   --cor-secundaria: #3a8c3a;
   --cor-destaque: #a5038a;
-  --cor-fundo-header: #f0f4f0;
+  --cor-fundo-header: #fae8e0;
   --cor-fundo-pagina: #f8faf9;
   --cor-texto-claro: #ffffff;
   --cor-texto-escuro: #333;
@@ -12,6 +12,118 @@
   --shadow-elevado: 0 8px 25px rgba(0, 0, 0, 0.12);
 
   display: block; /* Boa prática para componentes */
+}
+
+/* --- Tema dos filtros da Flora --- */
+:host ::ng-deep .filtros-container .mat-mdc-text-field-wrapper {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 8px 20px rgba(39, 99, 42, 0.08);
+}
+
+:host ::ng-deep .filtros-container .mdc-notched-outline__leading,
+:host ::ng-deep .filtros-container .mdc-notched-outline__notch,
+:host ::ng-deep .filtros-container .mdc-notched-outline__trailing {
+  border-color: rgba(39, 99, 42, 0.42) !important;
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+:host ::ng-deep .filtros-container .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+:host ::ng-deep .filtros-container .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: var(--cor-secundaria) !important;
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: var(--cor-destaque) !important;
+  border-width: 2px;
+}
+
+:host ::ng-deep .filtros-container .mdc-floating-label {
+  color: var(--cor-principal) !important;
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: var(--cor-destaque) !important;
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-input-element,
+:host ::ng-deep .filtros-container .mat-mdc-select-value {
+  color: var(--cor-texto-escuro);
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-input-element::placeholder {
+  color: rgba(39, 99, 42, 0.58);
+}
+
+:host ::ng-deep .filtros-container .mat-mdc-form-field-icon-suffix,
+:host ::ng-deep .filtros-container .mat-mdc-select-arrow {
+  color: var(--cor-secundaria) !important;
+}
+
+:host ::ng-deep .audio-toggle.mat-mdc-slide-toggle {
+  --mdc-switch-selected-handle-color: var(--cor-destaque);
+  --mdc-switch-selected-hover-handle-color: var(--cor-destaque);
+  --mdc-switch-selected-focus-handle-color: var(--cor-destaque);
+  --mdc-switch-selected-pressed-handle-color: var(--cor-destaque);
+  --mdc-switch-unselected-handle-color: var(--cor-destaque);
+  --mdc-switch-unselected-hover-handle-color: var(--cor-destaque);
+  --mdc-switch-unselected-focus-handle-color: var(--cor-destaque);
+  --mdc-switch-unselected-pressed-handle-color: var(--cor-destaque);
+  --mdc-switch-selected-track-color: rgba(165, 3, 138, 0.42);
+  --mdc-switch-selected-hover-track-color: rgba(165, 3, 138, 0.5);
+  --mdc-switch-selected-focus-track-color: rgba(165, 3, 138, 0.5);
+  --mdc-switch-selected-pressed-track-color: rgba(165, 3, 138, 0.56);
+
+  min-height: 56px;
+  padding: 0;
+}
+
+:host ::ng-deep .audio-toggle .mdc-label {
+  color: var(--cor-principal);
+  font-weight: 600;
+}
+
+:host ::ng-deep .audio-toggle .mdc-switch__handle,
+:host ::ng-deep .audio-toggle .mdc-switch__handle::before,
+:host ::ng-deep .audio-toggle .mdc-switch__handle::after {
+  background-color: var(--cor-destaque) !important;
+}
+
+:host ::ng-deep .audio-toggle.mat-mdc-slide-toggle-checked .mdc-switch__track::after {
+  background-color: var(--cor-destaque) !important;
+  opacity: 0.45;
+}
+
+:host ::ng-deep .audio-toggle.mat-mdc-slide-toggle-checked .mat-mdc-slide-toggle-ripple .mat-ripple-element {
+  background-color: var(--cor-destaque) !important;
+}
+
+:host ::ng-deep .audio-toggle.mat-mdc-slide-toggle-disabled {
+  opacity: 0.62;
+}
+
+::ng-deep .flora-select-panel {
+  --flora-cor-principal: #27632a;
+  --flora-cor-destaque: #a5038a;
+
+  border: 1px solid rgba(39, 99, 42, 0.18);
+  border-radius: 12px !important;
+  box-shadow: 0 16px 36px rgba(39, 99, 42, 0.18);
+}
+
+::ng-deep .flora-select-panel .mat-mdc-option {
+  color: #333;
+}
+
+::ng-deep .flora-select-panel .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
+  background: rgba(58, 140, 58, 0.1);
+}
+
+::ng-deep .flora-select-panel .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text {
+  color: var(--flora-cor-destaque) !important;
+  font-weight: 700;
 }
 
 /* --- Header e Filtros --- */
@@ -30,7 +142,7 @@
 
 .header-conteudo p {
   font-size: 1.2rem;
-  color: var(--cor-texto-escuro);
+  color: var(--cor-destaque);
   margin: 0.5rem 0 2.5rem 0;
 }
 
@@ -40,6 +152,7 @@
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
+  color: var(--cor-destaque);
 }
 
 .filtro-item {
@@ -185,6 +298,28 @@ mat-card-content {
   font-size: 20px;
   width: 20px;
   height: 20px;
+}
+
+.catalogacao-aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(165, 3, 138, 0.16);
+  border-radius: 10px;
+  background: rgba(250, 232, 224, 0.72);
+  color: var(--cor-principal);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.catalogacao-aviso mat-icon {
+  flex: 0 0 auto;
+  color: var(--cor-destaque);
+  font-size: 19px;
+  width: 19px;
+  height: 19px;
 }
 
 mat-card-actions {

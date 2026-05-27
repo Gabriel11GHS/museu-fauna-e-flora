@@ -26,9 +26,14 @@
 
 /* --- Seção Hero --- */
 .hero-section {
+  --carousel-dots-bottom: 20px;
+  --carousel-dots-size: 20px;
+  --carousel-play-gap: 10px;
+
   position: relative;
   height: 70vh;
-  min-height: 450px;
+  min-height: 540px;
+  box-sizing: border-box;
   color: white;
   display: flex;
   flex-direction: column;
@@ -90,7 +95,7 @@
   z-index: 3;
   padding: 1rem;
   max-width: 800px;
-  margin-top: 10rem;
+  margin-top: 12rem;
 }
 
 .hero-titulo {
@@ -119,9 +124,9 @@
 /* --- Botão Play/Pause --- */
 .carousel-play-pause-btn {
   position: absolute;
-  bottom: 50px; /* Ajustado para ficar acima dos dots (que estão a 20px) */
-  left: 50%;    /* Move para o centro horizontal */
-  transform: translateX(-50%); /* Corrige o ponto de ancoragem para o centro exato */
+  left: 50%;
+  bottom: calc(var(--carousel-dots-bottom) + var(--carousel-dots-size) + var(--carousel-play-gap));
+  transform: translateX(-50%);
   z-index: 25;  /* Garante que fique acima dos dots e da imagem */
 
   background-color: rgba(0, 0, 0, 0.5);
@@ -157,7 +162,7 @@
 }
 
 :host ::ng-deep .hero-carousel .slick-dots {
-  bottom: 20px;
+  bottom: var(--carousel-dots-bottom);
   z-index: 20;
 }
 
@@ -655,11 +660,12 @@
 @media (max-width: 768px) {
   .hero-section {
     height: auto;
+    min-height: 520px;
     padding: 100px 0;
   }
 
   .hero-content {
-  margin-top: 12rem;
+    margin-top: 11rem;
   }
 
   .vozes-container {
@@ -668,7 +674,7 @@
   }
 
   .carousel-play-pause-btn {
-    bottom: 50px;
+    left: 50%;
   }
 
   .home-mapa-locais {
