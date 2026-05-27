@@ -363,7 +363,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.adicionarListenerMapa(elemento, 'mouseleave', () => this.executarAcaoMapa(() => this.limparLocalAtivo()));
       this.adicionarListenerMapa(elemento, 'focus', () => this.executarAcaoMapa(() => this.definirLocalAtivo(id)));
       this.adicionarListenerMapa(elemento, 'blur', () => this.executarAcaoMapa(() => this.limparLocalAtivo()));
-      this.adicionarListenerMapa(elemento, 'click', () => this.executarAcaoMapa(() => this.selecionarLocal(id)));
+      this.adicionarListenerMapa(elemento, 'pointerdown', (event: Event) => this.selecionarLocalPorInteracao(id, event));
+      this.adicionarListenerMapa(elemento, 'click', (event: Event) => this.selecionarLocalPorInteracao(id, event));
       this.adicionarListenerMapa(elemento, 'keydown', (event: Event) => {
         const keyboardEvent = event as KeyboardEvent;
 
@@ -425,6 +426,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private adicionarListenerMapa(elemento: Element, tipo: string, listener: EventListener): void {
     elemento.addEventListener(tipo, listener);
     this.mapaSvgListeners.push({ elemento, tipo, listener });
+  }
+
+  private selecionarLocalPorInteracao(id: string, event: Event): void {
+    const pointerEvent = event as PointerEvent;
+
+    if (event.type === 'pointerdown' && pointerEvent.pointerType === 'mouse' && pointerEvent.button !== 0) {
+      return;
+    }
+
+    event.preventDefault();
+    this.executarAcaoMapa(() => this.selecionarLocal(id));
   }
 
   private executarAcaoMapa(acao: () => void): void {
