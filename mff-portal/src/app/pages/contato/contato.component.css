@@ -1,191 +1,291 @@
-/* --- Estilos Gerais --- */
+:host {
+  --cor-principal: #27632a;
+  --cor-principal-escura: #1e4a20;
+  --cor-secundaria: #3a8c3a;
+  --cor-destaque: #a5038a;
+  --cor-fundo-pagina: #f8faf9;
+  --cor-fundo-card: #ffffff;
+  --cor-fundo-suave: #eef7ef;
+  --cor-texto: #333333;
+  --cor-texto-suave: #5f6f60;
+  --cor-borda: rgba(39, 99, 42, 0.16);
+  --borda-radius: 16px;
+  --shadow-suave: 0 12px 30px rgba(39, 99, 42, 0.09);
+  --card-background:
+    linear-gradient(180deg, rgba(238, 247, 239, 0.78), rgba(255, 255, 255, 0.96) 42%),
+    var(--cor-fundo-card);
+  --icone-fundo: rgba(165, 3, 138, 0.1);
+  --mapa-borda: rgba(39, 99, 42, 0.24);
+  --mapa-realce-interno: rgba(255, 255, 255, 0.6);
+
+  display: block;
+  min-height: 100vh;
+  background: var(--cor-fundo-pagina);
+}
+
 .pagina-container {
-  max-width: 1400px;
+  width: min(100%, 1180px);
   margin: 0 auto;
-  padding: 2rem;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
 }
 
 .pagina-header {
+  max-width: 720px;
+  margin: 0 auto clamp(2rem, 5vw, 3.5rem);
   text-align: center;
-  margin-bottom: 4rem;
+}
+
+.pagina-eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--cor-destaque);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 .pagina-header h1 {
-  font-size: 2.8rem;
+  margin: 0;
+  color: var(--cor-principal);
+  font-size: clamp(2rem, 5vw, 2.8rem);
   font-weight: 700;
-  color: #27632a; 
+  line-height: 1.1;
 }
 
-.pagina-header p {
-  font-size: 1.1rem;
-  color: #666;
-  max-width: 600px;
-  margin: 0.5rem auto 0;
+.pagina-header p:not(.pagina-eyebrow) {
+  margin: 0.9rem auto 0;
+  color: var(--cor-texto-suave);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.65;
 }
 
-/* --- Layout Principal --- */
 .conteudo-contato {
-  display: flex;
-  flex-wrap: wrap; 
-  gap: 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: stretch;
 }
 
-.info-coluna, .mapa-coluna {
-  flex: 1; 
-  min-width: 320px; 
-}
-
-/* --- Card de Informações --- */
 .info-card {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 30px;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--borda-radius);
+  background: var(--card-background);
+  box-shadow: var(--shadow-suave);
 }
 
-.info-card h2 {
-  margin-top: 0;
-  font-size: 1.8rem;
-  color: #27632a;
+.secao-cabecalho {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
 }
 
-.info-card p {
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 25px;
+.secao-cabecalho > mat-icon {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border-radius: 14px;
+  color: var(--cor-destaque);
+  background: var(--icone-fundo);
+  font-size: 24px;
+}
+
+.secao-cabecalho h2 {
+  margin: 0;
+  color: var(--cor-principal);
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.secao-cabecalho p {
+  margin: 0.65rem 0 0;
+  color: var(--cor-texto-suave);
+  line-height: 1.65;
+}
+
+.acao-button {
+  align-self: flex-start;
+  min-height: 48px;
+  margin-top: 1.5rem;
+  padding: 0 1.25rem !important;
+  border-radius: 8px !important;
+  color: var(--cor-destaque) !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  --mdc-outlined-button-label-text-color: var(--cor-destaque);
+  --mdc-outlined-button-outline-color: rgba(165, 3, 138, 0.64);
+  --mdc-outlined-button-hover-label-text-color: var(--cor-destaque);
+  --mdc-outlined-button-hover-outline-color: var(--cor-destaque);
+}
+
+.acao-button:hover {
+  background: rgba(165, 3, 138, 0.08);
+}
+
+.acao-button mat-icon {
+  margin-right: 0.45rem;
+}
+
+mat-divider {
+  margin: 1.75rem 0;
+  border-top-color: var(--cor-borda);
+}
+
+.contato-card h3 {
+  margin: 0 0 1rem;
+  color: var(--cor-principal);
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .lista-contato {
-  list-style: none;
+  display: grid;
+  gap: 1rem;
   padding: 0;
-  margin-top: 25px;
+  margin: 0;
+  list-style: none;
 }
 
 .lista-contato li {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.85rem;
   align-items: flex-start;
-  margin-bottom: 20px;
-  font-size: 1rem;
+  color: var(--cor-texto);
+  line-height: 1.55;
 }
 
 .lista-contato mat-icon {
-  color: #3a8c3a;
-  margin-right: 15px;
-  margin-top: 3px;
+  color: var(--cor-secundaria);
+  margin-top: 0.15rem;
+}
+
+.lista-contato strong,
+.lista-contato a {
+  display: block;
+}
+
+.lista-contato strong {
+  color: var(--cor-principal-escura);
+  margin-bottom: 0.15rem;
 }
 
 .lista-contato a {
-  color: #3a8c3a;
+  width: fit-content;
+  color: var(--cor-destaque);
+  font-weight: 700;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
+  overflow-wrap: anywhere;
 }
 
 .lista-contato a:hover {
   text-decoration: underline;
-  color: #27632a;
 }
 
-/* --- Seção de Redes Sociais --- */
-.redes-sociais-titulo {
-  font-size: 1.4rem;
-  color: #27632a;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  font-weight: 500;
+.mapa-card {
+  gap: 1.5rem;
 }
 
-.redes-sociais-container {
-  display: flex;
-  gap: 10px; /* Espaço entre os ícones */
-}
-
-.redes-sociais-container a[mat-icon-button] {
-  color: #3a8c3a; /* Cor principal dos ícones */
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.redes-sociais-container a[mat-icon-button]:hover {
-  color: #27632a; /* Cor mais escura no hover */
-  transform: scale(1.1); /* Efeito de zoom sutil */
-}
-
-/* --- Mapa --- */
 .mapa-wrapper {
+  position: relative;
   width: 100%;
-  height: 500px; 
-  border-radius: 12px;
-  overflow: hidden; 
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ddd;
+  min-height: clamp(280px, 48vw, 520px);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border: 1px solid var(--mapa-borda);
+  border-radius: 14px;
+  background: var(--cor-fundo-suave);
+  box-shadow: inset 0 0 0 1px var(--mapa-realce-interno);
 }
 
-/* --- Seções de Ação (Agendamento e Google) --- */
-.acao-button {
-width: 100%;
-max-width: 320px;
-padding: 18px 0 !important; 
-font-size: 1rem !important;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-border-radius: 5px;
+.mapa-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.acao-button mat-icon {
-margin-right: 8px;
+:host-context(body.mff-dark-mode),
+:host-context(body.mff-high-contrast) {
+  --cor-fundo-pagina: var(--mff-access-bg);
+  --cor-fundo-card: var(--mff-access-surface);
+  --cor-fundo-suave: var(--mff-access-surface-soft);
+  --cor-texto: var(--mff-access-text);
+  --cor-texto-suave: var(--mff-access-muted);
+  --cor-borda: var(--mff-access-border);
+  --shadow-suave: none;
+  --card-background: var(--cor-fundo-card);
+  --icone-fundo: var(--cor-fundo-suave);
+  --mapa-borda: var(--mff-access-border);
+  --mapa-realce-interno: transparent;
 }
 
-/* Estilo para o botão primário ("Agendar Visita") */
-.acao-secao {
-  text-align: center; /* Adicione esta linha */
+:host-context(body.mff-dark-mode) .pagina-header h1,
+:host-context(body.mff-high-contrast) .pagina-header h1,
+:host-context(body.mff-dark-mode) .secao-cabecalho h2,
+:host-context(body.mff-high-contrast) .secao-cabecalho h2,
+:host-context(body.mff-dark-mode) .contato-card h3,
+:host-context(body.mff-high-contrast) .contato-card h3,
+:host-context(body.mff-dark-mode) .lista-contato strong,
+:host-context(body.mff-high-contrast) .lista-contato strong {
+  color: var(--mff-access-text);
 }
 
-.acao-secao button.mat-raised-button.mat-primary {
-background-color: #E91E63; 
-color: white; 
+:host-context(body.mff-dark-mode) .pagina-eyebrow,
+:host-context(body.mff-high-contrast) .pagina-eyebrow,
+:host-context(body.mff-dark-mode) .lista-contato a,
+:host-context(body.mff-high-contrast) .lista-contato a,
+:host-context(body.mff-dark-mode) .lista-contato mat-icon,
+:host-context(body.mff-high-contrast) .lista-contato mat-icon {
+  color: var(--mff-access-link);
 }
 
-.acao-secao button.mat-raised-button.mat-primary:hover {
-background-color: #C2185B; 
+:host-context(body.mff-dark-mode) .acao-button,
+:host-context(body.mff-high-contrast) .acao-button {
+  color: var(--mff-access-link) !important;
+  --mdc-outlined-button-label-text-color: var(--mff-access-link);
+  --mdc-outlined-button-outline-color: var(--mff-access-link);
 }
 
-/* Estilo para o botão de contorno ("Conectar com Google") */
-.acao-secao button.mat-stroked-button.mat-primary {
-color: #E91E63; 
-border-color: #E91E63;
+@media (max-width: 900px) {
+  .conteudo-contato {
+    grid-template-columns: 1fr;
+  }
 }
 
-.acao-secao button.mat-stroked-button.mat-primary:hover {
-background-color: #F8BBD0;
-color: #C2185B; 
-border-color: #C2185B; 
-}
+@media (max-width: 600px) {
+  .pagina-container {
+    padding-top: 2rem;
+  }
 
-.google-button .google-icon {
-width: 20px;
-height: 20px;
-}
-
-/* --- Seção de Redes Sociais --- */
-.redes-sociais-titulo {
-  font-size: 1.4rem;
-  color: #27632a;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  font-weight: 500;
-  text-align: center;
-}
-
-.redes-sociais-container {
-  display: flex;
-  gap: 10px;
-  justify-content: center; 
-}
-
-@media (max-width: 992px) {
   .info-card {
-    height: auto; 
+    border-radius: 12px;
+  }
+
+  .secao-cabecalho {
+    gap: 0.85rem;
+  }
+
+  .secao-cabecalho > mat-icon {
+    width: 42px;
+    height: 42px;
+    padding: 9px;
+  }
+
+  .acao-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mapa-wrapper {
+    min-height: 300px;
+    aspect-ratio: 4 / 3;
   }
 }
