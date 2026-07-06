@@ -4,29 +4,60 @@
     <p>Conheça as pessoas que fazem e fizeram parte da história do Museu de Fauna e Flora.</p>
   </header>
 
-  @for (secao of secoesEquipe(); track secao.titulo) {
-    <section class="equipe-section">
-      <h2 class="section-titulo">{{ secao.titulo }}</h2>
-
-      <div class="cards-container">
-        @for (membro of secao.membros; track membro.nome) {
-          <div class="membro-card">
-            <!--<img
-              [src]="membro.imagemUrl || 'assets/placeholder-avatar.png'"
-              [alt]="'Foto de ' + membro.nome"
-              class="membro-imagem"
-              loading="lazy"> -->
-
-            <div class="membro-info">
-              <h3 class="membro-nome">{{ membro.nome }}</h3>
-
-              @if (membro.funcao) {
-                <p class="membro-funcao">{{ membro.funcao }}</p>
-              }
-            </div>
+  <mat-tab-group
+    class="equipe-tabs"
+    animationDuration="0ms"
+    [mat-stretch-tabs]="false"
+    mat-align-tabs="center">
+    @for (secao of secoesEquipe(); track secao.titulo) {
+      <mat-tab [label]="secao.titulo">
+        <section class="equipe-section">
+          <div class="section-header">
+            <h2 class="section-titulo">{{ secao.titulo }}</h2>
+            <span class="section-contador">{{ secao.membros.length }} integrantes</span>
           </div>
-        }
-      </div>
-    </section>
-  }
+          
+          <div class="cards-container">
+            @for (membro of secao.membros; track membro.nome) {
+              <div class="membro-card">
+                <div class="membro-avatar">
+                  @if (membro.imagemUrl) {
+                    <img 
+                      [src]="membro.imagemUrl" 
+                      [alt]="'Foto de ' + membro.nome" 
+                      class="membro-imagem"
+                      loading="lazy">
+                  } @else {
+                    <div class="membro-iniciais" aria-hidden="true">
+                      {{ getIniciais(membro.nome) }}
+                    </div>
+                  }
+                </div>
+
+                <div class="membro-info">
+                  <h3 class="membro-nome">
+                    @if (membro.linkedinUrl) {
+                      <a
+                        [href]="membro.linkedinUrl"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        [attr.aria-label]="'Abrir perfil de ' + membro.nome + ' no LinkedIn'">
+                        {{ membro.nome }}
+                      </a>
+                    } @else {
+                      <span>{{ membro.nome }}</span>
+                    }
+                  </h3>
+                  
+                  @if (membro.funcao) {
+                    <p class="membro-funcao">{{ membro.funcao }}</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      </mat-tab>
+    }
+  </mat-tab-group>
 </div>

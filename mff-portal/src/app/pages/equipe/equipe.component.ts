@@ -1,11 +1,13 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // Interfaces para tipagem forte
 export interface MembroEquipe {
   nome: string;
   funcao?: string;
   imagemUrl?: string;
+  linkedinUrl?: string;
 }
 
 export interface SecaoEquipe {
@@ -16,7 +18,7 @@ export interface SecaoEquipe {
 @Component({
   selector: 'app-equipe',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatTabsModule],
   templateUrl: './equipe.component.html',
   styleUrls: ['./equipe.component.css'],
   // MELHORIA: Performance otimizada com OnPush
@@ -94,4 +96,13 @@ export class EquipeComponent {
       ]
     }
   ]);
+
+  public getIniciais(nome: string): string {
+    return nome
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((parte) => parte.charAt(0).toUpperCase())
+      .join('');
+  }
 }
