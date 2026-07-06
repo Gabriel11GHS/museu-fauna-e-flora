@@ -29,7 +29,7 @@
 
 .pagina-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .pagina-header h1 {
@@ -47,19 +47,61 @@
   line-height: 1.6;
 }
 
+/* --- Abas de Equipe --- */
+.equipe-tabs {
+  display: block;
+}
+
+:host ::ng-deep .equipe-tabs .mat-mdc-tab-header {
+  border-bottom: 1px solid rgba(39, 99, 42, 0.16);
+}
+
+:host ::ng-deep .equipe-tabs .mat-mdc-tab {
+  min-width: 150px;
+  padding: 0 22px;
+}
+
+:host ::ng-deep .equipe-tabs .mat-mdc-tab .mdc-tab__text-label {
+  color: var(--cor-texto-claro);
+  font-weight: 600;
+}
+
+:host ::ng-deep .equipe-tabs .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: var(--cor-principal);
+}
+
+:host ::ng-deep .equipe-tabs .mat-mdc-tab .mdc-tab-indicator__content--underline {
+  border-color: var(--cor-secundaria);
+}
+
 /* --- Seções de Equipe --- */
 .equipe-section {
-  margin-bottom: 4rem;
+  padding-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid var(--cor-secundaria);
+  padding-bottom: 10px;
 }
 
 .section-titulo {
   font-size: 1.8rem;
   font-weight: 500;
   color: var(--cor-texto-escuro);
-  border-bottom: 3px solid var(--cor-secundaria);
-  padding-bottom: 10px;
-  margin-bottom: 2rem;
-  display: inline-block; /* A linha fica apenas sob o texto */
+  margin: 0;
+}
+
+.section-contador {
+  color: var(--cor-texto-claro);
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 /* --- Grid de Cards --- */
@@ -90,17 +132,39 @@
   border-color: rgba(58, 140, 58, 0.2); /* Leve borda verde ao passar o mouse */
 }
 
+.membro-avatar {
+  width: 130px;
+  height: 130px;
+  margin-bottom: 1rem;
+}
+
 .membro-imagem {
   width: 130px;
   height: 130px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 1rem;
   border: 5px solid var(--cor-borda-imagem);
   transition: border-color 0.3s ease;
 }
 
-.membro-card:hover .membro-imagem {
+.membro-iniciais {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 5px solid var(--cor-borda-imagem);
+  background-color: #edf6ee;
+  color: var(--cor-principal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.membro-card:hover .membro-imagem,
+.membro-card:hover .membro-iniciais {
   border-color: var(--cor-secundaria); /* A borda da foto fica verde no hover */
 }
 
@@ -114,6 +178,29 @@
   margin: 0 0 0.5rem 0;
   color: var(--cor-principal);
   line-height: 1.3;
+}
+
+.membro-nome a,
+.membro-nome span {
+  color: inherit;
+}
+
+.membro-nome a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.membro-nome a:hover,
+.membro-nome a:focus-visible {
+  color: var(--cor-secundaria);
+  border-bottom-color: currentColor;
+}
+
+.membro-nome a:focus-visible {
+  outline: 3px solid rgba(58, 140, 58, 0.28);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .membro-funcao {
@@ -144,13 +231,29 @@
 }
 
 :host-context(body.mff-dark-mode) .pagina-header p,
-:host-context(body.mff-dark-mode) .membro-funcao {
+:host-context(body.mff-dark-mode) .membro-funcao,
+:host-context(body.mff-dark-mode) .section-contador {
   color: #c4d2c1;
 }
 
 :host-context(body.mff-dark-mode) .section-titulo {
   color: #e8f1e7;
+}
+
+:host-context(body.mff-dark-mode) .section-header {
   border-bottom-color: #74c97b;
+}
+
+:host-context(body.mff-dark-mode) ::ng-deep .equipe-tabs .mat-mdc-tab-header {
+  border-bottom-color: rgba(158, 226, 160, 0.2);
+}
+
+:host-context(body.mff-dark-mode) ::ng-deep .equipe-tabs .mat-mdc-tab .mdc-tab__text-label {
+  color: #c4d2c1;
+}
+
+:host-context(body.mff-dark-mode) ::ng-deep .equipe-tabs .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #9ee2a0;
 }
 
 :host-context(body.mff-dark-mode) .membro-card {
@@ -173,8 +276,20 @@
   border-color: #405b43;
 }
 
-:host-context(body.mff-dark-mode) .membro-card:hover .membro-imagem {
+:host-context(body.mff-dark-mode) .membro-iniciais {
+  color: #dcefd8;
+  background-color: #233527;
+  border-color: #405b43;
+}
+
+:host-context(body.mff-dark-mode) .membro-card:hover .membro-imagem,
+:host-context(body.mff-dark-mode) .membro-card:hover .membro-iniciais {
   border-color: #9ee2a0;
+}
+
+:host-context(body.mff-dark-mode) .membro-nome a:hover,
+:host-context(body.mff-dark-mode) .membro-nome a:focus-visible {
+  color: #9ee2a0;
 }
 
 :host-context(body.mff-high-contrast) {
@@ -202,15 +317,40 @@
 }
 
 :host-context(body.mff-high-contrast) .pagina-header p,
-:host-context(body.mff-high-contrast) .membro-funcao {
+:host-context(body.mff-high-contrast) .membro-funcao,
+:host-context(body.mff-high-contrast) .section-contador {
   color: #ffffff;
 }
 
-:host-context(body.mff-high-contrast) .section-titulo,
+:host-context(body.mff-high-contrast) .section-header,
 :host-context(body.mff-high-contrast) .membro-card,
-:host-context(body.mff-high-contrast) .membro-imagem {
+:host-context(body.mff-high-contrast) .membro-imagem,
+:host-context(body.mff-high-contrast) .membro-iniciais {
   border-color: #ffff00;
   box-shadow: none;
+}
+
+:host-context(body.mff-high-contrast) .membro-iniciais {
+  color: #ffff00;
+  background-color: #000000;
+}
+
+:host-context(body.mff-high-contrast) .membro-nome a:hover,
+:host-context(body.mff-high-contrast) .membro-nome a:focus-visible {
+  color: #ffffff;
+}
+
+:host-context(body.mff-high-contrast) .membro-nome a:focus-visible {
+  outline-color: #ffff00;
+}
+
+:host-context(body.mff-high-contrast) ::ng-deep .equipe-tabs .mat-mdc-tab-header {
+  border-bottom-color: #ffff00;
+}
+
+:host-context(body.mff-high-contrast) ::ng-deep .equipe-tabs .mat-mdc-tab .mdc-tab__text-label,
+:host-context(body.mff-high-contrast) ::ng-deep .equipe-tabs .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #ffff00;
 }
 
 /* --- Responsividade (Mobile) --- */
@@ -225,9 +365,22 @@
     gap: 20px;
   }
 
+  :host ::ng-deep .equipe-tabs .mat-mdc-tab {
+    min-width: auto;
+    padding: 0 14px;
+  }
+
+  .equipe-section {
+    padding-top: 2rem;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
   .section-titulo {
     font-size: 1.5rem;
-    width: 100%;
-    display: block; /* Linha ocupa toda a largura no mobile */
   }
 }
