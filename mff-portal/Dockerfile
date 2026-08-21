@@ -22,15 +22,10 @@ RUN ls -R /usr/src
 # Usamos uma imagem minúscula e oficial do Nginx.
 FROM nginx:stable-alpine
 
-# Origem interna padrao do backend CodeIgniter. No deploy, sobrescreva
-# BACKEND_CODEIGNITER se o PHP estiver em outro host/porta.
-ENV BACKEND_CODEIGNITER=http://host.docker.internal
-
-# Copia os arquivos da pasta /usr/src/docs para a pasta onde o Nginx serve os sites.
+# A CORREÇÃO FINAL: Copia os arquivos da pasta /usr/src/docs
+# (que foi criada no estágio anterior) para a pasta onde o Nginx serve os sites.
 COPY --from=build /usr/src/docs/browser/ /usr/share/nginx/html
-
-# A imagem oficial do Nginx renderiza templates com envsubst no startup.
-COPY nginx.conf /etc/nginx/templates/default.conf.template
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expõe a porta 80, que é a porta padrão que o Nginx usa.
 EXPOSE 80
