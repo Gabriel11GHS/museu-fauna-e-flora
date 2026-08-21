@@ -322,6 +322,50 @@ body.mff-dark-mode #mapa-section .home-mapa-locais__info-label {
   color: var(--mff-access-link) !important;
 }
 
+body.mff-high-contrast #mapa-section {
+  background: #000000 !important;
+}
+
+body.mff-high-contrast #mapa-section .texto-vozes h2,
+body.mff-high-contrast #mapa-section .texto-vozes p,
+body.mff-high-contrast #mapa-section .home-mapa-locais__info h3,
+body.mff-high-contrast #mapa-section .home-mapa-locais__info p {
+  color: #ffffff !important;
+}
+
+body.mff-high-contrast #mapa-section .home-mapa-locais__svg-container {
+  border: 2px solid #ffffff;
+  border-radius: 18px;
+  background: #000000;
+}
+
+body.mff-high-contrast #mapa-section .home-mapa-locais__svg {
+  background: #000000;
+}
+
+body.mff-high-contrast #mapa-section .home-mapa-locais__label {
+  color: #000000 !important;
+  background: #ffff00;
+  border-color: #ffffff;
+  box-shadow: none;
+}
+
+body.mff-high-contrast #mapa-section .home-mapa-locais__label--ativo {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+body.mff-high-contrast #mapa-section .home-mapa-locais__info {
+  color: #ffffff;
+  background: #000000;
+  border-color: #ffffff;
+  box-shadow: none;
+}
+
+body.mff-high-contrast #mapa-section .home-mapa-locais__info-label {
+  color: #ffff00 !important;
+}
+
 body.mff-reading-marker :where(
   h1,
   h2,

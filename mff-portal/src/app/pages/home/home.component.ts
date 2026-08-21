@@ -347,7 +347,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.limparListenersMapaLocais();
 
-    const elementos = svgDocument.querySelectorAll('[data-local-id]');
+    const elementos = this.obterElementosLocaisMapa(svgDocument);
     const svg = svgDocument.querySelector('svg');
 
     elementos.forEach(elemento => {
@@ -426,6 +426,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         transform: scale(1.035);
       }
 
+      svg.mff-map-dark {
+        background: #101711;
+      }
+
       svg.mff-map-dark #rua path {
         fill: #dce6d8 !important;
         opacity: 0.72;
@@ -435,16 +439,19 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         fill: #49564a !important;
       }
 
-      svg.mff-map-dark #predios path {
-        fill: #b9651d !important;
+      svg.mff-map-dark #predios path,
+      svg.mff-map-dark #Vector path,
+      svg.mff-map-dark [fill="#FE7D09"] {
+        fill: #b87535 !important;
       }
 
       svg.mff-map-dark [data-local-id] [fill="#286D2C"] {
-        fill: #4f9655 !important;
+        fill: #65ad6a !important;
       }
 
       svg.mff-map-dark [id$=" - linha"] {
-        stroke: #d98cc8 !important;
+        stroke: #f1b7e4 !important;
+        stroke-width: 5px !important;
       }
 
       svg.mff-map-dark [data-local-id]:hover [fill="#286D2C"],
@@ -455,25 +462,37 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         filter: drop-shadow(0 10px 14px rgba(217, 140, 200, 0.34));
       }
 
+      svg.mff-map-high-contrast {
+        background: #000000;
+      }
+
       svg.mff-map-high-contrast #rua path,
       svg.mff-map-high-contrast #caminhaveis path,
-      svg.mff-map-high-contrast #predios path {
+      svg.mff-map-high-contrast #predios path,
+      svg.mff-map-high-contrast #Vector path,
+      svg.mff-map-high-contrast [fill="#FE7D09"] {
         fill: #ffffff !important;
+        opacity: 1 !important;
       }
 
       svg.mff-map-high-contrast [data-local-id] [fill="#286D2C"] {
         fill: #00ff66 !important;
+        stroke: #000000 !important;
+        stroke-width: 1.5px !important;
       }
 
       svg.mff-map-high-contrast [id$=" - linha"] {
         stroke: #ffff00 !important;
+        stroke-width: 7px !important;
+        vector-effect: non-scaling-stroke;
       }
 
       svg.mff-map-high-contrast [data-local-id]:hover [fill="#286D2C"],
       svg.mff-map-high-contrast [data-local-id]:focus [fill="#286D2C"],
       svg.mff-map-high-contrast [data-local-id].mapa-local--ativo [fill="#286D2C"] {
         fill: #ffff00 !important;
-        stroke: #ffffff !important;
+        stroke: #000000 !important;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
       }
     `;
 
@@ -485,6 +504,31 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private adicionarListenerMapa(elemento: Element, tipo: string, listener: EventListener): void {
     elemento.addEventListener(tipo, listener);
     this.mapaSvgListeners.push({ elemento, tipo, listener });
+  }
+
+  private obterElementosLocaisMapa(svgDocument: Document): Element[] {
+    this.locaisMapa.forEach(local => {
+      if (svgDocument.querySelector(`[data-local-id="${local.id}"]`)) {
+        return;
+      }
+
+      const elemento =
+        this.obterElementoSvgPorId(svgDocument, local.nome) ??
+        this.obterElementoSvgPorId(svgDocument, local.nome.replace(/\s+/g, '')) ??
+        this.obterElementoSvgPorId(svgDocument, local.id);
+
+      if (elemento) {
+        elemento.setAttribute('data-local-id', local.id);
+      }
+    });
+
+    return Array.from(svgDocument.querySelectorAll('[data-local-id]'));
+  }
+
+  private obterElementoSvgPorId(svgDocument: Document, id: string): Element | null {
+    return svgDocument.getElementById(id)
+      ?? Array.from(svgDocument.querySelectorAll('[id]')).find(elemento => elemento.getAttribute('id') === id)
+      ?? null;
   }
 
   private selecionarLocalPorInteracao(id: string, event: Event): void {

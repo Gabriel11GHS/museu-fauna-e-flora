@@ -36,6 +36,10 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    document.body.classList.remove('mff-dark-mode', 'mff-high-contrast');
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -172,6 +176,77 @@ describe('HomeComponent', () => {
 
     expect(component.localSelecionado()).toBe('local-5');
     expect(component.obterLocalSelecionado()?.filtroFlora).toBe('Local 5');
+  });
+
+  it('should wire SVG groups named after map locals when data attributes are missing', () => {
+    const svgDocument = document.implementation.createHTMLDocument('mapa');
+    const svg = svgDocument.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const local = svgDocument.createElementNS('http://www.w3.org/2000/svg', 'g');
+    const localShape = svgDocument.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const componentInternals = component as unknown as {
+      configurarMapaLocais: () => void;
+      svgObject: {
+        nativeElement: {
+          contentDocument: Document;
+          removeEventListener: () => void;
+        }
+      };
+    };
+
+    local.setAttribute('id', 'Local 3');
+    localShape.setAttribute('d', 'M0 0H10V10H0Z');
+    local.appendChild(localShape);
+    svg.appendChild(local);
+    svgDocument.body.appendChild(svg);
+
+    componentInternals.svgObject = {
+      nativeElement: {
+        contentDocument: svgDocument,
+        removeEventListener: () => undefined
+      }
+    };
+
+    componentInternals.configurarMapaLocais();
+    localShape.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+    expect(local.getAttribute('data-local-id')).toBe('local-3');
+    expect(component.localSelecionado()).toBe('local-3');
+  });
+
+  it('should mirror accessibility theme classes into the embedded map SVG', () => {
+    const svgDocument = document.implementation.createHTMLDocument('mapa');
+    const svg = svgDocument.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const componentInternals = component as unknown as {
+      configurarMapaLocais: () => void;
+      atualizarTemaMapaSvg: () => void;
+      svgObject: {
+        nativeElement: {
+          contentDocument: Document;
+          removeEventListener: () => void;
+        }
+      };
+    };
+
+    svgDocument.body.appendChild(svg);
+    componentInternals.svgObject = {
+      nativeElement: {
+        contentDocument: svgDocument,
+        removeEventListener: () => undefined
+      }
+    };
+
+    document.body.classList.add('mff-dark-mode');
+    componentInternals.configurarMapaLocais();
+
+    expect(svg.classList.contains('mff-map-dark')).toBeTrue();
+    expect(svg.classList.contains('mff-map-high-contrast')).toBeFalse();
+
+    document.body.classList.remove('mff-dark-mode');
+    document.body.classList.add('mff-high-contrast');
+    componentInternals.atualizarTemaMapaSvg();
+
+    expect(svg.classList.contains('mff-map-dark')).toBeFalse();
+    expect(svg.classList.contains('mff-map-high-contrast')).toBeTrue();
   });
 
   it('should navigate to /Ficha with the selected local as query param', () => {
