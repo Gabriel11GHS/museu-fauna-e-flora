@@ -12,10 +12,6 @@ CONTAINER_NAME="mff-portal"
 EXT_PORT="4200"
 # Porta interna (do Nginx dentro do contêiner) que a porta externa vai se conectar.
 INT_PORT="80"
-# Origem interna do backend administrativo CodeIgniter/PHP.
-# Sobrescreva ao executar se o backend estiver em outro host/porta:
-# BACKEND_CODEIGNITER="http://IP_OU_HOST_INTERNO:PORTA" ./deploy.sh
-BACKEND_CODEIGNITER="${BACKEND_CODEIGNITER:-http://host.docker.internal}"
 
 # --- Início do Script ---
 
@@ -48,14 +44,7 @@ echo ""
 # 4. Iniciar o Novo Contêiner
 # Inicia um novo contêiner a partir da imagem recém-criada.
 echo "➡️  Passo 4/4: Iniciando o novo contêiner..."
-docker run \
-  --restart unless-stopped \
-  --name $CONTAINER_NAME \
-  --add-host=host.docker.internal:host-gateway \
-  -e BACKEND_CODEIGNITER="$BACKEND_CODEIGNITER" \
-  -d \
-  -p $EXT_PORT:$INT_PORT \
-  $IMAGE_NAME
+docker run --restart unless-stopped --name $CONTAINER_NAME -d -p $EXT_PORT:$INT_PORT $IMAGE_NAME
 echo ""
 
 # --- Fim do Script ---
