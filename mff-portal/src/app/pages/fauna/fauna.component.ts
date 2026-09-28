@@ -25,7 +25,8 @@ interface CameraProjetoClick {
 }
 
 const PROJETO_CLICK_CAMERA_IDS = [
-  '6738e98d'
+  '6738e98d',
+  '78516c6b'
 ];
 
 @Component({
