@@ -1,0 +1,76 @@
+<button
+  #trigger
+  type="button"
+  class="contest-trigger"
+  [class.is-compact]="!isExpanded()"
+  [attr.aria-label]="isOpen() ? 'Fechar informações sobre o Concurso de Fotografia' : 'Abrir informações sobre o Concurso de Fotografia'"
+  [attr.aria-expanded]="isOpen()"
+  aria-controls="mff-photography-contest-panel"
+  (click)="togglePanel()"
+>
+  <mat-icon aria-hidden="true">photo_camera</mat-icon>
+  <span class="contest-trigger-label" aria-hidden="true">Concurso de Fotografia</span>
+</button>
+
+@if (isOpen()) {
+  <section
+    id="mff-photography-contest-panel"
+    class="contest-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="mff-photography-contest-title"
+  >
+    <div class="contest-panel-header">
+      <div class="contest-heading">
+        <span class="contest-eyebrow">Participe</span>
+        <h2 #panelTitle id="mff-photography-contest-title" tabindex="-1">Concurso de Fotografia</h2>
+      </div>
+      <button
+        type="button"
+        class="contest-close"
+        aria-label="Fechar informações sobre o Concurso de Fotografia"
+        (click)="closePanel()"
+      >
+        <mat-icon aria-hidden="true">close</mat-icon>
+      </button>
+    </div>
+
+    <p class="contest-description">
+      Compartilhe seu olhar sobre a biodiversidade presente no instituto e participe do Concurso de Fotografia do Museu da Fauna e Flora.
+    </p>
+
+    @if (periodoInscricoes) {
+      <p class="contest-period">
+        <mat-icon aria-hidden="true">event</mat-icon>
+        <span>{{ periodoInscricoes }}</span>
+      </p>
+    }
+
+    <div class="contest-actions">
+      <a
+        class="contest-action contest-action-secondary"
+        [class.is-unavailable]="!editalUrl"
+        [attr.href]="editalUrl || null"
+        [attr.aria-disabled]="!editalUrl"
+        [attr.tabindex]="editalUrl ? 0 : -1"
+      >
+        <mat-icon aria-hidden="true">description</mat-icon>
+        <span>Ler o edital</span>
+      </a>
+      <a
+        class="contest-action contest-action-primary"
+        [class.is-unavailable]="!formularioUrl"
+        [attr.href]="formularioUrl || null"
+        [attr.aria-disabled]="!formularioUrl"
+        [attr.tabindex]="formularioUrl ? 0 : -1"
+      >
+        <mat-icon aria-hidden="true">add_a_photo</mat-icon>
+        <span>Enviar fotografias</span>
+      </a>
+    </div>
+
+    @if (!editalUrl || !formularioUrl) {
+      <p class="contest-availability">Links do concurso em breve.</p>
+    }
+  </section>
+}
