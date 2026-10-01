@@ -10,6 +10,7 @@ import { FiltroService } from './services/filtro.service';
 import { filter } from 'rxjs';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { AccessibilityMenuComponent } from './shared/components/accessibility-menu/accessibility-menu.component';
+import { PhotographyContestComponent } from './shared/components/photography-contest/photography-contest.component';
 
 declare var gtag: Function;
 
@@ -24,7 +25,8 @@ declare var gtag: Function;
     MatIconModule,
     MatButtonModule,
     HeaderComponent,
-    AccessibilityMenuComponent
+    AccessibilityMenuComponent,
+    PhotographyContestComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
